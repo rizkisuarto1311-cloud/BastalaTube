@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.rizkisuarto1311.bastalatube",
+      "sha256_cert_fingerprints": [
+        "8F:CA:DD:B5:A4:8F:54:29:C4:1E:A2:B0:81:1D:F8:3A:13:AB:79:BF:18:90:96:82:02:3C:94:A9:4B:27:D2:94"
+      ]
+    }
+  }
+]
