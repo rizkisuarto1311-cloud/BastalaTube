@@ -1,0 +1,1226 @@
+/* ==========================================================================
+   1. RESET & VARIABLES
+   ========================================================================== */
+:root {
+    --bg-color: #f9f9f9;
+    --text-main: #030303;
+    --text-sub: #606060;
+    --accent-color: #000000;
+    --header-height: 105px;
+    --nav-height: 60px;
+    --yt-red: #ff0000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* Sesuai background aplikasi BasTala */
+    min-height: 100vh;
+}
+
+
+body {
+    background-color: #fff;
+    padding-bottom: 70px;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    scroll-behavior: auto;
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ==========================================================================
+   2. HEADER & NAVIGATION (TOP)
+   ========================================================================== */
+.main-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #fff;
+    will-change: transform;
+}
+
+.header-hidden {
+    transform: translateY(-100%);
+}
+
+.top-nav {
+    padding-top: env(safe-area-inset-top);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding-top: calc(10px + env(safe-area-inset-top)); 
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.brand-name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: #000;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.app-logo {
+    height: 30px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+}
+
+.top-icon {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.icon {
+    font-size: 18px;
+    cursor: pointer;
+    -webkit-text-stroke: 1px #0f0f0f;
+}
+
+.icon:active {
+    -webkit-tap-highlight-color: transparent;
+    transform: scale(0.9);
+    opacity: 0.6;
+}
+
+.notification {
+    position: relative;
+    display: inline-block;
+}
+
+.badge {
+    position: absolute;
+    top: -7px;
+    right: -8px;
+    background-color: var(--yt-red);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    padding: 2px;
+}
+
+/* ==========================================================================
+   3. CATEGORIES (CHIPS)
+   ========================================================================== */
+.categories {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 15px;
+    gap: 10px;
+    z-index: 2000;
+    border-bottom: 1px solid #eee;
+    scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+    display: none;
+}
+
+.categories:active {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chip {
+    padding: 7px 15px;
+    border-radius: 8px;
+    border: none;
+    background: #f2f2f2;
+    white-space: nowrap;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.chip.active {
+    background: #000;
+    color: #fff;
+}
+
+/* ==========================================================================
+   4. SEARCH SYSTEM (OVERLAY & BODY)
+   ========================================================================== */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    overflow: hidden;
+}
+
+.search-overlay.active {
+    transform: translateX(0);
+    height: 100vh;
+}
+
+.search-container {
+    pointer-events: auto;
+    background: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid #eee;
+    gap: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    box-sizing: border-box;
+    z-index: 10005;
+}
+
+#searchForm {
+    flex: 1;
+    display: flex;
+    min-width: 0;
+}
+
+#searchInput {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: #f2f2f2;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    width: 100%;
+}
+
+#searchInput::-webkit-search-decoration,
+#searchInput::-webkit-search-cancel-button,
+#searchInput::-webkit-search-results-button,
+#searchInput::-webkit-search-results-decoration {
+    display: none;
+}
+
+/* ==========================================================================
+   5. MAIN CONTENT & VIDEO GRID
+   ========================================================================== */
+.main-content {
+    width: 100%;
+    max-width: 100%;
+    padding-top: 100px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+    box-sizing: border-box;
+}
+
+.main-content.search-active {
+    position: relative;
+    transform: translateX(0);
+    opacity: 1;
+    padding-top: 40px;
+}
+
+.video-grid {
+    display: block;
+    width: 100%;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.video-card {
+    width: 100%;
+    max-width: 100vw;
+    min-height: 250px;
+    overflow: hidden;
+    transition: opacity 0.1s ease-out;
+    will-change: transform;
+}
+
+.video-card.muncul {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.thumb-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.thumb-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.duration {
+    position: absolute !important;
+    bottom: 8px !important;
+    right: 8px !important;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+/* Info Bar under Thumbnail */
+.v-details {
+    display: flex;
+    padding: 12px;
+    gap: 12px;
+    transition: opacity 0.3s ease-out;
+}
+
+.v-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #000;
+}
+
+.v-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.v-text h3 {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.v-text p {
+    font-size: 12px;
+    color: #606060;
+    margin-top: 4px;
+}
+
+.menu-btn {
+    flex-shrink: 0;
+    width: 24px;
+    text-align: right;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   6. VIDEO DETAIL PAGE
+   ========================================================================== */
+.video-detail-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 2000;
+    transform: translateY(100%);
+    transition: transform 0.2s cubic-bezier(0.17, 0.84, 0.44, 1), background-color 0.3s ease;
+    overflow-y: auto;
+    will-change: transform;
+    display: none;
+}
+
+#videoDetailPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000 !important; /* Paksa hitam pekat */
+    z-index: 1000;
+}
+
+
+.detail-scroll-content {
+    /* Pastikan transisi opacity halus */
+    transition: opacity 0.3s ease;
+    will-change: transform, opacity;
+    margin-top: 200px;
+}
+
+.video-detail-page.active {
+    display: block;
+    transform: translateY(0);
+}
+
+.video-detail-page.dragging {
+    transition: none !important;
+    background-color: #000;
+}
+
+.player-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transform: translateZ(0);
+    box-shadow: none !important;
+}
+
+.back-btn-player {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+    cursor: pointer;
+}
+
+#backToHome { display: none; }
+
+.detail-scroll-content {
+    background: #fff;
+    min-height: 100vh;
+    border-radius: 18px 18px 0 0;
+    margin-top: 0px;
+    position: relative;
+    z-index: 5;
+    padding-bottom: 1px;
+}
+
+.video-header-info {
+    padding: 12px 15px;
+    border-radius: 10px 10px 0 0;
+    background: #fff;
+}
+
+.video-header-info h1 {
+    font-size: 19px;
+    font-weight: bold;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+}
+
+.meta-row { font-size: 13px; color: #606060; margin-top: 5px; }
+.selengkapnya { font-weight: bold; color: #0f0f0f; margin-left: 5px; }
+
+/* Channel & Interaction */
+.channel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+
+.channel-left { display: flex; align-items: center; gap: 10px; }
+.channel-img { width: 35px; height: 35px; border-radius: 50%; }
+.channel-name h3 { font-size: 15px; margin: 0; }
+.channel-name span { font-size: 12px; color: #606060; }
+
+.btn-subscribe {
+    background: #0f0f0f;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.interaction-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.interaction-bar::-webkit-scrollbar { display: none; }
+
+.btn-group {
+    background: #f2f2f2;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    height: 36px;
+}
+
+.btn-group button, .action-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    height: 100%;
+    cursor: pointer;
+}
+
+.action-btn {
+    background: #f2f2f2;
+    border-radius: 20px;
+    padding: 0 16px;
+    height: 36px;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background: #d9d9d9;
+}
+
+/* Comments & Recommendations */
+.comment-preview {
+    background: #f2f2f2;
+    margin: 10px 15px;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.comment-body { display: flex; gap: 10px; align-items: center; }
+.user-pfp { width: 24px; height: 24px; border-radius: 50%; }
+.comment-body p {
+    font-size: 12px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#rekomendasiSection {
+    transition: opacity 0.3s ease-out;
+}
+
+/* ==========================================================================
+   7. CUSTOM VIDEO PLAYER CONTROLS
+   ========================================================================== */
+.video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 15px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 15;
+    pointer-events: none;
+    color: white;
+}
+
+.video-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.video-overlay:active { -webkit-tap-highlight-color: transparent; }
+
+/* Jika overlay tidak aktif, paksa semua elemen di dalamnya (ikon, tombol) ikut mati */
+.video-overlay:not(.active) * {
+    pointer-events: none !important;
+}
+
+.overlay-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.top-right {
+  display: flex;
+  gap: 18px;
+  font-size: 25px;
+}
+
+.overlay-mid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+}
+
+.overlay-mid i { 
+  font-size: 25px;
+  opacity: 0.9;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.3);
+  width: 50px;                   /* Buat jadi kotak/lingkaran */
+  height: 50px;
+  display: flex;                 /* Biar ikon di tengah */
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+}
+
+.overlay-mid i.main-play {
+  font-size: 55px;
+  
+}
+
+.overlay-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+
+
+.progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: 30;
+    pointer-events: none;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #ff0000;
+    width: 0%; /* Ini yang diupdate oleh JavaScript */
+    position: relative; /* Penting: Agar bulatan mengacu pada ujung garis ini */
+}
+
+.icon-fullscreen {
+    position: relative;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 6px;
+    transition: transform 0.2s ease;
+    background: rgba(0, 0, 0, 0.3);
+    width: 32px;                   /* Buat jadi kotak/lingkaran */
+    height: 32px;
+    display: flex;                 /* Biar ikon di tengah */
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
+/* ==========================================================================
+   8. FULLSCREEN MODES & ANIMATIONS
+   ========================================================================== */
+#vContainer:fullscreen, 
+#vContainer:-webkit-full-screen, 
+#vContainer:-ms-fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 99999 !important;
+}
+
+#vContainer:fullscreen video,
+#vContainer:-webkit-full-screen video {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100vh !important;
+    object-fit: contain;
+}
+
+.fullscreen-mode {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #000 !important;
+}
+
+.video-loading {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: putar 0.8s linear infinite;
+    display: flex;
+}
+
+@keyframes putar {
+    to { transform: rotate(360deg); }
+}
+
+/* Transition Classes */
+.dari-kanan {
+    position: fixed;
+    top: 25px;
+    left: 0;
+    width: 100%;
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.dari-kiri {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Pastikan container video punya transisi agar halus */
+#vContainer {
+    transition:
+    transform 0.25s ease,
+    border-radius 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Tetap gunakan ini untuk state akhir */
+#vContainer.fullscreen-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Pastikan elemen video di dalamnya mengikuti ukuran container */
+#vContainer.fullscreen-mode video {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100vh !important;
+}
+
+
+/* =========================================
+   PORTRAIT FULLSCREEN MODE
+========================================= */
+
+/* Mode fullscreen vertikal seperti YouTube */
+#vContainer.portrait-fullscreen {
+
+    position: fixed !important;
+    inset: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    background: #000 !important;
+
+    z-index: 999999 !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    overflow: hidden;
+}
+
+/* Video tetap landscape */
+#vContainer.portrait-fullscreen video,
+#vContainer.portrait-fullscreen iframe {
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-height: 100vh !important;
+    aspect-ratio: 16 / 9;
+
+    object-fit: contain;
+}
+
+/* Transisi untuk kembali ke posisi semula jika tidak jadi ditutup */
+.snap-back {
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+}
+
+
+/* ==========================================================================
+   9. BOTTOM NAVIGATION
+   ========================================================================== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #f2f2f2;
+    z-index: 3000;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 2px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.nav-item i { font-size: 23px; display: block; }
+.nav-item span { font-size: 11px; }
+.nav-item:active { -webkit-tap-highlight-color: transparent; }
+
+.plus-btn {
+    font-size: 30px;
+    font-weight: 700;
+    width: 45px;
+    height: 45px;
+    background-color: #f2f2f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.user-avatar-container {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+}
+
+.user-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Container pembungkus */
+.icon-skip-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Ukuran ikon utama (sesuaikan dengan seleramu) */
+.icon-skip-container i {
+    font-size: 2.5rem; /* Ukuran ikon panah */
+}
+
+/* Gaya angka 10 di tengah */
+.skip-number {
+    position: absolute;
+    font-size: 0.65rem; /* Ukuran angka kecil agar masuk di tengah */
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    top: 55%; /* Geser sedikit ke bawah agar pas di tengah lingkaran panah */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Supaya klik tetap tembus ke icon */
+}
+
+
+/* --- KONDISI PORTRAIT (Pindah ke bawah layar) --- */
+.mode-portrait .progress-container {
+    position: fixed; /* Lepas dari video, menempel ke layar HP */
+    bottom: -280px;    /* Jarak dari ujung bawah layar */
+    left: 2%;        /* Agar ada jarak di kiri */
+    right: 2%;       /* Agar ada jarak di kanan */
+    width: 96%;      /* Lebar garis jadi 90% layar */
+    height: 3px;     /* Lebih tipis dan elegan */
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    opacity: 0;
+}
+
+.mode-portrait.show-controls .progress-container {
+    opacity: 1;
+}
+
+/* BULATAN MERAH (Scrubber) */
+.mode-portrait .progress-fill::after {
+    content: '';
+    position: absolute;
+    
+    /* KUNCI: Taruh di ujung kanan (100%) dari si progress-fill */
+    right: -7px; 
+    top: 50%;
+    transform: translateY(-50%); /* Agar tepat di tengah secara vertikal */
+    
+    width: 9px;
+    height: 9px;
+    background: #ff0000;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    
+    /* Supaya terlihat saat mode portrait saja */
+    display: block;
+}
+
+.time-wrapper {
+    position: relative;
+    bottom: 5px;   /* Ubah angka ini: makin besar makin naik, makin kecil makin turun */
+    left: 3px;
+    color: white;
+    font-size: 12px;
+    pointer-events: auto; /* Biar tetap bisa disentuh jika perlu */
+    background: rgba(0, 0, 0, 0.3); /* Warna hitam transparan */
+    padding: 12px 12px;             /* Jarak teks ke tepi background */
+    border-radius: 30px;            /* Membuat sudut melengkung */
+    /* Efek Sembunyi/Muncul sesuai permintaanmu sebelumnya */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* --- KONDISI MODE PORTRAIT (Pindah ke Paling Bawah Layar) --- */
+.mode-portrait .time-wrapper {
+    position: fixed; /* Gunakan fixed agar menempel di layar bawah */
+    bottom: -260px;    /* Jarak dari paling bawah layar */
+    left: 5px;
+    top: auto;       /* Reset top jika ada */
+    color: #fff;     /* Warna hitam agar kontras dengan background putih */
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.mode-portrait .icon-fullscreen {
+    position: fixed; /* Gunakan fixed */
+    bottom: -270px;    /* Sejajar dengan durasi */
+    right: 10px;
+    top: auto;
+    color: #fff;
+    font-size: 20px;
+}
+
+/* --- MUNCULKAN SAAT SHOW-CONTROLS --- */
+.show-controls .time-wrapper, 
+.show-controls .icon-fullscreen {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- KONDISI MODE PORTRAIT (KELUAR DARI VIDEO) --- */
+/* 1. ICON ATAS PINDAH KE LANGIT-LANGIT LAYAR HP */
+.mode-portrait .overlay-top {
+    position: fixed;
+    top: -230px;          /* Jarak dari paling atas layar HP */
+    right: 5px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.mode-portrait .top-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    color: #fff;        /* Warna hitam karena background detail putih */
+}
+
+/* --- POSISI TENGAH VIDEO --- */
+.overlay-mid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* KUNCI: Titik tengah absolut */
+    
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Tengah horizontal */
+    align-items: center;     /* Tengah vertikal */
+    gap: 40px;               /* Jarak antara tombol skip dan play */
+    
+    z-index: 10;
+    pointer-events: auto;
+}
+
+
+/* 1. CONTAINER UTAMA */
+.mode-portrait.show-controls .judul-portrait-khusus {
+    display: flex !important;           /* Gunakan Flexbox */
+    flex-direction: column;             /* Susun ke bawah (Judul lalu Channel) */
+    position: fixed;
+    bottom: 410px;                         /* Turunkan sedikit agar aman dari video */
+    left: 3%;
+    width: 90%;                         /* Lebar 90% layar (tengah-tengah) */
+    z-index: 9999999;
+    pointer-events: none;
+}
+
+/* 2. JUDUL (PEMBERSIHAN TOTAL) */
+.v-title-luar {
+    display: block !important;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff !important;
+    
+    /* FIX TINGGI TERPOTONG: Beri Line Height yang Lega */
+    line-height: 1.5 !important; 
+    padding: 2px 0;                    /* Kasih ruang napas atas bawah */
+    
+    /* RUMUS TITIK-TITIK */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* 3. NAMA CHANNEL */
+.v-channel-luar {
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff !important;
+    margin-top: 2px;
+}
+
+
+.mode-portrait.show-controls .ikon-tambahan-portrait {
+    display: flex !important;
+    position: fixed;
+    /* Sesuaikan tinggi ini agar pas di bawah garis merah */
+    top: 530px; 
+    left: 0;
+    width: 100%;
+    justify-content: left;
+    align-items: left;
+    padding: 10px 0;
+    z-index: 999999;
+    color: white;
+}
+
+.item-ikon {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    font-weight: 800;
+    /* Memberi efek lingkaran samar saat ditekan (opsional) */
+    height: 50px; 
+    margin: 0 15px; /* Angka 15px ini yang mengatur jarak kiri-kanan tiap ikon */
+}
+
+.item-ikon i {
+    font-size: 20px; /* Ukuran ikon diperbesar sedikit karena tanpa teks */
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+/* Efek saat ikon ditekan jari */
+.item-ikon i:active {
+    transform: scale(0.9);
+    opacity: 0.6;
+}
+
+
+.mode-portrait .detail-scroll-content {
+    pointer-events: none !important; /* Mematikan semua tarikan jari di area konten */
+}
+
+.mode-portrait .player-wrapper {
+    /* Video tetap bisa diklik (untuk pause/play), tapi tidak bisa ditarik */
+    touch-action: none !important; 
+}
+
+.ikon-tambahan-portrait, .video-overlay {
+    pointer-events: auto !important; /* Pastikan tombol tetap bisa dipencet */
+}
+
+.ikon-tambahan-portrait:active {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+@media (orientation: landscape) {
+    /* 1. Pastikan Video Full */
+    .player-wrapper {
+        height: 100vh !important;
+        background: #000;
+    }
+
+    /* 2. Reset Status Default (Sembunyi) */
+    .progress-container, 
+    .judul-portrait-khusus, 
+    .video-overlay,
+    .ikon-tambahan-portrait {
+        display: flex !important; /* Pastikan tidak 'none' */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        color: #fff;
+    }
+
+    /* 3. Munculkan saat vContainer aktif */
+    .video-container.show-controls .progress-container,
+    .video-container.show-controls .judul-portrait-khusus,
+    .video-container.show-controls .video-overlay,
+    .video-container.show-controls .ikon-tambahan-portrait {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* --- TATA LETAK BERTINGKAT (Sesuai Ukuran Layar HP) --- */
+
+    /* BARIS 1: Ikon Tambahan (Paling Bawah) */
+    .ikon-tambahan-portrait {
+        position: absolute;
+        bottom: -20px; 
+        left: 25px;
+        width: 100%;
+        justify-content: left;
+        z-index: 50;
+    }
+    
+    .item-ikon {
+    display: flex;
+    align-items: left;
+    font-weight: 800;
+    /* Memberi efek lingkaran samar saat ditekan (opsional) */
+    height: 50px; 
+    margin: 0 15px; /* Angka 15px ini yang mengatur jarak kiri-kanan tiap ikon */
+}
+
+.item-ikon i {
+    font-size: 20px; /* Ukuran ikon diperbesar sedikit karena tanpa teks */
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+/* Efek saat ikon ditekan jari */
+.item-ikon i:active {
+    transform: scale(0.9);
+    opacity: 0.6;
+}
+
+    /* BARIS 2: Progress Bar */
+    .progress-container {
+        position: absolute;
+        bottom: 45px; 
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 5px;
+        z-index: 45;
+    }
+
+    /* BARIS 3: Waktu & Fullscreen */
+    .overlay-bot {
+        position: absolute;
+        bottom: 55px; 
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 45;
+    }
+
+    /* BARIS 4: Judul & Channel */
+    .judul-portrait-khusus {
+        position: absolute;
+        bottom: 380px; /* Jarak aman di atas kontrol */
+        left: 20px;
+        display: block !important;
+        z-index: 45;
+    }
+
+    /* BARIS ATAS: Ikon Gear (Settings) */
+    .top-right {
+        position: absolute;
+        top: 20px; /* Gunakan TOP, bukan BOTTOM, agar lebih mudah diatur */
+        right: 25px;
+        display: flex;
+        gap: 20px;
+        z-index: 50;
+    }
+
+    /* Sembunyikan elemen yang benar-benar tidak perlu */
+    .detail-scroll-content {
+        display: none !important;
+    }
+}
