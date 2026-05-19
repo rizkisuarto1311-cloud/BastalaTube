@@ -349,6 +349,9 @@ function bukaDetailVideo(video) {
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
     const bNav = document.getElementById('bottomNav');
+    
+    updateStatusBar('normal_video');
+    updateContentLayout('normal_video');
 
     // --- TAMBAHKAN INI ---
     if (bottomNav) {
@@ -515,8 +518,7 @@ function bukaDetailVideo(video) {
     }
 
     // --- FULLSCREEN LOGIC ---
-    // --- LOGIKA TOMBOL TOGGLE: NORMAL <-> FULLSCREEN VERTIKAL ---
-    // --- LOGIKA TOMBOL TOGGLE FULLSCREEN (LANDSCAPE & PORTRAIT) ---
+    // --- LOGIKA TOMBOL TOGGLE: NORMAL <-> FULLSCREEN VERTIKAL ---    
 btnFullscreen.onclick = (e) => {
     e.stopPropagation();
 
@@ -630,21 +632,18 @@ vElement.onloadedmetadata = () => {
         loadingEfek.style.display = 'none';
     };
 
-    // 3. Perintah Play Utama
-    vElement.muted = false; // Paksa suara aktif
+     // 3. Perintah Play Utama
+    vElement.muted = false; 
     
     vElement.play().then(() => {
-        console.log("Video berhasil diputar dengan suara");
+        console.log("Video berhasil diputar bersuara");
         if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
     }).catch((err) => {
-        console.log("Autoplay bersuara ditahan browser, mencoba mode mute...");
-        
-        // Jika gagal karena kebijakan browser, putar dalam keadaan mute dulu
+        // Jika gagal (biasanya karena mode normal dianggap autoplay tanpa klik), 
+        // kita coba putar demi visual, namun biarkan fungsi putarVideoOtomatis mengambil alih suaranya
         vElement.muted = true;
         vElement.play();
-        
-        // Beri tahu user atau biarkan user klik tombol unmute nanti
-        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
     });
     
     // 4. fitur autonext 
@@ -781,6 +780,9 @@ if (detailPage.classList.contains('dragging') && distY > 0 && !isPortrait) {
     if (isPortrait && distY < -50) {
         isPortrait = false; 
         
+        updateStatusBar('normal_video');
+    updateContentLayout('normal_video');
+        
         // KONDISI IKON: Balik ke Normal
         if (vContainer) vContainer.classList.remove('mode-portrait');
         
@@ -814,6 +816,9 @@ if (detailPage.classList.contains('dragging') && distY > 0 && !isPortrait) {
     // 2. JIKA SWIPE DOWN (MASUK KE PORTRAIT)
     if (velocity > 0.5 || distY > 100) {
         isPortrait = true; 
+        
+        updateStatusBar('portrait_video');
+    updateContentLayout('portrait_video');
         
         // KONDISI IKON: Aktifkan Mode Portrait
         if (vContainer) vContainer.classList.add('mode-portrait');
@@ -1059,6 +1064,9 @@ function tutupDetailVideoManual() {
     
     isPortrait = false;
     
+    updateStatusBar('home');
+    updateContentLayout('home');
+    
     // Ambil elemen yang dimanipulasi saat swipe
     const scrollContent = detailPage.querySelector('.detail-scroll-content');
     const playerWrapper = detailPage.querySelector('.player-wrapper');
@@ -1099,6 +1107,7 @@ function tutupDetailVideoManual() {
     }, 400); 
 }
 
+
 function putarVideoOtomatis() {
     if (typeof videoLibrary !== 'undefined' && videoLibrary.length > 0) {
         const judulSekarang = document.getElementById('detailTitle').innerText;
@@ -1110,29 +1119,29 @@ function putarVideoOtomatis() {
             detailPage.scrollTo({ top: 0, behavior: 'instant' }); 
         }
 
-        // Jalankan fungsi buka video
+        // Buka detail video terlebih dahulu
         bukaDetailVideo(videoBerikutnya);
 
-        // --- TAMBAHKAN LOGIKA FORCE PLAY ---
+        // KUNCI UTAMA: Beri jeda sedikit agar DOM selesai terbentuk, 
+        // lalu paksa suara aktif di mode apapun
         setTimeout(() => {
             const vElement = document.getElementById('mainVideoPlayer');
+            const playIcon = document.getElementById('playIcon');
+            
             if (vElement) {
-                // Gunakan promise untuk memastikan video benar-benar jalan
-                const playPromise = vElement.play();
+                vElement.muted = false; // Buka suara secara paksa
                 
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log("Autoplay dicegah, mencoba play lagi...");
-                        // Jika gagal, biasanya browser minta video di-mute dulu
-                        vElement.muted = true;
-                        vElement.play();
-                    });
-                }
+                vElement.play().then(() => {
+                    if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+                }).catch((err) => {
+                    console.log("Browser memblokir suara otomatis di mode ini, terpaksa mute");
+                    vElement.muted = true;
+                    vElement.play();
+                });
             }
-        }, 500); // Beri jeda 500ms agar elemen player siap
+        }, 300); 
     }
 }
-
 
 
 // 1. Fungsi khusus untuk Bridge Android
