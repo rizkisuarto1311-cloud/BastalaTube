@@ -1063,7 +1063,7 @@ body {
     display: flex !important;           /* Gunakan Flexbox */
     flex-direction: column;             /* Susun ke bawah (Judul lalu Channel) */
     position: fixed;
-    bottom: 410px;                         /* Turunkan sedikit agar aman dari video */
+    bottom: calc(410px - env(safe-area-inset-top));
     left: 3%;
     width: 90%;                         /* Lebar 90% layar (tengah-tengah) */
     z-index: 9999999;
