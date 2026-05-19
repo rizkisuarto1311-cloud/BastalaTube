@@ -25,6 +25,23 @@ html, body {
     min-height: 100vh;
 }
 
+/* --- KONDISI 1: Home (Transparan) --- */
+body.mode-home {
+    padding-top: 0; /* Konten naik sampai ke atas */
+}
+
+/* --- KONDISI 2: Normal Video (Hitam) --- */
+body.mode-normal-video {
+    padding-top: env(safe-area-inset-top); /* Kasih ruang agar tidak tertutup bar */
+    background: #000;
+}
+
+/* --- KONDISI 3: Portrait Video (Hilang) --- */
+body.mode-portrait-video {
+    padding-top: 0;
+    background: #000;
+}
+
 
 body {
     background-color: #fff;
@@ -32,7 +49,6 @@ body {
     overflow-x: hidden;
     overscroll-behavior-y: none;
     scroll-behavior: auto;
-    padding-top: env(safe-area-inset-top);
 }
 
 .no-select {
