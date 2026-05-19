@@ -230,6 +230,7 @@ body {
     display: none;
 }
 
+
 /* ==========================================================================
    5. MAIN CONTENT & VIDEO GRID
    ========================================================================== */
@@ -298,60 +299,60 @@ body {
 
 /* Info Bar under Thumbnail */
 .v-details {
-    tampilan : flex ;
-    padding : 12 px ;
-    jarak : 12 px ;
-    transisi : opasitas  0,3 s  ease-out ;
+    display: flex;
+    padding: 12px;
+    gap: 12px;
+    transition: opacity 0.3s ease-out;
 }
 
 .v-avatar-img {
-    lebar : 36 px ;
-    tinggi : 36 px ;
-    radius-batas : 50 % ;
-    kesesuaian objek : sampul ;
-    batas : 1 px  solid #000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #000;
 }
 
-.v-teks {
-    fleksibel : 1 ;
-    min-width : 0 ;
-    tampilan : flex ;
-    arah-fleksibel : kolom ;
+.v-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.judul-baris {
-    tampilan : flex ;
-    justify-content : space-between ;
-    lebar : 100 % ;
-    sejajarkan-item : mulai-fleksibel ;
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
 }
 
-.v-teks h3 {
-    fleksibel : 1 ;
-    Ukuran font : 15 px ;
-    Ketebalan font : 900 ;
-    Tinggi baris : 1,4 ;
-    margin : 0 ;
+.v-text h3 {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin: 0;
 }
 
-.v-teks p {
-    Ukuran font : 12 px ;
-    warna : #606060;
-    margin -atas : 4px ;
+.v-text p {
+    font-size: 12px;
+    color: #606060;
+    margin-top: 4px;
 }
 
-.tombol-menu {
-    flex-shrink : 0 ;
-    lebar : 24 px ;
-    perataan teks : kanan ;
-    margin -atas : 2px ;
+.menu-btn {
+    flex-shrink: 0;
+    width: 24px;
+    text-align: right;
+    margin-top: 2px;
 }
 
 /* ==========================================================================
-   6. HALAMAN DETAIL VIDEO
+   6. VIDEO DETAIL PAGE
    ========================================================================== */
-.halaman-detail-video {
-    posisi : tetap ;
+.video-detail-page {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -420,7 +421,9 @@ body {
     cursor: pointer;
 }
 
-#backToHome { display: none; }
+#backToHome {
+    display: none;
+}
 
 .detail-scroll-content {
     background: #fff;
@@ -449,8 +452,17 @@ body {
     width: 100%;
 }
 
-.meta-row { font-size: 13px; color: #606060; margin-top: 5px; }
-.selengkapnya { font-weight: bold; color: #0f0f0f; margin-left: 5px; }
+.meta-row {
+    font-size: 13px;
+    color: #606060;
+    margin-top: 5px;
+}
+
+.selengkapnya {
+    font-weight: bold;
+    color: #0f0f0f;
+    margin-left: 5px;
+}
 
 /* Channel & Interaction */
 .channel-bar {
@@ -460,10 +472,27 @@ body {
     padding: 10px 15px;
 }
 
-.channel-left { display: flex; align-items: center; gap: 10px; }
-.channel-img { width: 35px; height: 35px; border-radius: 50%; }
-.channel-name h3 { font-size: 15px; margin: 0; }
-.channel-name span { font-size: 12px; color: #606060; }
+.channel-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.channel-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.channel-name h3 {
+    font-size: 15px;
+    margin: 0;
+}
+
+.channel-name span {
+    font-size: 12px;
+    color: #606060;
+}
 
 .btn-subscribe {
     background: #0f0f0f;
@@ -482,7 +511,13 @@ body {
     white-space: nowrap;
 }
 
-.interaction-bar::-webkit-scrollbar { display: none; }
+.interaction-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.interaction-bar:active {
+    -webkit-tap-highlight-color: transparent;
+}
 
 .btn-group {
     background: #f2f2f2;
@@ -536,8 +571,18 @@ body {
     margin-bottom: 8px;
 }
 
-.comment-body { display: flex; gap: 10px; align-items: center; }
-.user-pfp { width: 24px; height: 24px; border-radius: 50%; }
+.comment-body {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.user-pfp {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
 .comment-body p {
     font-size: 12px;
     margin: 0;
@@ -582,7 +627,9 @@ body {
     pointer-events: auto;
 }
 
-.video-overlay:active { -webkit-tap-highlight-color: transparent; }
+.video-overlay:active {
+    -webkit-tap-highlight-color: transparent;
+}
 
 /* Jika overlay tidak aktif, paksa semua elemen di dalamnya (ikon, tombol) ikut mati */
 .video-overlay:not(.active) * {
@@ -672,57 +719,57 @@ body {
 }
 
 /* ==========================================================================
-   8. MODE LAYAR PENUH & ANIMASI
+   8. FULLSCREEN MODES & ANIMATIONS
    ========================================================================== */
-#vContainer: layar penuh ,
-#vContainer: -webkit-full-screen ,
-#vContainer: -ms-fullscreen  {
-    lebar : 100 vw  !penting ;
-    tinggi : 100 vh  !penting ;
-    warna latar belakang : #000 !penting ;
-    display : flex  !important ;
-    sejajarkan item : tengah  !penting ;
-    justify-content : center  !important ;
-    z-index : 99999  !important ;
+#vContainer:fullscreen, 
+#vContainer:-webkit-full-screen, 
+#vContainer:-ms-fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 99999 !important;
 }
 
-#vContainer: video layar penuh ,
-#vContainer: -webkit-full-screen video {
-    lebar : 100 %  !penting ;
-    tinggi : otomatis  !penting ;
-    tinggi maksimum : 100 vh  !penting ;
-    object-fit : contain ;
+#vContainer:fullscreen video,
+#vContainer:-webkit-full-screen video {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100vh !important;
+    object-fit: contain;
 }
 
-.mode layar penuh {
-    display : flex  !important ;
-    sejajarkan item : tengah  !penting ;
-    justify-content : center  !important ;
-    latar belakang : #000 !penting ;
+.fullscreen-mode {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #000 !important;
 }
 
 .video-loading {
-    posisi : absolut ;
-    atas : 0 ; kiri : 0 ; kanan : 0 ; bawah : 0 ;
-    latar belakang : #000;
-    tampilan : flex ;
-    sejajarkan item : tengah ;
-    justify-content : center ;
-    indeks-z : 10 ;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
 
 .spinner {
-    lebar : 50 px ;
-    tinggi : 50 px ;
-    batas : 3px solid rgba ( 255 , 255 , 255 , 0.3 ) ;​  
-    warna-atas-batas : #fff;
-    radius-batas : 50 % ;
-    animasi : putar  0.8 s  linear  tak terbatas ;
-    tampilan : flex ;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: putar 0.8s linear infinite;
+    display: flex;
 }
 
 @keyframes putar {
-    untuk  {  transformasi : putar ( 360 derajat ) ; }
+    to { transform: rotate(360deg); }
 }
 
 /* Transition Classes */
@@ -779,34 +826,25 @@ body {
 
 /* Mode fullscreen vertikal seperti YouTube */
 #vContainer.portrait-fullscreen {
-
     position: fixed !important;
     inset: 0 !important;
-
     width: 100vw !important;
     height: 100vh !important;
-
     background: #000 !important;
-
     z-index: 999999 !important;
-
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-
     overflow: hidden;
 }
 
 /* Video tetap landscape */
 #vContainer.portrait-fullscreen video,
 #vContainer.portrait-fullscreen iframe {
-
     width: 100% !important;
     height: auto !important;
-
     max-height: 100vh !important;
     aspect-ratio: 16 / 9;
-
     object-fit: contain;
 }
 
@@ -910,12 +948,12 @@ body {
 
 /* --- KONDISI PORTRAIT (Pindah ke bawah layar) --- */
 .mode-portrait .progress-container {
-    position: fixed; /* Lepas dari video, menempel ke layar HP */
-    bottom: -280px;    /* Jarak dari ujung bawah layar */
-    left: 2%;        /* Agar ada jarak di kiri */
-    right: 2%;       /* Agar ada jarak di kanan */
-    width: 96%;      /* Lebar garis jadi 90% layar */
-    height: 3px;     /* Lebih tipis dan elegan */
+    position: fixed;
+    bottom: -280px;   
+    left: 2%;       
+    right: 2%;       
+    width: 96%;      
+    height: 3px;  
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     opacity: 0;
@@ -928,19 +966,16 @@ body {
 /* BULATAN MERAH (Scrubber) */
 .mode-portrait .progress-fill::after {
     content: '';
-    position: absolute;
-    
+    position: absolute;   
     /* KUNCI: Taruh di ujung kanan (100%) dari si progress-fill */
     right: -7px; 
     top: 50%;
-    transform: translateY(-50%); /* Agar tepat di tengah secara vertikal */
-    
+    transform: translateY(-50%); /* Agar tepat di tengah secara vertikal */    
     width: 9px;
     height: 9px;
     background: #ff0000;
     border-radius: 50%;
     box-shadow: 0 0 8px rgba(0,0,0,0.5);
-    
     /* Supaya terlihat saat mode portrait saja */
     display: block;
 }
@@ -1010,13 +1045,11 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* KUNCI: Titik tengah absolut */
-    
     width: 100%;
     display: flex;
     justify-content: center; /* Tengah horizontal */
     align-items: center;     /* Tengah vertikal */
-    gap: 40px;               /* Jarak antara tombol skip dan play */
-    
+    gap: 40px;               /* Jarak antara tombol skip dan play */    
     z-index: 10;
     pointer-events: auto;
 }
@@ -1040,12 +1073,10 @@ body {
     width: 100%;
     font-size: 18px;
     font-weight: bold;
-    color: #fff !important;
-    
+    color: #fff !important;   
     /* FIX TINGGI TERPOTONG: Beri Line Height yang Lega */
     line-height: 1.5 !important; 
-    padding: 2px 0;                    /* Kasih ruang napas atas bawah */
-    
+    padding: 2px 0;                    /* Kasih ruang napas atas bawah */    
     /* RUMUS TITIK-TITIK */
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -1116,7 +1147,7 @@ body {
 }
 
 
-@media (orientation: landscape) {
+@media (orientation: landscape) {  
     /* 1. Pastikan Video Full */
     .player-wrapper {
         height: 100vh !important;
