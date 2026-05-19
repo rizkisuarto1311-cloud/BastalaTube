@@ -403,8 +403,6 @@ body {
     z-index: 10;
     transform: translateZ(0);
     box-shadow: none !important;
-    padding-top: env(safe-area-inset-top); /* KUNCI: Menambahkan ruang untuk status bar */
-    box-sizing: border-box;
 }
 
 .back-btn-player {
@@ -1063,7 +1061,7 @@ body {
     display: flex !important;           /* Gunakan Flexbox */
     flex-direction: column;             /* Susun ke bawah (Judul lalu Channel) */
     position: fixed;
-    bottom: calc(410px - env(safe-area-inset-top));
+    bottom: 410px;
     left: 3%;
     width: 90%;                         /* Lebar 90% layar (tengah-tengah) */
     z-index: 9999999;
