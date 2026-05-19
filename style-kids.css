@@ -25,6 +25,24 @@ html, body {
     min-height: 100vh;
 }
 
+/* Mode Home: Konten Full Masuk ke Status Bar */
+.mode-home {
+    padding-top: 0; 
+}
+
+/* Mode Video Normal: Konten di bawah Status Bar */
+.mode-normal-video {
+    /* Padding sebesar tinggi status bar agar tidak tertutup */
+    padding-top: env(safe-area-inset-top, 25px); 
+    background-color: #000;
+}
+
+/* Mode Portrait: Fullscreen (Status Bar Hilang) */
+.mode-portrait-video {
+    padding-top: 0;
+    background-color: #000;
+}
+
 
 body {
     background-color: #fff;
