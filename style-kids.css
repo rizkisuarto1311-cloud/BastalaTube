@@ -605,6 +605,7 @@ body {
     background: #000;
     overflow: hidden;
     line-height: 0;
+    padding-top: env(safe-area-inset-top);
 }
 
 .video-overlay {
