@@ -1132,3 +1132,23 @@ function putarVideoOtomatis() {
         }, 500); // Beri jeda 500ms agar elemen player siap
     }
 }
+
+
+
+// 1. Fungsi khusus untuk Bridge Android
+function updateStatusBar(state) {
+    if (typeof Android !== "undefined") {
+        Android.setStatusBarStyle(state);
+    }
+}
+
+// 2. Fungsi khusus untuk Layout Content
+function updateContentLayout(state) {
+    // Hapus semua class mode agar bersih
+    document.body.classList.remove('mode-home', 'mode-normal-video', 'mode-portrait-video');
+    
+    // Tambahkan class yang sesuai
+    if (state !== 'none') {
+        document.body.classList.add('mode-' + state);
+    }
+}
