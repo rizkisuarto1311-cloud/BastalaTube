@@ -298,60 +298,60 @@ body {
 
 /* Info Bar under Thumbnail */
 .v-details {
-    display: flex;
-    padding: 12px;
-    gap: 12px;
-    transition: opacity 0.3s ease-out;
+    tampilan : flex ;
+    padding : 12 px ;
+    jarak : 12 px ;
+    transisi : opasitas  0,3 s  ease-out ;
 }
 
 .v-avatar-img {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid #000;
+    lebar : 36 px ;
+    tinggi : 36 px ;
+    radius-batas : 50 % ;
+    kesesuaian objek : sampul ;
+    batas : 1 px  solid #000;
 }
 
-.v-text {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
+.v-teks {
+    fleksibel : 1 ;
+    min-width : 0 ;
+    tampilan : flex ;
+    arah-fleksibel : kolom ;
 }
 
-.title-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: flex-start;
+.judul-baris {
+    tampilan : flex ;
+    justify-content : space-between ;
+    lebar : 100 % ;
+    sejajarkan-item : mulai-fleksibel ;
 }
 
-.v-text h3 {
-    flex: 1;
-    font-size: 15px;
-    font-weight: 900;
-    line-height: 1.4;
-    margin: 0;
+.v-teks h3 {
+    fleksibel : 1 ;
+    Ukuran font : 15 px ;
+    Ketebalan font : 900 ;
+    Tinggi baris : 1,4 ;
+    margin : 0 ;
 }
 
-.v-text p {
-    font-size: 12px;
-    color: #606060;
-    margin-top: 4px;
+.v-teks p {
+    Ukuran font : 12 px ;
+    warna : #606060;
+    margin -atas : 4px ;
 }
 
-.menu-btn {
-    flex-shrink: 0;
-    width: 24px;
-    text-align: right;
-    margin-top: 2px;
+.tombol-menu {
+    flex-shrink : 0 ;
+    lebar : 24 px ;
+    perataan teks : kanan ;
+    margin -atas : 2px ;
 }
 
 /* ==========================================================================
-   6. VIDEO DETAIL PAGE
+   6. HALAMAN DETAIL VIDEO
    ========================================================================== */
-.video-detail-page {
-    position: fixed;
+.halaman-detail-video {
+    posisi : tetap ;
     top: 0;
     left: 0;
     width: 100%;
@@ -561,6 +561,7 @@ body {
     overflow: hidden;
     line-height: 0;
     padding-top: 40px; 
+    object-fit: contain; 
 }
 
 .video-overlay {
@@ -673,57 +674,57 @@ body {
 }
 
 /* ==========================================================================
-   8. FULLSCREEN MODES & ANIMATIONS
+   8. MODE LAYAR PENUH & ANIMASI
    ========================================================================== */
-#vContainer:fullscreen, 
-#vContainer:-webkit-full-screen, 
-#vContainer:-ms-fullscreen {
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: #000 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 99999 !important;
+#vContainer: layar penuh ,
+#vContainer: -webkit-full-screen ,
+#vContainer: -ms-fullscreen  {
+    lebar : 100 vw  !penting ;
+    tinggi : 100 vh  !penting ;
+    warna latar belakang : #000 !penting ;
+    display : flex  !important ;
+    sejajarkan item : tengah  !penting ;
+    justify-content : center  !important ;
+    z-index : 99999  !important ;
 }
 
-#vContainer:fullscreen video,
-#vContainer:-webkit-full-screen video {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 100vh !important;
-    object-fit: contain;
+#vContainer: video layar penuh ,
+#vContainer: -webkit-full-screen video {
+    lebar : 100 %  !penting ;
+    tinggi : otomatis  !penting ;
+    tinggi maksimum : 100 vh  !penting ;
+    object-fit : contain ;
 }
 
-.fullscreen-mode {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #000 !important;
+.mode layar penuh {
+    display : flex  !important ;
+    sejajarkan item : tengah  !penting ;
+    justify-content : center  !important ;
+    latar belakang : #000 !penting ;
 }
 
 .video-loading {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
+    posisi : absolut ;
+    atas : 0 ; kiri : 0 ; kanan : 0 ; bawah : 0 ;
+    latar belakang : #000;
+    tampilan : flex ;
+    sejajarkan item : tengah ;
+    justify-content : center ;
+    indeks-z : 10 ;
 }
 
 .spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: putar 0.8s linear infinite;
-    display: flex;
+    lebar : 50 px ;
+    tinggi : 50 px ;
+    batas : 3px solid rgba ( 255 , 255 , 255 , 0.3 ) ;​  
+    warna-atas-batas : #fff;
+    radius-batas : 50 % ;
+    animasi : putar  0.8 s  linear  tak terbatas ;
+    tampilan : flex ;
 }
 
 @keyframes putar {
-    to { transform: rotate(360deg); }
+    untuk  {  transformasi : putar ( 360 derajat ) ; }
 }
 
 /* Transition Classes */
