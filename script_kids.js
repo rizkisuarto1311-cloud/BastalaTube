@@ -1132,3 +1132,41 @@ function putarVideoOtomatis() {
         }, 500); // Beri jeda 500ms agar elemen player siap
     }
 }
+
+function setUIState(state) {
+    if (typeof Android !== "undefined") {
+        Android.setStatusBarStyle(state);
+    }
+    
+    // Update class body untuk CSS
+    document.body.className = ''; // Reset
+    if (state === 'home') document.body.classList.add('mode-home');
+    if (state === 'normal_video') document.body.classList.add('mode-normal-video');
+    if (state === 'portrait_video') document.body.classList.add('mode-portrait-video');
+}
+
+// Implementasi Panggilan:
+
+// 1. Saat aplikasi pertama dibuka
+window.onload = () => setUIState('home');
+
+// 2. Saat bukaDetailVideo (Kondisi 2)
+function bukaDetailVideo(video) {
+    setUIState('normal_video');
+    // ...
+}
+
+// 3. Saat Swipe ke Portrait (Kondisi 3)
+// Di dalam fungsi touch end saat distY > 100
+if (velocity > 0.5 || distY > 100) {
+    isPortrait = true;
+    setUIState('portrait_video'); // Panggil ini
+    // ...
+}
+
+// 4. Saat Balik dari Portrait (Kembali ke Kondisi 2)
+if (isPortrait && distY < -50) {
+    isPortrait = false;
+    setUIState('normal_video'); // Panggil ini
+    // ...
+}
