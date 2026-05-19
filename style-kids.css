@@ -561,7 +561,7 @@ body {
     overflow: hidden;
     line-height: 0;
     padding-top: 40px; 
-    object-fit: contain; 
+    height:auto; 
 }
 
 .video-overlay {
