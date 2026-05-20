@@ -50,8 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const bottomNav = document.getElementById('bottomNav');
     const detailPage = document.getElementById('videoDetailPage');
     
-    // Gunakan nilai default jika elemen belum ter-render sempurna
-    const hHeight = header?.offsetHeight || 105;
+    // Ganti bagian inisialisasi ini:
+    const statusbarHeight = 30; // Sesuaikan dengan tinggi status bar Anda (px)
+    const hHeight = (header?.offsetHeight || 105) + statusbarHeight; 
     const bHeight = bottomNav?.offsetHeight || 60;
 
     let lastPos = 0;
@@ -64,9 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // A. LOGIKA HEADER
           if (!isDetail) {
-            hTrans = Math.max(-hHeight, Math.min(0, hTrans - diff));
+           // Kita kurangi hTrans lebih dalam
+          hTrans = Math.max(-hHeight, Math.min(0, hTrans - diff));
           } else {
-            hTrans = -hHeight; 
+          // Saat di detail, paksa header hilang sepenuhnya
+          hTrans = -hHeight; 
           }
         
           // B. LOGIKA BOTTOM NAV
