@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailPage = document.getElementById('videoDetailPage');
     
     // Ganti bagian inisialisasi ini:
-    const statusbarHeight = 30; // Sesuaikan dengan tinggi status bar Anda (px)
+    const statusbarHeight = 35; // Sesuaikan dengan tinggi status bar Anda (px)
     const hHeight = (header?.offsetHeight || 105) + statusbarHeight; 
     const bHeight = bottomNav?.offsetHeight || 60;
 
