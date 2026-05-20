@@ -3,6 +3,9 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
       .then(reg => console.log('Service Worker terdaftar!', reg))
       .catch(err => console.error('Gagal daftar Service Worker', err));
+
+    updateStatusBar('home');
+    updateContentLayout('home');
   });
 }
 
@@ -51,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailPage = document.getElementById('videoDetailPage');
     
     // Ganti bagian inisialisasi ini:
-    const statusbarHeight = 35; // Sesuaikan dengan tinggi status bar Anda (px)
+    const statusbarHeight = 40; // Sesuaikan dengan tinggi status bar Anda (px)
     const hHeight = (header?.offsetHeight || 105) + statusbarHeight; 
     const bHeight = bottomNav?.offsetHeight || 60;
 
