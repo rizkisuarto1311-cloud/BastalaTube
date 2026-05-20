@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // A. LOGIKA HEADER
           if (!isDetail) {
            // Kita kurangi hTrans lebih dalam
-          hTrans = Math.max(-hHeight, Math.min(0, hTrans - diff));
+          hTrans = Math.max(-(hHeight + 35), Math.min(0, hTrans - diff));
           } else {
           // Saat di detail, paksa header hilang sepenuhnya
           hTrans = -hHeight; 
