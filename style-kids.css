@@ -255,7 +255,7 @@ body {
 .main-content {
     width: 100%;
     max-width: 100%;
-    margin-top: 105px;
+    padding-top: 145px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
     box-sizing: border-box;
 }
