@@ -639,27 +639,26 @@ vElement.onloadedmetadata = () => {
     };
 
     // 3. Perintah Play Utama
-    const dipicuOtomatis = (new Error().stack.includes('putarVideoOtomatis'));
-
-    if (dipicuOtomatis) {
-        // JIKA OTOMATIS: Kita tetap harus memutar video, 
-        // tapi biarkan fungsi putarVideoOtomatis yang mengontrol suaranya nanti.
-        vElement.muted = true; // Paksa mute dulu agar browser tidak memblokir play()
-        vElement.play().catch(e => console.log("Menunggu perintah suara dari putarVideoOtomatis"));
-        console.log("Pemutaran otomatis dimulai...");
-    } else {
-        // Jika KLIK MANUAL dari beranda, langsung mainkan bersuara
-        vElement.muted = false; 
-        vElement.play().then(() => {
-            console.log("Video berhasil diputar bersuara (Manual)");
-            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-        }).catch((err) => {
-            console.warn("Autoplay diblokir, memaksa mute:", err);
-            vElement.muted = true;
-            vElement.play();
-            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-        });
-    }
+if (isAutomatic) {
+    // JIKA OTOMATIS: Langsung kunci di mode mute agar browser mengizinkan video berputar
+    vElement.muted = true; 
+    vElement.play().then(() => {
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        console.log("Pemutaran otomatis berhasil dimulai (Muted)...");
+    }).catch(e => console.error("Autoplay diblokir sistem:", e));
+} else {
+    // JIKA KLIK MANUAL: Langsung mainkan bersuara
+    vElement.muted = false; 
+    vElement.play().then(() => {
+        console.log("Video berhasil diputar bersuara (Manual)");
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+    }).catch((err) => {
+        console.warn("Autoplay bersuara diblokir, memaksa mute:", err);
+        vElement.muted = true;
+        vElement.play();
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+    });
+}
     
     // 4. Fitur autonext 
     vElement.onended = () => {
