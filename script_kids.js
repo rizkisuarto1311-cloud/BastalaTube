@@ -1128,40 +1128,22 @@ function putarVideoOtomatis() {
         const daftarPilihan = videoLibrary.filter(v => v.title !== judulSekarang);
         const videoBerikutnya = daftarPilihan[Math.floor(Math.random() * daftarPilihan.length)];
 
-        // 1. Scroll otomatis ke atas halaman detail
+        // 1. Scroll otomatis ke atas halaman detail agar video baru mulai dari atas
         const detailPage = document.getElementById('videoDetailPage');
         if (detailPage) {
             detailPage.scrollTo({ top: 0, behavior: 'instant' }); 
         }
 
-        // 2. Cek apakah video yang saat ini sedang berputar posisinya bersuara?
-        // Menggunakan querySelector('video') agar aman di mode normal maupun portrait
-        const playerLama = document.querySelector('video');
-        const apakahBersuara = playerLama ? !playerLama.muted : true;
+        // 2. Cek apakah video lama posisinya sedang bersuara (tidak di-mute)
+        // Kita gunakan ID 'mainVideoPlayer' agar deteksinya sangat akurat
+        const playerLama = document.getElementById('mainVideoPlayer');
+        const apakahBersuaraSebelumnya = playerLama ? !playerLama.muted : true;
 
-        // 3. Panggil fungsi pasang data video baru
-        // Fungsi ini akan langsung memutar video dalam keadaan MUTE jika terdeteksi otomatis
-        bukaDetailVideo(videoBerikutnya);
-
-        // 4. Buka suara video baru mengikuti status video lama (Wariskan izin suara)
-        setTimeout(() => {
-            // Cari elemen video baru yang sedang aktif (apapun ID-nya)
-            const vElement = document.querySelector('video');
-            const playIcon = document.getElementById('playIcon');
-            
-            if (vElement) {
-                // Jika video lama tadi bersuara, buka suara video baru sekarang
-                if (apakahBersuara) {
-                    vElement.muted = false;
-                    console.log("Suara video berikutnya berhasil dibuka!");
-                } else {
-                    vElement.muted = true;
-                }
-                
-                // Set icon ke mode pause karena video sudah diputar oleh bukaDetailVideo
-                if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-            }
-        }, 400); // Beri jeda sedikit (400ms) agar video baru benar-benar sudah running
+        // 3. Panggil fungsi detail dengan mengoper status otomatis & suara sebelumnya
+        // Argumen 1: Objek video berikutnya
+        // Argumen 2: true (menandakan ini diputar secara otomatis)
+        // Argumen 3: Status suara (true jika bersuara, false jika senyap)
+        bukaDetailVideo(videoBerikutnya, true, apakahBersuaraSebelumnya);
     }
 }
 
