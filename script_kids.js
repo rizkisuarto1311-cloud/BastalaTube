@@ -638,25 +638,33 @@ vElement.onloadedmetadata = () => {
         loadingEfek.style.display = 'none';
     };
 
-     // 3. Perintah Play Utama
-    vElement.muted = false; 
+      // 3. Perintah Play Utama (Sudah Diperbaiki)
+    // Kita cek dulu, apakah video ini jalan karena auto-next atau diklik manual?
+    const dipicuOtomatis = (new Error().stack.includes('putarVideoOtomatis'));
+
+    if (dipicuOtomatis) {
+        // Jika auto-next, biarkan fungsi putarVideoOtomatis() yang mengurus pemutaran & suaranya
+        console.log("Pemutaran diserahkan ke fungsi otomatis...");
+    } else {
+        // Jika KLIK MANUAL dari beranda, langsung mainkan bersuara
+        vElement.muted = false; 
+        vElement.play().then(() => {
+            console.log("Video berhasil diputar bersuara");
+            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        }).catch((err) => {
+            console.warn("Autoplay diblokir pada klik manual, memaksa mute:", err);
+            vElement.muted = true;
+            vElement.play();
+            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        });
+    }
     
-    vElement.play().then(() => {
-        console.log("Video berhasil diputar bersuara");
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-    }).catch((err) => {
-        // Jika gagal (biasanya karena mode normal dianggap autoplay tanpa klik), 
-        // kita coba putar demi visual, namun biarkan fungsi putarVideoOtomatis mengambil alih suaranya
-        vElement.muted = true;
-        vElement.play();
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-    });
-    
-    // 4. fitur autonext 
+    // 4. Fitur autonext (Tetap aman)
     vElement.onended = () => {
         console.log("Video selesai, memutar video berikutnya...");
         putarVideoOtomatis();
     };
+
 
     // --- LOGIKA KOMENTAR DINAMIS ---
     const elementTeksKomentar = document.getElementById('commentText');
@@ -1120,29 +1128,45 @@ function putarVideoOtomatis() {
         const daftarPilihan = videoLibrary.filter(v => v.title !== judulSekarang);
         const videoBerikutnya = daftarPilihan[Math.floor(Math.random() * daftarPilihan.length)];
 
+        // Scroll otomatis ke atas halaman detail
         const detailPage = document.getElementById('videoDetailPage');
         if (detailPage) {
             detailPage.scrollTo({ top: 0, behavior: 'instant' }); 
         }
 
-        // Buka detail video terlebih dahulu
+        // Ambil elemen video yang sekarang sedang berjalan sebelum diganti
+        const playerLama = document.getElementById('mainVideoPlayer');
+        
+        // Cek apakah video lama posisinya sedang bersuara (tidak di-mute)
+        const apakahBersuara = playerLama ? !playerLama.muted : true;
+
+        // Panggil fungsi pasang data video baru
         bukaDetailVideo(videoBerikutnya);
 
-        // KUNCI UTAMA: Beri jeda sedikit agar DOM selesai terbentuk, 
-        // lalu paksa suara aktif di mode apapun
+        // Beri jeda sedikit agar HTML video baru selesai di-render sempurna oleh browser
         setTimeout(() => {
             const vElement = document.getElementById('mainVideoPlayer');
             const playIcon = document.getElementById('playIcon');
             
             if (vElement) {
-                vElement.muted = false; // Buka suara secara paksa
+                // Oper status suara dari video sebelumnya
+                vElement.muted = !apakahBersuara; 
                 
                 vElement.play().then(() => {
                     if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
                 }).catch((err) => {
-                    console.log("Browser memblokir suara otomatis di mode ini, terpaksa mute");
+                    console.warn("Browser mendeteksi autoplay otomatis, menjalankan trik bypass...");
+                    
+                    // Trik pancingan: Nyalakan video dalam kondisi bisu (mute) terlebih dahulu
                     vElement.muted = true;
-                    vElement.play();
+                    vElement.play().then(() => {
+                        // Setelah video terdeteksi berhasil 'running', paksa un-mute setelah 50 milidetik
+                        setTimeout(() => {
+                            vElement.muted = false;
+                        }, 50);
+                    });
+                    
+                    if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
                 });
             }
         }, 300); 
