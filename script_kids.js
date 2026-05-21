@@ -640,14 +640,30 @@ vElement.onloadedmetadata = () => {
 
     // 3. Perintah Play Utama
 if (isAutomatic) {
-    // JIKA OTOMATIS: Langsung kunci di mode mute agar browser mengizinkan video berputar
+    // 1. Kunci awal di mode MUTE agar browser PASTI mengizinkan video berputar
     vElement.muted = true; 
+    
     vElement.play().then(() => {
         if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
         console.log("Pemutaran otomatis berhasil dimulai (Muted)...");
-    }).catch(e => console.error("Autoplay diblokir sistem:", e));
+        
+        // 2. TRIK BYPASS: Jika video lama tadi bersuara, pancing buka suaranya di sini
+        if (suaraDariVideoLama) {
+            setTimeout(() => {
+                vElement.muted = false;
+                console.log("Suara berhasil dipancing terbuka otomatis!");
+                
+                // Antisipasi jika browser galak dan memacetkan video saat di-unmute
+                vElement.play().catch(() => {
+                    console.warn("Browser menolak suara otomatis, dikunci mute agar video tetap jalan.");
+                    vElement.muted = true;
+                });
+            }, 200); // Jeda 200ms memberikan waktu browser mendeteksi video sudah "running"
+        }
+    }).catch(e => console.error("Autoplay diblokir total oleh sistem:", e));
+
 } else {
-    // JIKA KLIK MANUAL: Langsung mainkan bersuara
+    // JIKA KLIK MANUAL: Tetap pakai logika milikmu (Sudah Bagus)
     vElement.muted = false; 
     vElement.play().then(() => {
         console.log("Video berhasil diputar bersuara (Manual)");
@@ -659,6 +675,7 @@ if (isAutomatic) {
         if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
     });
 }
+
     
     // 4. Fitur autonext 
     vElement.onended = () => {
