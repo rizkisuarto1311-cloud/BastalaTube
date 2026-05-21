@@ -638,33 +638,34 @@ vElement.onloadedmetadata = () => {
         loadingEfek.style.display = 'none';
     };
 
-      // 3. Perintah Play Utama (Sudah Diperbaiki)
-    // Kita cek dulu, apakah video ini jalan karena auto-next atau diklik manual?
+    // 3. Perintah Play Utama
     const dipicuOtomatis = (new Error().stack.includes('putarVideoOtomatis'));
 
     if (dipicuOtomatis) {
-        // Jika auto-next, biarkan fungsi putarVideoOtomatis() yang mengurus pemutaran & suaranya
-        console.log("Pemutaran diserahkan ke fungsi otomatis...");
+        // JIKA OTOMATIS: Kita tetap harus memutar video, 
+        // tapi biarkan fungsi putarVideoOtomatis yang mengontrol suaranya nanti.
+        vElement.muted = true; // Paksa mute dulu agar browser tidak memblokir play()
+        vElement.play().catch(e => console.log("Menunggu perintah suara dari putarVideoOtomatis"));
+        console.log("Pemutaran otomatis dimulai...");
     } else {
         // Jika KLIK MANUAL dari beranda, langsung mainkan bersuara
         vElement.muted = false; 
         vElement.play().then(() => {
-            console.log("Video berhasil diputar bersuara");
+            console.log("Video berhasil diputar bersuara (Manual)");
             if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
         }).catch((err) => {
-            console.warn("Autoplay diblokir pada klik manual, memaksa mute:", err);
+            console.warn("Autoplay diblokir, memaksa mute:", err);
             vElement.muted = true;
             vElement.play();
             if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
         });
     }
     
-    // 4. Fitur autonext (Tetap aman)
+    // 4. Fitur autonext 
     vElement.onended = () => {
         console.log("Video selesai, memutar video berikutnya...");
         putarVideoOtomatis();
     };
-
 
     // --- LOGIKA KOMENTAR DINAMIS ---
     const elementTeksKomentar = document.getElementById('commentText');
