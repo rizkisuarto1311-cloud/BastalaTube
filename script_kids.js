@@ -350,7 +350,7 @@ window.addEventListener('scroll', () => {
 
 let isPortrait = false; // Status apakah video sedang di tengah/portrait
 
-function bukaDetailVideo(video) {
+function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
     const detailPage = document.getElementById('videoDetailPage');
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
