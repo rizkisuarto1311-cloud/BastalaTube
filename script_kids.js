@@ -393,9 +393,9 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
         <div class="spinner"></div>
       </div>
       
-      <video id="mainVideoPlayer" playsinline style="width:100%; display:block;">
+     <video id="mainVideoPlayer" playsinline autoplay muted style="width:100%; display:block;">
         <source src="${video.videoUrl}" type="video/mp4">
-      </video>
+     </video
 
       <div id="videoOverlay" class="video-overlay">
         <div class="overlay-top">
