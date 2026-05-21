@@ -1129,48 +1129,40 @@ function putarVideoOtomatis() {
         const daftarPilihan = videoLibrary.filter(v => v.title !== judulSekarang);
         const videoBerikutnya = daftarPilihan[Math.floor(Math.random() * daftarPilihan.length)];
 
-        // Scroll otomatis ke atas halaman detail
+        // 1. Scroll otomatis ke atas halaman detail
         const detailPage = document.getElementById('videoDetailPage');
         if (detailPage) {
             detailPage.scrollTo({ top: 0, behavior: 'instant' }); 
         }
 
-        // Ambil elemen video yang sekarang sedang berjalan sebelum diganti
-        const playerLama = document.getElementById('mainVideoPlayer');
-        
-        // Cek apakah video lama posisinya sedang bersuara (tidak di-mute)
+        // 2. Cek apakah video yang saat ini sedang berputar posisinya bersuara?
+        // Menggunakan querySelector('video') agar aman di mode normal maupun portrait
+        const playerLama = document.querySelector('video');
         const apakahBersuara = playerLama ? !playerLama.muted : true;
 
-        // Panggil fungsi pasang data video baru
+        // 3. Panggil fungsi pasang data video baru
+        // Fungsi ini akan langsung memutar video dalam keadaan MUTE jika terdeteksi otomatis
         bukaDetailVideo(videoBerikutnya);
 
-        // Beri jeda sedikit agar HTML video baru selesai di-render sempurna oleh browser
+        // 4. Buka suara video baru mengikuti status video lama (Wariskan izin suara)
         setTimeout(() => {
-            const vElement = document.getElementById('mainVideoPlayer');
+            // Cari elemen video baru yang sedang aktif (apapun ID-nya)
+            const vElement = document.querySelector('video');
             const playIcon = document.getElementById('playIcon');
             
             if (vElement) {
-                // Oper status suara dari video sebelumnya
-                vElement.muted = !apakahBersuara; 
-                
-                vElement.play().then(() => {
-                    if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-                }).catch((err) => {
-                    console.warn("Browser mendeteksi autoplay otomatis, menjalankan trik bypass...");
-                    
-                    // Trik pancingan: Nyalakan video dalam kondisi bisu (mute) terlebih dahulu
+                // Jika video lama tadi bersuara, buka suara video baru sekarang
+                if (apakahBersuara) {
+                    vElement.muted = false;
+                    console.log("Suara video berikutnya berhasil dibuka!");
+                } else {
                     vElement.muted = true;
-                    vElement.play().then(() => {
-                        // Setelah video terdeteksi berhasil 'running', paksa un-mute setelah 50 milidetik
-                        setTimeout(() => {
-                            vElement.muted = false;
-                        }, 50);
-                    });
-                    
-                    if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-                });
+                }
+                
+                // Set icon ke mode pause karena video sudah diputar oleh bukaDetailVideo
+                if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
             }
-        }, 300); 
+        }, 400); // Beri jeda sedikit (400ms) agar video baru benar-benar sudah running
     }
 }
 
