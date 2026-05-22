@@ -640,42 +640,49 @@ vElement.onloadedmetadata = () => {
 
     // 3. Perintah Play Utama
 if (isAutomatic) {
-    // 1. Kunci awal di mode MUTE agar browser PASTI mengizinkan video berputar
-    vElement.muted = true; 
-    
-    vElement.play().then(() => {
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-        console.log("Pemutaran otomatis berhasil dimulai (Muted)...");
-        
-        // 2. TRIK BYPASS: Jika video lama tadi bersuara, pancing buka suaranya di sini
-        if (suaraDariVideoLama) {
-            setTimeout(() => {
-                vElement.muted = false;
-                console.log("Suara berhasil dipancing terbuka otomatis!");
+        // Kunci awal: Pastikan benar-benar mute dan panggil load() agar browser mendeteksi ulang resource
+        vElement.muted = true; 
+        vElement.setAttribute('autoplay', 'autoplay');
+        vElement.load(); 
+
+        // Berikan jeda sangat singkat (50ms) agar perintah load() selesai diproses browser
+        setTimeout(() => {
+            vElement.play().then(() => {
+                if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+                console.log("Pemutaran otomatis mode normal berhasil dipaksa jalan!");
                 
-                // Antisipasi jika browser galak dan memacetkan video saat di-unmute
-                vElement.play().catch(() => {
-                    console.warn("Browser menolak suara otomatis, dikunci mute agar video tetap jalan.");
-                    vElement.muted = true;
-                });
-            }, 200); // Jeda 200ms memberikan waktu browser mendeteksi video sudah "running"
-        }
-    }).catch(e => console.error("Autoplay diblokir total oleh sistem:", e));
+                // Jika video lama tadi bersuara, buka suaranya setelah video berjalan stabil
+                if (suaraDariVideoLama) {
+                    setTimeout(() => {
+                        vElement.muted = false;
+                        // Antisipasi jika un-mute mendadak membuat browser sensitif dan memacetkan video
+                        vElement.play().catch(() => {
+                            console.warn("Browser sensitif suara otomatis, dikunci mute agar video tidak macet.");
+                            vElement.muted = true;
+                        });
+                    }, 300); // Jeda 300ms memberikan waktu stabilisasi streaming
+                }
+            }).catch(e => {
+                console.error("Autoplay diblokir total. Mencoba trik klik bayangan...", e);
+                // Trik darurat jika diblokir total: pancing play ulang dalam mode senyap penuh
+                vElement.muted = true;
+                vElement.play();
+            });
+        }, 50);
 
-} else {
-    // JIKA KLIK MANUAL: Tetap pakai logika milikmu (Sudah Bagus)
-    vElement.muted = false; 
-    vElement.play().then(() => {
-        console.log("Video berhasil diputar bersuara (Manual)");
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-    }).catch((err) => {
-        console.warn("Autoplay bersuara diblokir, memaksa mute:", err);
-        vElement.muted = true;
-        vElement.play();
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-    });
-}
-
+    } else {
+        // JIKA KLIK MANUAL: Tetap pakai logika milikmu (Sudah Bagus)
+        vElement.muted = false; 
+        vElement.play().then(() => {
+            console.log("Video berhasil diputar bersuara (Manual)");
+            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        }).catch((err) => {
+            console.warn("Autoplay bersuara diblokir, memaksa mute:", err);
+            vElement.muted = true;
+            vElement.play();
+            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        });
+    }
     
     // 4. Fitur autonext 
     vElement.onended = () => {
