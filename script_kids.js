@@ -1158,10 +1158,15 @@ function putarVideoOtomatis() {
 }
 
 
-// 1. Fungsi khusus untuk Bridge Android
 function updateStatusBar(state) {
-    if (typeof Android !== "undefined") {
-        Android.setStatusBarStyle(state);
+    if (state === 'home') {
+        StatusBar.overlaysWebView(true);
+        StatusBar.backgroundColorByHexString('#FFFFFF'); // Putih
+        StatusBar.styleDefault(); // Ikon Hitam
+    } else if (state === 'normal_video' || state === 'portrait_video') {
+        StatusBar.overlaysWebView(true);
+        StatusBar.backgroundColorByHexString('#000000'); // Hitam
+        StatusBar.styleLightContent(); // Ikon Putih
     }
 }
 
