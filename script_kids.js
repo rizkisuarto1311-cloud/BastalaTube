@@ -666,8 +666,12 @@ if (isAutomatic) {
     } else {
         // JIKA DIKLIK MANUAL OLEH USER
         vElement.muted = false;
-        vElement.play().catch(e => console.log("Play manual error:", e));
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        vElement.play().catch(err => {
+    console.warn("Autoplay diblokir:", err);
+    // Tampilkan tombol Play manual jika gagal
+    playIcon.className = "bi bi-play-fill main-play";
+});
+
     }
     
     // 4. Fitur autonext 
