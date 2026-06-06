@@ -1175,3 +1175,17 @@ function updateContentLayout(state) {
         document.body.classList.add('mode-' + state);
     }
 }
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+    // 1. Aktifkan mode overlay (transparan agar konten masuk ke bawah status bar)
+    StatusBar.overlaysWebView(true);
+    
+    // 2. Set warna background status bar jadi putih
+    StatusBar.backgroundColorByHexString('#FFFFFF');
+    
+    // 3. Set ikon (baterai/jam) jadi gelap (karena background kita putih)
+    StatusBar.styleDefault(); 
+}
+
