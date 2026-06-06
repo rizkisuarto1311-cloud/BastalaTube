@@ -640,30 +640,24 @@ vElement.onloadedmetadata = () => {
 
     // 3. Perintah Play Utama
 if (isAutomatic) {
-        // SELALU mulai dengan muted=true agar tidak diblokir browser
-        vElement.muted = true; 
-        vElement.load(); 
+    vElement.muted = true;
+    vElement.load();
 
-        // Gunakan Promise dari .play() untuk menentukan kapan harus unmute
-        vElement.play().then(() => {
-            console.log("Video berhasil diputar otomatis (muted)");
-            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+    vElement.play().then(() => {
+        console.log("Video berhasil diputar otomatis (muted)");
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
 
-            // Jika sebelumnya tidak di-mute, baru kita coba nyalakan suara
-            if (suaraDariVideoLama) {
-                // Beri jeda 500ms agar browser yakin video ini "aman" diputar
-                setTimeout(() => {
-                    vElement.muted = false;
-                    console.log("Suara diaktifkan setelah autoplay");
-                }, 500);
-            }
-        }).catch(err => {
-            console.error("Autoplay gagal, perlu interaksi user:", err);
-            // Fallback: Tampilkan ikon play agar user bisa klik manual
-            if (playIcon) playIcon.className = "bi bi-play-fill main-play";
-        });
-
-    } else {
+        if (suaraDariVideoLama) {
+            setTimeout(() => {
+                vElement.muted = false;
+                console.log("Suara diaktifkan setelah autoplay");
+            }, 500);
+        }
+    }).catch(err => {
+        console.error("Autoplay gagal, perlu interaksi user:", err);
+        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
+    });
+} else {
         // JIKA DIKLIK MANUAL OLEH USER
         vElement.muted = false;
         vElement.play().catch(e => console.log("Play manual error:", e));
