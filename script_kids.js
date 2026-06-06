@@ -351,6 +351,18 @@ window.addEventListener('scroll', () => {
 let isPortrait = false; // Status apakah video sedang di tengah/portrait
 
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
+    const playerArea = document.getElementById('playerContent');
+    
+    // TAMBAHKAN INI: Pastikan player lama benar-benar mati
+    const oldPlayer = document.getElementById('mainVideoPlayer');
+    if (oldPlayer) {
+        oldPlayer.pause();
+        oldPlayer.src = "";
+        oldPlayer.load();
+    }
+    playerArea.innerHTML = "";
+    // ... sisa kode Anda
+
     const detailPage = document.getElementById('videoDetailPage');
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
@@ -389,9 +401,8 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     // 3. Masukkan Struktur Video Player & Overlay
     playerArea.innerHTML = `
     <div class="video-container" id="vContainer">
-      <div id="videoLoading" class="video-loading">
-        <div class="spinner"></div>
-      </div>
+      <video id="mainVideoPlayer" playsinline autoplay muted src="${video.videoUrl}" style="width:100%; display:block;"></video>
+    </div>
       
      <video id="mainVideoPlayer" playsinline autoplay muted style="width:100%; display:block;">
         <source src="${video.videoUrl}" type="video/mp4">
@@ -675,13 +686,22 @@ const tryToPlay = (isAuto) => {
         });
 };
 
+// Ganti bagian akhir dari fungsi bukaDetailVideo (pada bagian 3. Perintah Play Utama)
 if (isAutomatic) {
-    vElement.muted = true; // WAJIB muted untuk auto-play
-    vElement.load();
-    tryToPlay(true);
+    // Beri jeda 300ms agar DOM benar-benar siap dan browser tidak menganggap ini aksi instan
+    setTimeout(() => {
+        vElement.muted = true;
+        vElement.play().then(() => {
+            console.log("Auto-next dimulai");
+            setTimeout(() => { vElement.muted = false; }, 800); // Unmute pelan-pelan
+        }).catch(err => {
+            console.error("Autoplay diblokir, tampilkan tombol play manual");
+            playIcon.className = "bi bi-play-fill main-play";
+        });
+    }, 300);
 } else {
     vElement.muted = false;
-    tryToPlay(false);
+    vElement.play();
 }
 
   
