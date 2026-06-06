@@ -457,6 +457,21 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     const tTotal = document.getElementById('durationTime');
     const btnFullscreen = document.getElementById('btnFullscreen');
 
+  // --- PASANG LISTENER DI SINI ---
+if (vElement) {
+    // Gunakan fungsi 'once' atau bersihkan listener lama jika perlu, 
+    // tapi karena Anda melakukan innerHTML = "" sebelumnya, 
+    // listener lama otomatis terhapus. Jadi ini sudah aman:
+    
+    vElement.addEventListener('play', () => {
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+    });
+
+    vElement.addEventListener('pause', () => {
+        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
+    });
+}
+
     let overlayTimeout;
 
     // --- FUNGSI OVERLAY ---
@@ -641,27 +656,24 @@ vElement.onloadedmetadata = () => {
     // 3. Perintah Play Utama
 if (isAutomatic) {
         // SELALU mulai dengan muted=true agar tidak diblokir browser
-        vElement.muted = true; 
-        vElement.load(); 
+        // Di dalam bukaDetailVideo
+vElement.muted = true; 
+vElement.load();
 
-        // Gunakan Promise dari .play() untuk menentukan kapan harus unmute
-        vElement.play().then(() => {
-            console.log("Video berhasil diputar otomatis (muted)");
-            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-
-            // Jika sebelumnya tidak di-mute, baru kita coba nyalakan suara
-            if (suaraDariVideoLama) {
-                // Beri jeda 500ms agar browser yakin video ini "aman" diputar
-                setTimeout(() => {
-                    vElement.muted = false;
-                    console.log("Suara diaktifkan setelah autoplay");
-                }, 500);
-            }
-        }).catch(err => {
-            console.error("Autoplay gagal, perlu interaksi user:", err);
-            // Fallback: Tampilkan ikon play agar user bisa klik manual
-            if (playIcon) playIcon.className = "bi bi-play-fill main-play";
-        });
+// Jalankan play dan tunggu hasilnya
+vElement.play()
+    .then(() => {
+        // BERHASIL: Sekarang baru ubah ikon jadi PAUSE
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        
+        // Coba unmute setelah delay
+        setTimeout(() => { vElement.muted = false; }, 500);
+    })
+    .catch(err => {
+        // GAGAL: Pastikan ikon menunjukkan PLAY agar user tahu harus diklik
+        console.warn("Autoplay diblokir:", err);
+        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
+    });
 
     } else {
         // JIKA DIKLIK MANUAL OLEH USER
@@ -673,7 +685,8 @@ if (isAutomatic) {
 });
 
     }
-    
+
+  
     // 4. Fitur autonext 
     vElement.onended = () => {
         console.log("Video selesai, memutar video berikutnya...");
