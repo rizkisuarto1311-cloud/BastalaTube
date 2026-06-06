@@ -351,6 +351,10 @@ window.addEventListener('scroll', () => {
 let isPortrait = false; // Status apakah video sedang di tengah/portrait
 
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
+
+    console.log("bukaDetailVideo dipanggil");
+    console.log("isAutomatic =", isAutomatic);
+  
     const detailPage = document.getElementById('videoDetailPage');
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
@@ -1127,6 +1131,8 @@ function tutupDetailVideoManual() {
 
 
 function putarVideoOtomatis() {
+    console.log("PUTAR VIDEO OTOMATIS DIPANGGIL");
+  
     if (typeof videoLibrary !== 'undefined' && videoLibrary.length > 0) {
         const judulSekarang = document.getElementById('detailTitle').innerText;
         const daftarPilihan = videoLibrary.filter(v => v.title !== judulSekarang);
