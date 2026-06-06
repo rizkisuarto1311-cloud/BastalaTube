@@ -653,38 +653,36 @@ vElement.onloadedmetadata = () => {
         loadingEfek.style.display = 'none';
     };
 
-    // 3. Perintah Play Utama
+// 3. Perintah Play Utama
+// Kita buat fungsi reusable untuk play agar tidak duplikat kode
+const tryToPlay = (isAuto) => {
+    vElement.play()
+        .then(() => {
+            console.log("Video berhasil diputar");
+            // Ikon akan diubah oleh event listener 'play' yang kita pasang tadi
+            
+            // Jika auto-next, coba aktifkan suara setelah 500ms
+            if (isAuto) {
+                setTimeout(() => {
+                    vElement.muted = false;
+                }, 500);
+            }
+        })
+        .catch(err => {
+            console.warn("Autoplay diblokir:", err);
+            // Paksa ikon jadi PLAY karena video PAUSED
+            if (playIcon) playIcon.className = "bi bi-play-fill main-play";
+        });
+};
+
 if (isAutomatic) {
-        // SELALU mulai dengan muted=true agar tidak diblokir browser
-        // Di dalam bukaDetailVideo
-vElement.muted = true; 
-vElement.load();
-
-// Jalankan play dan tunggu hasilnya
-vElement.play()
-    .then(() => {
-        // BERHASIL: Sekarang baru ubah ikon jadi PAUSE
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-        
-        // Coba unmute setelah delay
-        setTimeout(() => { vElement.muted = false; }, 500);
-    })
-    .catch(err => {
-        // GAGAL: Pastikan ikon menunjukkan PLAY agar user tahu harus diklik
-        console.warn("Autoplay diblokir:", err);
-        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
-    });
-
-    } else {
-        // JIKA DIKLIK MANUAL OLEH USER
-        vElement.muted = false;
-        vElement.play().catch(err => {
-    console.warn("Autoplay diblokir:", err);
-    // Tampilkan tombol Play manual jika gagal
-    playIcon.className = "bi bi-play-fill main-play";
-});
-
-    }
+    vElement.muted = true; // WAJIB muted untuk auto-play
+    vElement.load();
+    tryToPlay(true);
+} else {
+    vElement.muted = false;
+    tryToPlay(false);
+}
 
   
     // 4. Fitur autonext 
