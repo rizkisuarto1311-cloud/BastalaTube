@@ -351,18 +351,6 @@ window.addEventListener('scroll', () => {
 let isPortrait = false; // Status apakah video sedang di tengah/portrait
 
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
-    const playerArea = document.getElementById('playerContent');
-    
-    // TAMBAHKAN INI: Pastikan player lama benar-benar mati
-    const oldPlayer = document.getElementById('mainVideoPlayer');
-    if (oldPlayer) {
-        oldPlayer.pause();
-        oldPlayer.src = "";
-        oldPlayer.load();
-    }
-    playerArea.innerHTML = "";
-    // ... sisa kode Anda
-
     const detailPage = document.getElementById('videoDetailPage');
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
@@ -401,8 +389,9 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     // 3. Masukkan Struktur Video Player & Overlay
     playerArea.innerHTML = `
     <div class="video-container" id="vContainer">
-      <video id="mainVideoPlayer" playsinline autoplay muted src="${video.videoUrl}" style="width:100%; display:block;"></video>
-    </div>
+      <div id="videoLoading" class="video-loading">
+        <div class="spinner"></div>
+      </div>
       
      <video id="mainVideoPlayer" playsinline autoplay muted style="width:100%; display:block;">
         <source src="${video.videoUrl}" type="video/mp4">
@@ -467,21 +456,6 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     const tSekarang = document.getElementById('currentTime');
     const tTotal = document.getElementById('durationTime');
     const btnFullscreen = document.getElementById('btnFullscreen');
-
-  // --- PASANG LISTENER DI SINI ---
-if (vElement) {
-    // Gunakan fungsi 'once' atau bersihkan listener lama jika perlu, 
-    // tapi karena Anda melakukan innerHTML = "" sebelumnya, 
-    // listener lama otomatis terhapus. Jadi ini sudah aman:
-    
-    vElement.addEventListener('play', () => {
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-    });
-
-    vElement.addEventListener('pause', () => {
-        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
-    });
-}
 
     let overlayTimeout;
 
@@ -664,47 +638,38 @@ vElement.onloadedmetadata = () => {
         loadingEfek.style.display = 'none';
     };
 
-// 3. Perintah Play Utama
-// Kita buat fungsi reusable untuk play agar tidak duplikat kode
-const tryToPlay = (isAuto) => {
-    vElement.play()
-        .then(() => {
-            console.log("Video berhasil diputar");
-            // Ikon akan diubah oleh event listener 'play' yang kita pasang tadi
-            
-            // Jika auto-next, coba aktifkan suara setelah 500ms
-            if (isAuto) {
+    // 3. Perintah Play Utama
+if (isAutomatic) {
+        // SELALU mulai dengan muted=true agar tidak diblokir browser
+        vElement.muted = true; 
+        vElement.load(); 
+
+        // Gunakan Promise dari .play() untuk menentukan kapan harus unmute
+        vElement.play().then(() => {
+            console.log("Video berhasil diputar otomatis (muted)");
+            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+
+            // Jika sebelumnya tidak di-mute, baru kita coba nyalakan suara
+            if (suaraDariVideoLama) {
+                // Beri jeda 500ms agar browser yakin video ini "aman" diputar
                 setTimeout(() => {
                     vElement.muted = false;
+                    console.log("Suara diaktifkan setelah autoplay");
                 }, 500);
             }
-        })
-        .catch(err => {
-            console.warn("Autoplay diblokir:", err);
-            // Paksa ikon jadi PLAY karena video PAUSED
+        }).catch(err => {
+            console.error("Autoplay gagal, perlu interaksi user:", err);
+            // Fallback: Tampilkan ikon play agar user bisa klik manual
             if (playIcon) playIcon.className = "bi bi-play-fill main-play";
         });
-};
 
-// Ganti bagian akhir dari fungsi bukaDetailVideo (pada bagian 3. Perintah Play Utama)
-if (isAutomatic) {
-    // Beri jeda 300ms agar DOM benar-benar siap dan browser tidak menganggap ini aksi instan
-    setTimeout(() => {
-        vElement.muted = true;
-        vElement.play().then(() => {
-            console.log("Auto-next dimulai");
-            setTimeout(() => { vElement.muted = false; }, 800); // Unmute pelan-pelan
-        }).catch(err => {
-            console.error("Autoplay diblokir, tampilkan tombol play manual");
-            playIcon.className = "bi bi-play-fill main-play";
-        });
-    }, 300);
-} else {
-    vElement.muted = false;
-    vElement.play();
-}
-
-  
+    } else {
+        // JIKA DIKLIK MANUAL OLEH USER
+        vElement.muted = false;
+        vElement.play().catch(e => console.log("Play manual error:", e));
+        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+    }
+    
     // 4. Fitur autonext 
     vElement.onended = () => {
         console.log("Video selesai, memutar video berikutnya...");
