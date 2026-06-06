@@ -67,7 +67,7 @@ body {
     top: 0;
     width: 100%;
     z-index: 1000;
-    background: #fff;
+    background: #f2f;
     will-change: transform;
 }
 
