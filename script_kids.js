@@ -669,10 +669,10 @@ if (isAutomatic) {
     }
     
     // 4. Fitur autonext 
-    vElement.onended = () => {
-        console.log("Video selesai, memutar video berikutnya...");
-        putarVideoOtomatis();
-    };
+vElement.onended = () => {
+    console.log("VIDEO SELESAI");
+    putarVideoOtomatis();
+};
 
     // --- LOGIKA KOMENTAR DINAMIS ---
     const elementTeksKomentar = document.getElementById('commentText');
