@@ -6,7 +6,7 @@
     --text-main: #030303;
     --text-sub: #606060;
     --accent-color: #000000;
-    --header-height: 105px;
+    --header-height: 10px;
     --nav-height: 60px;
     --yt-red: #ff0000;
 }
@@ -45,7 +45,7 @@ html, body {
 
 
 body {
-    background-color: #f2f;
+    background-color: #fff;
     padding-bottom: 70px;
     overflow-x: hidden;
     overscroll-behavior-y: none;
@@ -76,7 +76,6 @@ body {
 }
 
 .top-nav {
-    padding-top: env(safe-area-inset-top);
     display: flex;
     justify-content: space-between;
     align-items: center;
