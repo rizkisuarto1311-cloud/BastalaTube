@@ -2,10 +2,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
       .then(reg => console.log('Service Worker terdaftar!', reg))
-      .catch(err => console.error('Gagal daftar Service Worker', err));
-
-    updateStatusBar('home');
-    updateContentLayout('home');
+      .catch(err => console.error('Gagal daftar Service Worker', err))
   });
 }
 
@@ -1158,39 +1155,40 @@ function putarVideoOtomatis() {
 }
 
 
-function updateStatusBar(state) {
-    if (state === 'home') {
-        StatusBar.overlaysWebView(true);
-        StatusBar.backgroundColorByHexString('#FFFFFF'); // Putih
-        StatusBar.styleDefault(); // Ikon Hitam
-    } else if (state === 'normal_video' || state === 'portrait_video') {
-        StatusBar.overlaysWebView(true);
-        StatusBar.backgroundColorByHexString('#000000'); // Hitam
-        StatusBar.styleLightContent(); // Ikon Putih
-    }
-}
-
-// 2. Fungsi khusus untuk Layout Content
-function updateContentLayout(state) {
-    // Hapus semua class mode agar bersih
-    document.body.classList.remove('mode-home', 'mode-normal-video', 'mode-portrait-video');
-    
-    // Tambahkan class yang sesuai
-    if (state !== 'none') {
-        document.body.classList.add('mode-' + state);
-    }
-}
-
+// A. Tunggu Cordova Siap
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-    // 1. Aktifkan mode overlay (transparan agar konten masuk ke bawah status bar)
+    console.log("Cordova Siap!");
+    
+    // Inisialisasi awal
     StatusBar.overlaysWebView(true);
+    updateStatusBar('home');
+    updateContentLayout('home');
     
-    // 2. Set warna background status bar jadi putih
-    StatusBar.backgroundColorByHexString('#FFFFFF');
-    
-    // 3. Set ikon (baterai/jam) jadi gelap (karena background kita putih)
-    StatusBar.styleDefault(); 
+    // Inisialisasi Service Worker (jika perlu)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('SW terdaftar!'))
+            .catch(err => console.error('Gagal daftar SW', err));
+    }
+
+    // Inisialisasi UI lain (seperti Render Video)
+    if (typeof videoLibrary !== 'undefined') {
+        displayVideos(videoLibrary);
+    }
 }
 
+// B. Fungsi-fungsi global Anda (tetap simpan di bawah)
+function updateStatusBar(state) {
+    // Pastikan objek StatusBar sudah tersedia
+    if (typeof StatusBar === 'undefined') return;
+
+    if (state === 'home') {
+        StatusBar.backgroundColorByHexString('#FFFFFF'); 
+        StatusBar.styleDefault(); 
+    } else {
+        StatusBar.backgroundColorByHexString('#000000'); 
+        StatusBar.styleLightContent();
+    }
+}
