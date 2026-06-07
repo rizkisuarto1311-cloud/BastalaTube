@@ -65,7 +65,7 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    width: 50%;
+    width: 100px;
     z-index: 1000;
     background: #000;
     will-change: transform;
@@ -77,6 +77,7 @@ body {
 
 .top-nav {
     display: flex;
+   background: #f2f;
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
