@@ -32,8 +32,8 @@ html, body {
 
 /* Mode Video Normal: Konten di bawah Status Bar */
 .mode-normal-video {
-    /* Padding sebesar tinggi status bar agar tidak tertutup */
-    padding-top: env(safe-area-inset-top, 25px); 
+    /* Padding sebesar tinggi status bar agar  tidak tertutup */
+    padding-top: env(safe-area-inset-top, 0px); 
     background-color: #000;
 }
 
