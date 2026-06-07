@@ -2,7 +2,10 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
       .then(reg => console.log('Service Worker terdaftar!', reg))
-      .catch(err => console.error('Gagal daftar Service Worker', err))
+      .catch(err => console.error('Gagal daftar Service Worker', err));
+
+    updateStatusBar('home');
+    updateContentLayout('home');
   });
 }
 
@@ -348,10 +351,6 @@ window.addEventListener('scroll', () => {
 let isPortrait = false; // Status apakah video sedang di tengah/portrait
 
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
-
-    console.log("bukaDetailVideo dipanggil");
-    console.log("isAutomatic =", isAutomatic);
-  
     const detailPage = document.getElementById('videoDetailPage');
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
@@ -641,24 +640,30 @@ vElement.onloadedmetadata = () => {
 
     // 3. Perintah Play Utama
 if (isAutomatic) {
-    vElement.muted = true;
-    vElement.load();
+        // SELALU mulai dengan muted=true agar tidak diblokir browser
+        vElement.muted = true; 
+        vElement.load(); 
 
-    vElement.play().then(() => {
-        console.log("Video berhasil diputar otomatis (muted)");
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        // Gunakan Promise dari .play() untuk menentukan kapan harus unmute
+        vElement.play().then(() => {
+            console.log("Video berhasil diputar otomatis (muted)");
+            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
 
-        if (suaraDariVideoLama) {
-            setTimeout(() => {
-                vElement.muted = false;
-                console.log("Suara diaktifkan setelah autoplay");
-            }, 500);
-        }
-    }).catch(err => {
-        console.error("Autoplay gagal, perlu interaksi user:", err);
-        if (playIcon) playIcon.className = "bi bi-play-fill main-play";
-    });
-} else {
+            // Jika sebelumnya tidak di-mute, baru kita coba nyalakan suara
+            if (suaraDariVideoLama) {
+                // Beri jeda 500ms agar browser yakin video ini "aman" diputar
+                setTimeout(() => {
+                    vElement.muted = false;
+                    console.log("Suara diaktifkan setelah autoplay");
+                }, 500);
+            }
+        }).catch(err => {
+            console.error("Autoplay gagal, perlu interaksi user:", err);
+            // Fallback: Tampilkan ikon play agar user bisa klik manual
+            if (playIcon) playIcon.className = "bi bi-play-fill main-play";
+        });
+
+    } else {
         // JIKA DIKLIK MANUAL OLEH USER
         vElement.muted = false;
         vElement.play().catch(e => console.log("Play manual error:", e));
@@ -666,10 +671,10 @@ if (isAutomatic) {
     }
     
     // 4. Fitur autonext 
-vElement.onended = () => {
-    console.log("VIDEO SELESAI");
-    putarVideoOtomatis();
-};
+    vElement.onended = () => {
+        console.log("Video selesai, memutar video berikutnya...");
+        putarVideoOtomatis();
+    };
 
     // --- LOGIKA KOMENTAR DINAMIS ---
     const elementTeksKomentar = document.getElementById('commentText');
@@ -1128,8 +1133,6 @@ function tutupDetailVideoManual() {
 
 
 function putarVideoOtomatis() {
-    console.log("PUTAR VIDEO OTOMATIS DIPANGGIL");
-  
     if (typeof videoLibrary !== 'undefined' && videoLibrary.length > 0) {
         const judulSekarang = document.getElementById('detailTitle').innerText;
         const daftarPilihan = videoLibrary.filter(v => v.title !== judulSekarang);
@@ -1155,40 +1158,20 @@ function putarVideoOtomatis() {
 }
 
 
-// A. Tunggu Cordova Siap
-document.addEventListener("deviceready", onDeviceReady, false);
-
-function onDeviceReady() {
-    console.log("Cordova Siap!");
-    
-    // Inisialisasi awal
-    StatusBar.overlaysWebView(true);
-    updateStatusBar('home');
-    updateContentLayout('home');
-    
-    // Inisialisasi Service Worker (jika perlu)
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('SW terdaftar!'))
-            .catch(err => console.error('Gagal daftar SW', err));
-    }
-
-    // Inisialisasi UI lain (seperti Render Video)
-    if (typeof videoLibrary !== 'undefined') {
-        displayVideos(videoLibrary);
+// 1. Fungsi khusus untuk Bridge Android
+function updateStatusBar(state) {
+    if (typeof Android !== "undefined") {
+        Android.setStatusBarStyle(state);
     }
 }
 
-// B. Fungsi-fungsi global Anda (tetap simpan di bawah)
-function updateStatusBar(state) {
-    // Pastikan objek StatusBar sudah tersedia
-    if (typeof StatusBar === 'undefined') return;
-
-    if (state === 'home') {
-        StatusBar.backgroundColorByHexString('#FFFFFF'); 
-        StatusBar.styleDefault(); 
-    } else {
-        StatusBar.backgroundColorByHexString('#000000'); 
-        StatusBar.styleLightContent();
+// 2. Fungsi khusus untuk Layout Content
+function updateContentLayout(state) {
+    // Hapus semua class mode agar bersih
+    document.body.classList.remove('mode-home', 'mode-normal-video', 'mode-portrait-video');
+    
+    // Tambahkan class yang sesuai
+    if (state !== 'none') {
+        document.body.classList.add('mode-' + state);
     }
 }
