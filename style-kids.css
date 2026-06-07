@@ -65,7 +65,7 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    width: 100px;
+    width: 100%;
     z-index: 1000;
     background: #000;
     will-change: transform;
@@ -257,6 +257,7 @@ body {
     padding-top: 100px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
     box-sizing: border-box;
+   background:#f1f;
 }
 
 .main-content.search-active {
