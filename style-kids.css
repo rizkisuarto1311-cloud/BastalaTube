@@ -33,7 +33,7 @@ html, body {
 /* Mode Video Normal: Konten di bawah Status Bar */
 .mode-normal-video {
     /* Padding sebesar tinggi status bar agar  tidak tertutup */
-    padding-top: env(safe-area-inset-top, 0px); 
+    padding-top: env(safe-area-inset-top, 25px); 
     background-color: #000;
 }
 
@@ -253,7 +253,7 @@ body {
 .main-content {
     width: 100%;
     max-width: 100%;
-    padding-top: 80px;
+    padding-top: 100px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
     box-sizing: border-box;
 }
