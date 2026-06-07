@@ -262,7 +262,7 @@ body {
     position: relative;
     transform: translateX(0);
     opacity: 1;
-    padding-top: 40px;
+    padding-top: 0px;
 }
 
 .video-grid {
