@@ -1136,26 +1136,26 @@ function putarVideoOtomatis() {
     if (typeof videoLibrary !== 'undefined' && videoLibrary.length > 0) {
         const judulSekarang = document.getElementById('detailTitle').innerText;
         const daftarPilihan = videoLibrary.filter(v => v.title !== judulSekarang);
+        
+        if (daftarPilihan.length === 0) return;
+        
         const videoBerikutnya = daftarPilihan[Math.floor(Math.random() * daftarPilihan.length)];
 
-        // 1. Scroll otomatis ke atas halaman detail agar video baru mulai dari atas
+        // 1. Scroll otomatis ke atas halaman detail
         const detailPage = document.getElementById('videoDetailPage');
         if (detailPage) {
             detailPage.scrollTo({ top: 0, behavior: 'instant' }); 
         }
 
-        // 2. Cek apakah video lama posisinya sedang bersuara (tidak di-mute)
-        // Kita gunakan ID 'mainVideoPlayer' agar deteksinya sangat akurat
+        // 2. Ambil status suara dari pemutar yang sedang aktif SEBELUM dihancurkan
         const playerLama = document.getElementById('mainVideoPlayer');
         const apakahBersuaraSebelumnya = playerLama ? !playerLama.muted : true;
 
-        // 3. Panggil fungsi detail dengan mengoper status otomatis & suara sebelumnya
-        // Argumen 1: Objek video berikutnya
-        // Argumen 2: true (menandakan ini diputar secara otomatis)
-        // Argumen 3: Status suara (true jika bersuara, false jika senyap)
+        // 3. Panggil langsung bukaDetailVideo dengan status otomatis (true)
         bukaDetailVideo(videoBerikutnya, true, apakahBersuaraSebelumnya);
     }
 }
+
 
 
 // 1. Fungsi khusus untuk Bridge Android
