@@ -379,6 +379,13 @@ const videoLibrary = [
       videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1778989911/YTDown_YouTube_Ikan-Badut-Lagu-Anak-dan-Balita-Indonesi_Media_EeQ739wH4aM_001_1080p_twlqb7.mp4",
       duration: "2.15"
     },
+    {
+      id: "49",
+      title: "SKL",
+      thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1778989882/EeQ739wH4aMhd_jetntv.jpg",
+      videoUrl: "https://files.catbox.moe/a5en4p.mp4H4aM_001_1080p_twlqb7.mp4",
+      duration: "2.15"
+    },
 ];
 
 // Acak video
