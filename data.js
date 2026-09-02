@@ -383,7 +383,7 @@ const videoLibrary = [
       id: "49",
       title: "SKL",
       thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1778989882/EeQ739wH4aMhd_jetntv.jpg",
-      videoUrl: "https://files.catbox.moe/a5en4p.mp4H4aM_001_1080p_twlqb7.mp4",
+      videoUrl: "https://files.catbox.moe/a5en4p.mp4",
       duration: "2.15"
     },
 ];
