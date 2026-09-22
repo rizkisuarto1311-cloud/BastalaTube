@@ -381,10 +381,10 @@ const videoLibrary = [
     },
     {
       id: "49",
-      title: "SKL",
-      thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1778989882/EeQ739wH4aMhd_jetntv.jpg",
-      videoUrl: "https://files.catbox.moe/a5en4p.mp4",
-      duration: "2.15"
+      title: "Kebun Binatang - Lagu Anak dan Balita Indonesia ",
+      thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1790087981/ZSG8LzpbEoI-HD_wudixr.jpg",
+      videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1790088009/Kebun_Binatang_-_Lagu_Kebun_Binatang_-_Lagu_Anak_Indonesia_1080p_axyzox.mp4",
+      duration: "3.03"
     },
 ];
 
