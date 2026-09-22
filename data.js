@@ -386,6 +386,14 @@ const videoLibrary = [
       videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1790088009/Kebun_Binatang_-_Lagu_Kebun_Binatang_-_Lagu_Anak_Indonesia_1080p_axyzox.mp4",
       duration: "3.03"
     },
+    
+    {
+      id: "50",
+      title: "Roda Bis Berputar - Lagu Anak dan Balita Indonesia ",
+      thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1790114340/HbMYjE6Sm6Y-HD_f44wrh.jpg",
+      videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1790114410/vidssave.com_Bus_Hewan_Lucu___Roda_di_Bis___Wheels_on_the_Bus___Lagu_Anak-anak_Seru___LiaChaCha_Bahasa_Indonesia_720p_gi7ftf.mp4",
+      duration: "15.19"
+    },
 ];
 
 // Acak video
