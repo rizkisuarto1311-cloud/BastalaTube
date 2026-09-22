@@ -27,7 +27,7 @@ html, body {
 
 /* Mode Home: Konten Full Masuk ke Status Bar */
 .mode-home {
-    padding-top: 0; 
+    padding-top: 25px; 
 }
 
 /* Mode Video Normal: Konten di bawah Status Bar */
