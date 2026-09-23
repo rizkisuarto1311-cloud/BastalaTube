@@ -79,7 +79,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 33px 16px 8px;
+    padding: 8px 16px;
     position: sticky;
     top: 0;
     z-index: 1000;
