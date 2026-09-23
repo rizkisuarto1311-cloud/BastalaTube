@@ -69,7 +69,6 @@ body {
     z-index: 1000;
     background: #fff;
     will-change: transform;
-    padding-top: 25px;
 }
 
 .header-hidden {
@@ -80,7 +79,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
+    padding: 33px 16px 8px;
     position: sticky;
     top: 0;
     z-index: 1000;
