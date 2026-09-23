@@ -367,7 +367,6 @@ body {
    6. VIDEO DETAIL PAGE
    ========================================================================== */
 .video-detail-page {
-    .video-detail-page {
     position: fixed;
     top: env(safe-area-inset-top, 0px);
     left: 0;
