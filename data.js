@@ -315,7 +315,7 @@ const videoLibrary = [
         id: "v40",
         title: "2 Dino Kuat - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773818276/pyM_znA8CIA-HD_buziso.jpg",
+        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774234967/SZLfD1DLGnM-HD_makncj.jpg",
         videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234527/YTDown.com_YouTube_Dua-Dino-Kuat-Lagu-Anak-dan-Balita-Indon_Media_SZLfD1DLGnM_001_1080p_rkfwk8.mp4",
         duration: "2.04"
     },
