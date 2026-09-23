@@ -383,10 +383,10 @@ body {
 
 #videoDetailPage {
     position: fixed;
-    top: env(safe-area-inset-top, 0px);
+    top: calc(env(safe-area-inset-top, 0px) - 5px);
     left: 0;
     width: 100%;
-    height: calc(100% - env(safe-area-inset-top, 0px));
+    height: calc(100% - env(safe-area-inset-top, 0px) + 5px);
     background: #000 !important;
     z-index: 1000;
 }
