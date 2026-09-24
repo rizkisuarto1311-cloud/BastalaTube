@@ -1272,3 +1272,70 @@ body {
         display: none !important;
     }
 }
+
+/* =========================================================
+   INTRO ANIMATION
+   ========================================================= */
+
+#introAnimation {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+}
+
+.intro-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ff0000;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.intro-logo span {
+    display: inline-block;
+
+    opacity: 0;
+    transform: scale(0.2);
+
+    animation: introLetterAppear 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Huruf muncul satu per satu */
+.intro-logo span:nth-child(1)  { animation-delay: 0.00s; }
+.intro-logo span:nth-child(2)  { animation-delay: 0.07s; }
+.intro-logo span:nth-child(3)  { animation-delay: 0.14s; }
+.intro-logo span:nth-child(4)  { animation-delay: 0.21s; }
+.intro-logo span:nth-child(5)  { animation-delay: 0.28s; }
+.intro-logo span:nth-child(6)  { animation-delay: 0.35s; }
+.intro-logo span:nth-child(7)  { animation-delay: 0.42s; }
+.intro-logo span:nth-child(8)  { animation-delay: 0.49s; }
+.intro-logo span:nth-child(9)  { animation-delay: 0.56s; }
+.intro-logo span:nth-child(10) { animation-delay: 0.63s; }
+.intro-logo span:nth-child(11) { animation-delay: 0.70s; }
+
+@keyframes introLetterAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.2);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
