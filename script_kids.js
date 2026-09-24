@@ -212,6 +212,15 @@ function displayVideos(videos, append = false) {
             }, index * 10);
         });
     });
+
+  // Beri browser kesempatan menyelesaikan layout Home
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            if (!append) {
+                showHomeAfterReady();
+            }
+        });
+    });
 }
 
 
