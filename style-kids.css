@@ -1339,3 +1339,12 @@ body {
         transform: scale(1);
     }
 }
+
+#introAnimation.intro-hide {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.45s ease,
+        visibility 0.45s ease;
+    pointer-events: none;
+}
