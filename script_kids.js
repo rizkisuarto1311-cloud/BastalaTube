@@ -1172,3 +1172,19 @@ function updateContentLayout(state) {
         document.body.classList.add('mode-' + state);
     }
 }
+
+// =========================================================
+// INTRO ANIMATION — HOME READY
+// =========================================================
+
+function showHomeAfterReady() {
+    const intro = document.getElementById('introAnimation');
+
+    if (!intro) return;
+
+    intro.classList.add('intro-hide');
+
+    setTimeout(() => {
+        intro.remove();
+    }, 450);
+}
