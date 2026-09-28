@@ -516,7 +516,7 @@ if (qualityBtn && qualityMenu) {
 
     qualityButtons.forEach(button => {
 
-          button.onclick = (e) => {
+        button.onclick = (e) => {
             e.stopPropagation();
 
             const kualitas = button.dataset.quality;
@@ -528,7 +528,6 @@ if (qualityBtn && qualityMenu) {
 
             tandaiKualitasAktif(kualitas);
 
-            // 1. SIMPAN POSISI DETIK PRESISI & STATUS DIPUTAR
             const posisiTujuan = vElement.currentTime || 0;
             const sedangPlay = !vElement.paused;
 
@@ -537,53 +536,72 @@ if (qualityBtn && qualityMenu) {
                 kualitas
             );
 
-            // Tampilkan animasi loading
             const loadingEfek = document.getElementById('videoLoading');
-            if (loadingEfek) loadingEfek.style.display = 'flex';
+
+            if (loadingEfek) {
+                loadingEfek.style.display = 'flex';
+            }
 
             vElement.pause();
 
-            // 2. FUNGSI UNTUK MENGEMBALIKAN DETIK KE POSISI AWAL
             let sudahDiRestore = false;
-            
+
             const restorePosisi = () => {
                 if (sudahDiRestore) return;
-                
+
                 try {
-                    // Pindahkan detik ke posisi tujuan (misal 1:03)
                     vElement.currentTime = posisiTujuan;
                     sudahDiRestore = true;
 
                     if (sedangPlay) {
-                        vElement.play().catch(err => console.log("Gagal melanjut pemutaran:", err));
+                        vElement.play().catch(err =>
+                            console.log(
+                                "Gagal melanjut pemutaran:",
+                                err
+                            )
+                        );
                     }
                 } catch (err) {
-                    console.log("Menunggu buffer untuk seeking...", err);
+                    console.log(
+                        "Menunggu buffer untuk seeking...",
+                        err
+                    );
                 }
             };
 
-            // 3. PASANG EVENT LISTENER GANDA (METADATA & CANPLAY)
-            // loadedmetadata: saat durasi video baru diketahui
-            // canplay: saat video sudah siap diputar di detik tersebut
             const handleMetadata = () => {
                 restorePosisi();
-                vElement.removeEventListener('loadedmetadata', handleMetadata);
+                vElement.removeEventListener(
+                    'loadedmetadata',
+                    handleMetadata
+                );
             };
 
             const handleCanPlay = () => {
                 restorePosisi();
-                vElement.removeEventListener('canplay', handleCanPlay);
+                vElement.removeEventListener(
+                    'canplay',
+                    handleCanPlay
+                );
             };
 
-            vElement.addEventListener('loadedmetadata', handleMetadata);
-            vElement.addEventListener('canplay', handleCanPlay);
+            vElement.addEventListener(
+                'loadedmetadata',
+                handleMetadata
+            );
 
-            // 4. GANTI URL DAN MUAT
+            vElement.addEventListener(
+                'canplay',
+                handleCanPlay
+            );
+
             vElement.src = urlBaru;
             vElement.load();
 
             qualityMenu.classList.remove('active');
-        }
+        };
+    });
+}
 
   
     const loadingEfek = document.getElementById('videoLoading');
