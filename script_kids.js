@@ -577,14 +577,14 @@ console.log("URL VIDEO:", urlAwal);
     const playIcon = document.getElementById('playIcon');
     const garisMerah = document.getElementById('merahJalan');
     const tSekarang = document.getElementById('currentTime');
-const tTotal = document.getElementById('durationTime');
-const btnFullscreen = document.getElementById('btnFullscreen');
+    const tTotal = document.getElementById('durationTime');
+    const btnFullscreen = document.getElementById('btnFullscreen');
 
-// Tampilkan durasi asli langsung dari data video
 if (tTotal && video.duration) {
     tTotal.innerText = video.duration;
 }
 
+let overlayTimeout;
 let overlayTimeout;
 
     // --- FUNGSI OVERLAY ---
