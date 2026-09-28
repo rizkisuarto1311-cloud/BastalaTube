@@ -403,8 +403,20 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
             <i class="ri-toggle-line"></i>
             <i class="ri-macbook-line"></i>
             <i class="ri-closed-captioning-line"></i>
-            <i class="ri-settings-3-line"></i>
+
+            <div class="quality-wrapper">
+            <i id="qualityBtn" class="ri-settings-3-line"></i>
+
+           <div id="qualityMenu" class="quality-menu">
+           <div class="quality-title">Kualitas</div>
+            <button data-quality="auto">Auto</button>
+            <button data-quality="360">360p</button>
+            <button data-quality="480">480p</button>
+            <button data-quality="720">720p</button>
+            <button data-quality="1080">1080p</button>
+           </div>
           </div>
+         </div>
         </div>
 
           <div class="overlay-mid">
