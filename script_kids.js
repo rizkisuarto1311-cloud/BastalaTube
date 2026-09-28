@@ -460,6 +460,107 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   
     // 4. Inisialisasi Elemen Kontrol
     const vElement = document.getElementById('mainVideoPlayer');
+
+     // =========================================
+// PENGATURAN KUALITAS VIDEO
+// =========================================
+
+const qualityBtn = document.getElementById('qualityBtn');
+const qualityMenu = document.getElementById('qualityMenu');
+const qualityButtons = qualityMenu
+    ? qualityMenu.querySelectorAll('button')
+    : [];
+
+const kualitasTersimpan =
+    localStorage.getItem('bastalaVideoQuality') || 'auto';
+
+function buatUrlKualitas(url, kualitas) {
+    if (!url || kualitas === 'auto') {
+        return url;
+    }
+
+    const ukuran = {
+        '360': 360,
+        '480': 480,
+        '720': 720,
+        '1080': 1080
+    };
+
+    const width = ukuran[kualitas];
+
+    if (!width) {
+        return url;
+    }
+
+    return url.replace(
+        '/video/upload/',
+        `/video/upload/w_${width}/q_auto/f_auto/`
+    );
+}
+
+function tandaiKualitasAktif(kualitas) {
+    qualityButtons.forEach(button => {
+        button.classList.toggle(
+            'active',
+            button.dataset.quality === kualitas
+        );
+    });
+}
+
+if (qualityBtn && qualityMenu) {
+
+    qualityBtn.onclick = (e) => {
+        e.stopPropagation();
+        qualityMenu.classList.toggle('active');
+    };
+
+    qualityButtons.forEach(button => {
+
+        button.onclick = (e) => {
+            e.stopPropagation();
+
+            const kualitas = button.dataset.quality;
+
+            localStorage.setItem(
+                'bastalaVideoQuality',
+                kualitas
+            );
+
+            tandaiKualitasAktif(kualitas);
+
+            const posisi = vElement.currentTime || 0;
+            const sedangPlay = !vElement.paused;
+
+            const urlBaru = buatUrlKualitas(
+                video.videoUrl,
+                kualitas
+            );
+
+            vElement.pause();
+
+            vElement.innerHTML =
+                `<source src="${urlBaru}" type="video/mp4">`;
+
+            vElement.load();
+
+            vElement.currentTime = posisi;
+
+            if (sedangPlay) {
+                vElement.play().catch(err => {
+                    console.log(
+                        "Gagal melanjutkan video:",
+                        err
+                    );
+                });
+            }
+
+            qualityMenu.classList.remove('active');
+        };
+    });
+
+    tandaiKualitasAktif(kualitasTersimpan);
+}
+  
     const loadingEfek = document.getElementById('videoLoading');
     const vContainer = document.getElementById('vContainer');
     const overlay = document.getElementById('videoOverlay');
