@@ -583,8 +583,7 @@ if (qualityBtn && qualityMenu) {
             vElement.load();
 
             qualityMenu.classList.remove('active');
-        };
-
+        }
 
   
     const loadingEfek = document.getElementById('videoLoading');
