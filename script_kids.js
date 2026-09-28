@@ -567,6 +567,8 @@ const urlAwal = buatUrlKualitas(
 
 vElement.src = urlAwal;
 vElement.load();
+
+console.log("URL VIDEO:", urlAwal);
 }
   
     const loadingEfek = document.getElementById('videoLoading');
