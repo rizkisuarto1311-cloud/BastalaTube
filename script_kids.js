@@ -461,7 +461,8 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     const vElement = document.getElementById('mainVideoPlayer');
 
      // =========================================
-// PENGATURAN KUALITAS VIDEO
+// =========================================
+// PENGATURAN KUALITAS VIDEO (FIXED)
 // =========================================
 
 const qualityBtn = document.getElementById('qualityBtn');
@@ -492,9 +493,9 @@ function buatUrlKualitas(url, kualitas) {
     }
 
     return url.replace(
-    '/video/upload/',
-    `/video/upload/w_${width}/q_auto/f_auto/`
-   );
+        '/video/upload/',
+        `/video/upload/w_${width}/q_auto/f_auto/`
+    );
 }
 
 function tandaiKualitasAktif(kualitas) {
@@ -527,6 +528,7 @@ if (qualityBtn && qualityMenu) {
 
             tandaiKualitasAktif(kualitas);
 
+            // Simpan posisi detik dan status pemutaran
             const posisi = vElement.currentTime || 0;
             const sedangPlay = !vElement.paused;
 
@@ -535,23 +537,28 @@ if (qualityBtn && qualityMenu) {
                 kualitas
             );
 
+            // TAMPILKAN LOADING SEMENTARA
+            const loadingEfek = document.getElementById('videoLoading');
+            if (loadingEfek) loadingEfek.style.display = 'flex';
+
             vElement.pause();
 
-            vElement.innerHTML =
-                `<source src="${urlBaru}" type="video/mp4">`;
-
+            // GANTI SRC LANGSUNG KE VELEMENT (Bukan via innerHTML <source>)
+            vElement.src = urlBaru;
             vElement.load();
 
-            vElement.currentTime = posisi;
+            // KEMBALIKAN KE DETIK TERAKHIR KETIKA MEDIA SUDAH SIAP
+            const onCanPlay = () => {
+                vElement.currentTime = posisi;
+                if (sedangPlay) {
+                    vElement.play().catch(err => {
+                        console.log("Gagal melanjutkan video:", err);
+                    });
+                }
+                vElement.removeEventListener('canplay', onCanPlay);
+            };
 
-            if (sedangPlay) {
-                vElement.play().catch(err => {
-                    console.log(
-                        "Gagal melanjutkan video:",
-                        err
-                    );
-                });
-            }
+            vElement.addEventListener('canplay', onCanPlay);
 
             qualityMenu.classList.remove('active');
         };
@@ -559,17 +566,16 @@ if (qualityBtn && qualityMenu) {
 
     tandaiKualitasAktif(kualitasTersimpan);
 
-  // Muat video langsung dengan kualitas yang dipilih
-const urlAwal = buatUrlKualitas(
-    video.videoUrl,
-    kualitasTersimpan
-);
+    // Muat video awal langsung dengan kualitas tersimpan
+    const urlAwal = buatUrlKualitas(
+        video.videoUrl,
+        kualitasTersimpan
+    );
 
-vElement.src = urlAwal;
-vElement.load();
-
-console.log("URL VIDEO:", urlAwal);
+    vElement.src = urlAwal;
+    vElement.load();
 }
+
   
     const loadingEfek = document.getElementById('videoLoading');
     const vContainer = document.getElementById('vContainer');
