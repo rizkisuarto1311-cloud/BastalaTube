@@ -471,7 +471,7 @@ const qualityButtons = qualityMenu
     : [];
 
 const kualitasTersimpan =
-    localStorage.getItem('bastalaVideoQuality') || 'auto';
+    localStorage.getItem('bastalaVideoQuality') || '480';
 
 function buatUrlKualitas(url, kualitas) {
     if (!url || kualitas === 'auto') {
@@ -558,6 +558,15 @@ if (qualityBtn && qualityMenu) {
     });
 
     tandaiKualitasAktif(kualitasTersimpan);
+
+  // Muat video langsung dengan kualitas yang dipilih
+const urlAwal = buatUrlKualitas(
+    video.videoUrl,
+    kualitasTersimpan
+);
+
+vElement.src = urlAwal;
+vElement.load();
 }
   
     const loadingEfek = document.getElementById('videoLoading');
