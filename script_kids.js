@@ -461,8 +461,7 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     const vElement = document.getElementById('mainVideoPlayer');
 
      // =========================================
-// =========================================
-// PENGATURAN KUALITAS VIDEO (FIXED)
+// PENGATURAN KUALITAS VIDEO
 // =========================================
 
 const qualityBtn = document.getElementById('qualityBtn');
@@ -493,9 +492,9 @@ function buatUrlKualitas(url, kualitas) {
     }
 
     return url.replace(
-        '/video/upload/',
-        `/video/upload/w_${width}/q_auto/f_auto/`
-    );
+    '/video/upload/',
+    `/video/upload/w_${width}/q_auto/f_auto/`
+   );
 }
 
 function tandaiKualitasAktif(kualitas) {
@@ -528,7 +527,7 @@ if (qualityBtn && qualityMenu) {
 
             tandaiKualitasAktif(kualitas);
 
-            const posisiTujuan = vElement.currentTime || 0;
+            const posisi = vElement.currentTime || 0;
             const sedangPlay = !vElement.paused;
 
             const urlBaru = buatUrlKualitas(
@@ -536,73 +535,41 @@ if (qualityBtn && qualityMenu) {
                 kualitas
             );
 
-            const loadingEfek = document.getElementById('videoLoading');
-
-            if (loadingEfek) {
-                loadingEfek.style.display = 'flex';
-            }
-
             vElement.pause();
 
-            let sudahDiRestore = false;
+            vElement.innerHTML =
+                `<source src="${urlBaru}" type="video/mp4">`;
 
-            const restorePosisi = () => {
-                if (sudahDiRestore) return;
+            vElement.load();
 
-                try {
-                    vElement.currentTime = posisiTujuan;
-                    sudahDiRestore = true;
+            vElement.currentTime = posisi;
 
-                    if (sedangPlay) {
-                        vElement.play().catch(err =>
-                            console.log(
-                                "Gagal melanjut pemutaran:",
-                                err
-                            )
-                        );
-                    }
-                } catch (err) {
+            if (sedangPlay) {
+                vElement.play().catch(err => {
                     console.log(
-                        "Menunggu buffer untuk seeking...",
+                        "Gagal melanjutkan video:",
                         err
                     );
-                }
-            };
-
-            const handleMetadata = () => {
-                restorePosisi();
-                vElement.removeEventListener(
-                    'loadedmetadata',
-                    handleMetadata
-                );
-            };
-
-            const handleCanPlay = () => {
-                restorePosisi();
-                vElement.removeEventListener(
-                    'canplay',
-                    handleCanPlay
-                );
-            };
-
-            vElement.addEventListener(
-                'loadedmetadata',
-                handleMetadata
-            );
-
-            vElement.addEventListener(
-                'canplay',
-                handleCanPlay
-            );
-
-            vElement.src = urlBaru;
-            vElement.load();
+                });
+            }
 
             qualityMenu.classList.remove('active');
         };
     });
-}
 
+    tandaiKualitasAktif(kualitasTersimpan);
+
+  // Muat video langsung dengan kualitas yang dipilih
+const urlAwal = buatUrlKualitas(
+    video.videoUrl,
+    kualitasTersimpan
+);
+
+vElement.src = urlAwal;
+vElement.load();
+
+console.log("URL VIDEO:", urlAwal);
+}
   
     const loadingEfek = document.getElementById('videoLoading');
     const vContainer = document.getElementById('vContainer');
@@ -613,9 +580,9 @@ if (qualityBtn && qualityMenu) {
     const tTotal = document.getElementById('durationTime');
     const btnFullscreen = document.getElementById('btnFullscreen');
 
-    if (tTotal) {
-        tTotal.innerText = video.duration || "0:00";
-    }
+    if (tTotal && video.duration) {
+    tTotal.innerText = video.duration;
+}
 
 let overlayTimeout;
 
@@ -773,11 +740,16 @@ vElement.addEventListener('timeupdate', () => {
 
 // Pastikan Durasi Total muncul saat video dimuat
 vElement.addEventListener('loadedmetadata', () => {
-    if (tTotal && !video.duration && isFinite(vElement.duration) && vElement.duration > 0) {
+    if (tTotal && isFinite(vElement.duration) && vElement.duration > 0) {
         tTotal.innerText = formatWaktu(vElement.duration);
     }
 });
 
+vElement.addEventListener('durationchange', () => {
+    if (tTotal && isFinite(vElement.duration) && vElement.duration > 0) {
+        tTotal.innerText = formatWaktu(vElement.duration);
+    }
+});
     // --- LOGIKA LOADING & PLAY OTOMATIS ---
 
     // 1. Jika video sedang memuat data (buffering), munculkan loading
