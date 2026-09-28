@@ -394,9 +394,8 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
       </div>
       
      <video id="mainVideoPlayer" playsinline autoplay muted style="width:100%; display:block;">
-        <source src="${video.videoUrl}" type="video/mp4">
      </video>
-
+     
       <div id="videoOverlay" class="video-overlay">
         <div class="overlay-top">
           <div class="top-right">
