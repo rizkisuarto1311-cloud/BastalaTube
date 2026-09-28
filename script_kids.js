@@ -580,9 +580,9 @@ console.log("URL VIDEO:", urlAwal);
     const tTotal = document.getElementById('durationTime');
     const btnFullscreen = document.getElementById('btnFullscreen');
 
-    if (tTotal && video.duration) {
-    tTotal.innerText = video.duration;
-}
+    if (tTotal) {
+        tTotal.innerText = video.duration || "0:00";
+    }
 
 let overlayTimeout;
 
@@ -740,16 +740,11 @@ vElement.addEventListener('timeupdate', () => {
 
 // Pastikan Durasi Total muncul saat video dimuat
 vElement.addEventListener('loadedmetadata', () => {
-    if (tTotal && isFinite(vElement.duration) && vElement.duration > 0) {
+    if (tTotal && !video.duration && isFinite(vElement.duration) && vElement.duration > 0) {
         tTotal.innerText = formatWaktu(vElement.duration);
     }
 });
 
-vElement.addEventListener('durationchange', () => {
-    if (tTotal && isFinite(vElement.duration) && vElement.duration > 0) {
-        tTotal.innerText = formatWaktu(vElement.duration);
-    }
-});
     // --- LOGIKA LOADING & PLAY OTOMATIS ---
 
     // 1. Jika video sedang memuat data (buffering), munculkan loading
