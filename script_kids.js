@@ -585,7 +585,6 @@ if (tTotal && video.duration) {
 }
 
 let overlayTimeout;
-let overlayTimeout;
 
     // --- FUNGSI OVERLAY ---
     const handleOverlayToggle = (e) => {
