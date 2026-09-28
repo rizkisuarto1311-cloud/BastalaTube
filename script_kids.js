@@ -580,7 +580,7 @@ console.log("URL VIDEO:", urlAwal);
     const tTotal = document.getElementById('durationTime');
     const btnFullscreen = document.getElementById('btnFullscreen');
 
-if (tTotal && video.duration) {
+    if (tTotal && video.duration) {
     tTotal.innerText = video.duration;
 }
 
