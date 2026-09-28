@@ -493,7 +493,7 @@ function buatUrlKualitas(url, kualitas) {
 
     return url.replace(
     '/video/upload/',
-    `/video/upload/w_${width}/q_auto/f_mp4/`
+    `/video/upload/w_${width}/q_auto/f_auto/`
    );
 }
 
