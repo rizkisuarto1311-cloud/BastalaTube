@@ -492,9 +492,9 @@ function buatUrlKualitas(url, kualitas) {
     }
 
     return url.replace(
-        '/video/upload/',
-        `/video/upload/w_${width}/q_auto/f_auto/`
-    );
+    '/video/upload/',
+    `/video/upload/w_${width}/q_auto/f_mp4/`
+   );
 }
 
 function tandaiKualitasAktif(kualitas) {
