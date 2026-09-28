@@ -516,7 +516,7 @@ if (qualityBtn && qualityMenu) {
 
     qualityButtons.forEach(button => {
 
-        button.onclick = (e) => {
+          button.onclick = (e) => {
             e.stopPropagation();
 
             const kualitas = button.dataset.quality;
@@ -528,8 +528,8 @@ if (qualityBtn && qualityMenu) {
 
             tandaiKualitasAktif(kualitas);
 
-            // Simpan posisi detik dan status pemutaran
-            const posisi = vElement.currentTime || 0;
+            // 1. SIMPAN POSISI DETIK PRESISI & STATUS DIPUTAR
+            const posisiTujuan = vElement.currentTime || 0;
             const sedangPlay = !vElement.paused;
 
             const urlBaru = buatUrlKualitas(
@@ -537,44 +537,54 @@ if (qualityBtn && qualityMenu) {
                 kualitas
             );
 
-            // TAMPILKAN LOADING SEMENTARA
+            // Tampilkan animasi loading
             const loadingEfek = document.getElementById('videoLoading');
             if (loadingEfek) loadingEfek.style.display = 'flex';
 
             vElement.pause();
 
-            // GANTI SRC LANGSUNG KE VELEMENT (Bukan via innerHTML <source>)
+            // 2. FUNGSI UNTUK MENGEMBALIKAN DETIK KE POSISI AWAL
+            let sudahDiRestore = false;
+            
+            const restorePosisi = () => {
+                if (sudahDiRestore) return;
+                
+                try {
+                    // Pindahkan detik ke posisi tujuan (misal 1:03)
+                    vElement.currentTime = posisiTujuan;
+                    sudahDiRestore = true;
+
+                    if (sedangPlay) {
+                        vElement.play().catch(err => console.log("Gagal melanjut pemutaran:", err));
+                    }
+                } catch (err) {
+                    console.log("Menunggu buffer untuk seeking...", err);
+                }
+            };
+
+            // 3. PASANG EVENT LISTENER GANDA (METADATA & CANPLAY)
+            // loadedmetadata: saat durasi video baru diketahui
+            // canplay: saat video sudah siap diputar di detik tersebut
+            const handleMetadata = () => {
+                restorePosisi();
+                vElement.removeEventListener('loadedmetadata', handleMetadata);
+            };
+
+            const handleCanPlay = () => {
+                restorePosisi();
+                vElement.removeEventListener('canplay', handleCanPlay);
+            };
+
+            vElement.addEventListener('loadedmetadata', handleMetadata);
+            vElement.addEventListener('canplay', handleCanPlay);
+
+            // 4. GANTI URL DAN MUAT
             vElement.src = urlBaru;
             vElement.load();
 
-            // KEMBALIKAN KE DETIK TERAKHIR KETIKA MEDIA SUDAH SIAP
-            const onCanPlay = () => {
-                vElement.currentTime = posisi;
-                if (sedangPlay) {
-                    vElement.play().catch(err => {
-                        console.log("Gagal melanjutkan video:", err);
-                    });
-                }
-                vElement.removeEventListener('canplay', onCanPlay);
-            };
-
-            vElement.addEventListener('canplay', onCanPlay);
-
             qualityMenu.classList.remove('active');
         };
-    });
 
-    tandaiKualitasAktif(kualitasTersimpan);
-
-    // Muat video awal langsung dengan kualitas tersimpan
-    const urlAwal = buatUrlKualitas(
-        video.videoUrl,
-        kualitasTersimpan
-    );
-
-    vElement.src = urlAwal;
-    vElement.load();
-}
 
   
     const loadingEfek = document.getElementById('videoLoading');
