@@ -663,6 +663,64 @@ body {
   font-size: 25px;
 }
 
+/* =========================================
+   VIDEO QUALITY MENU
+========================================= */
+
+.quality-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#qualityBtn {
+    cursor: pointer;
+}
+
+.quality-menu {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 130px;
+    background: rgba(20, 20, 20, 0.96);
+    border-radius: 10px;
+    padding: 8px 0;
+    display: none;
+    flex-direction: column;
+    z-index: 999999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.quality-menu.active {
+    display: flex;
+}
+
+.quality-title {
+    color: #aaa;
+    font-size: 12px;
+    padding: 6px 14px;
+}
+
+.quality-menu button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.quality-menu button:active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.quality-menu button.active {
+    color: #ff0000;
+    font-weight: bold;
+}
+
 .overlay-mid {
     display: flex;
     justify-content: center;
