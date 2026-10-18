@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bastala-cache-v1';
+const CACHE_NAME = 'bastala-cache-v2';
 const assets = [
   './',
   './index.html',
