@@ -180,7 +180,7 @@ function displayVideos(videos, append = false) {
         // Template HTML yang lebih bersih
         card.innerHTML = `
             <div class="thumb-container">
-              <img src="https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg" loading="lazy" alt="${v.title}" onerror="this.src='fallback.jpg'">
+              <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" loading="lazy" alt="${video.title}" onerror="this.src='fallback.jpg'">
               <span class="duration">${video.duration || "0:00"}</span>
             </div>
             
@@ -620,7 +620,7 @@ function buatElemenVideo(v) {
     
     card.innerHTML = `
         <div class="thumb-container">
-            <img src="${v.thumbnail}" alt="${v.title}" loading="lazy">
+            <img src="https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg" loading="lazy" alt="${v.title}" onerror="this.src='fallback.jpg'">
             <span class="duration">${v.duration || "0:00"}</span>
         </div>
         <div class="v-details">
