@@ -388,73 +388,20 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
 
     // 3. Masukkan Struktur Video Player & Overlay
     playerArea.innerHTML = `
-    <div class="video-container" id="vContainer">
-      <div id="videoLoading" class="video-loading">
-        <div class="spinner"></div>
-      </div>
-      
-     <video id="mainVideoPlayer" playsinline autoplay muted style="width:100%; display:block;">
-     </video>
-     
-      <div id="videoOverlay" class="video-overlay">
-        <div class="overlay-top">
-          <div class="top-right">
-            <i class="ri-toggle-line"></i>
-            <i class="ri-macbook-line"></i>
-            <i class="ri-closed-captioning-line"></i>
-
-            <div class="quality-wrapper">
-            <i id="qualityBtn" class="ri-settings-3-line"></i>
-
-           <div id="qualityMenu" class="quality-menu">
-           <div class="quality-title">Kualitas</div>
-            <button data-quality="auto">Auto</button>
-            <button data-quality="360">360p</button>
-            <button data-quality="480">480p</button>
-            <button data-quality="720">720p</button>
-            <button data-quality="1080">1080p</button>
-           </div>
-          </div>
-         </div>
-        </div>
-
-          <div class="overlay-mid">
-             <div class="icon-skip-container" id="rewindBtn">
-               <i class="bi bi-arrow-counterclockwise"></i>
-               <span class="skip-number">10</span>
-             </div>
-             <i id="playIcon" class="bi bi-pause-fill main-play"></i>
-             <div class="icon-skip-container" id="fastForwardBtn">
-               <i class="bi bi-arrow-clockwise"></i>
-               <span class="skip-number">10</span>
-             </div>
-          </div>
-
-          <div class="overlay-bot">
-            <div class="time-wrapper">
-              <span id="currentTime">0:00</span> / <span id="durationTime">0:00</span>
-            </div>
-            <i id="btnFullscreen" class="ri-expand-diagonal-2-line icon-fullscreen"></i>
-          </div>
-      </div>
-      
-       <div class="progress-container">
-        <div id="merahJalan" class="progress-fill"></div>
-      </div>
-      
-      <div class="judul-portrait-khusus" id="judulLuar">
-        <div class="v-title-luar">${video.title}</div>
-        <div class="v-channel-luar">@${meta.channel}</div>
-      </div>
-      
-      <div class="ikon-tambahan-portrait">
-        <div class="item-ikon"><i class="bi bi-hand-thumbs-up"></i></div>
-        <div class="item-ikon"><i class="bi bi-hand-thumbs-down"></i></div>
-        <div class="item-ikon"><i class="bi bi-chat-left-text"></i></div>
-        <div class="item-ikon"><i class="bi bi-bookmark"></i></div>
-        <div class="item-ikon"><i class="bi-three-dots"></i></div>
-      </div>
-    </div>`;
+<div class="video-container" id="vContainer">
+  <!-- Gunakan youtube-nocookie.com untuk mode privasi anak -->
+  <iframe 
+    id="mainVideoPlayer"
+    width="100%" 
+    height="100%" 
+    src="https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0&modestbranding=1" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
+  
+  <!-- Hapus overlay kontrol kustom Anda (playIcon, progress bar, dll) karena YouTube punya kontrol sendiri -->
+</div>`;
   
   
     // 4. Inisialisasi Elemen Kontrol
