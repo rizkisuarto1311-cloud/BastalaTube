@@ -348,30 +348,43 @@ window.addEventListener('scroll', () => {
 
 // ==== FUNGSI BUKA DETAIL VIDEO ==== //
 
-let isPortrait = false; // Status apakah video sedang di tengah/portrait
-
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
     const detailPage = document.getElementById('videoDetailPage');
     const playerArea = document.getElementById('playerContent');
     const targetRekomendasi = document.getElementById('rekomendasiSection');
-    const bNav = document.getElementById('bottomNav');
+    const bottomNav = document.getElementById('bottomNav');
     
     updateStatusBar('normal_video');
     updateContentLayout('normal_video');
 
-    // --- TAMBAHKAN INI ---
     if (bottomNav) {
-        bottomNav.style.transform = 'translateY(100%)'; // Buang ke bawah layar
+        bottomNav.style.transform = 'translateY(100%)';
         bottomNav.style.transition = 'transform 0.3s ease';
     }
-    lastPos = 0; // Reset tracking scroll
-
+    lastPos = 0; 
 
     // 1. Reset Awal
     if (targetRekomendasi) targetRekomendasi.innerHTML = "";
-    playerArea.innerHTML = "";
+    
+    // Ambil YouTube ID dari data.js
+    const ytId = video.youtubeId || ""; 
 
-    // 2. Update Informasi Video (Title, Views, Date, Likes, Comment Count)
+    // 2. Masukkan Iframe YouTube
+    playerArea.innerHTML = `
+    <div class="video-container" id="vContainer" style="background:#000;">
+      <iframe 
+        id="mainVideoPlayer"
+        width="100%" 
+        height="100%" 
+        src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+        style="position:absolute; top:0; left:0; width:100%; height:100%;">
+      </iframe>
+    </div>`;
+
+    // 3. Update Informasi Video (Title, Views, Date, Likes, Comment Count)
     const stats = getStatsOtomatis(video.title);
     const meta = getMetaOtomatis(video.title);
     const jmlKomentar = getKomentarOtomatis(video.title);
@@ -386,372 +399,27 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     const commentCountElement = document.getElementById('commentCount');
     if (commentCountElement) commentCountElement.innerText = jmlKomentar;
 
-    // 3. Masukkan Struktur Video Player & Overlay
-    playerArea.innerHTML = `
-<div class="video-container" id="vContainer">
-  <!-- Gunakan youtube-nocookie.com untuk mode privasi anak -->
-  <iframe 
-    id="mainVideoPlayer"
-    width="100%" 
-    height="100%" 
-    src="https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0&modestbranding=1" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-  
-  <!-- Hapus overlay kontrol kustom Anda (playIcon, progress bar, dll) karena YouTube punya kontrol sendiri -->
-</div>`;
-  
-  
-    // 4. Inisialisasi Elemen Kontrol
-    const vElement = document.getElementById('mainVideoPlayer');
-
-     // =========================================
-// PENGATURAN KUALITAS VIDEO
-// =========================================
-
-const qualityBtn = document.getElementById('qualityBtn');
-const qualityMenu = document.getElementById('qualityMenu');
-const qualityButtons = qualityMenu
-    ? qualityMenu.querySelectorAll('button')
-    : [];
-
-const kualitasTersimpan =
-    localStorage.getItem('bastalaVideoQuality') || '480';
-
-function buatUrlKualitas(url, kualitas) {
-    if (!url || kualitas === 'auto') {
-        return url;
-    }
-
-    const ukuran = {
-        '360': 360,
-        '480': 480,
-        '720': 720,
-        '1080': 1080
-    };
-
-    const width = ukuran[kualitas];
-
-    if (!width) {
-        return url;
-    }
-
-    return url.replace(
-    '/video/upload/',
-    `/video/upload/w_${width}/q_auto/f_auto/`
-   );
-}
-
-function tandaiKualitasAktif(kualitas) {
-    qualityButtons.forEach(button => {
-        button.classList.toggle(
-            'active',
-            button.dataset.quality === kualitas
-        );
-    });
-}
-
-if (qualityBtn && qualityMenu) {
-
-    qualityBtn.onclick = (e) => {
-        e.stopPropagation();
-        qualityMenu.classList.toggle('active');
-    };
-
-    qualityButtons.forEach(button => {
-
-        button.onclick = (e) => {
-            e.stopPropagation();
-
-            const kualitas = button.dataset.quality;
-
-            localStorage.setItem(
-                'bastalaVideoQuality',
-                kualitas
-            );
-
-            tandaiKualitasAktif(kualitas);
-
-            const posisi = vElement.currentTime || 0;
-            const sedangPlay = !vElement.paused;
-
-            const urlBaru = buatUrlKualitas(
-                video.videoUrl,
-                kualitas
-            );
-
-            vElement.pause();
-
-            vElement.innerHTML =
-                `<source src="${urlBaru}" type="video/mp4">`;
-
-            vElement.load();
-
-            vElement.currentTime = posisi;
-
-            if (sedangPlay) {
-                vElement.play().catch(err => {
-                    console.log(
-                        "Gagal melanjutkan video:",
-                        err
-                    );
-                });
-            }
-
-            qualityMenu.classList.remove('active');
-        };
-    });
-
-    tandaiKualitasAktif(kualitasTersimpan);
-
-  // Muat video langsung dengan kualitas yang dipilih
-const urlAwal = buatUrlKualitas(
-    video.videoUrl,
-    kualitasTersimpan
-);
-
-vElement.src = urlAwal;
-vElement.load();
-
-console.log("URL VIDEO:", urlAwal);
-}
-  
-    const loadingEfek = document.getElementById('videoLoading');
-    const vContainer = document.getElementById('vContainer');
-    const overlay = document.getElementById('videoOverlay');
-    const playIcon = document.getElementById('playIcon');
-    const garisMerah = document.getElementById('merahJalan');
-    const tSekarang = document.getElementById('currentTime');
-    const tTotal = document.getElementById('durationTime');
+    // 4. Tombol Fullscreen (Mode Browser)
     const btnFullscreen = document.getElementById('btnFullscreen');
+    if (btnFullscreen) {
+        btnFullscreen.onclick = (e) => {
+            e.stopPropagation();
+            const vContainer = document.getElementById('vContainer');
+            const isFS = document.fullscreenElement || document.webkitFullscreenElement;
 
-    if (tTotal && video.duration) {
-    tTotal.innerText = video.duration;
-}
-
-let overlayTimeout;
-
-    // --- FUNGSI OVERLAY ---
-    const handleOverlayToggle = (e) => {
-    if (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    }
-
-    // Gunakan classList, jangan set .style.opacity secara manual lagi
-    const isShowing = overlay.classList.contains('active');
-
-    if (isShowing) {
-        // SEMBUNYIKAN
-        overlay.classList.remove('active');
-        vContainer.classList.remove('show-controls');
-        clearTimeout(overlayTimeout);
-    } else {
-        // MUNCULKAN
-        overlay.classList.add('active');
-        vContainer.classList.add('show-controls');
-        
-        clearTimeout(overlayTimeout);
-        overlayTimeout = setTimeout(() => {
-            // Sembunyikan otomatis dengan menghapus class
-            overlay.classList.remove('active');
-            vContainer.classList.remove('show-controls');
-        }, 3000);
-    }
-};
-
-
-
-    vElement.onclick = handleOverlayToggle;
-    overlay.onclick = (e) => { if (e.target === overlay) handleOverlayToggle(e); };
-
-        // --- KONTROL TOMBOL ---
-    playIcon.onclick = (e) => {
-        e.stopPropagation();
-        if (vElement.paused) {
-            vElement.play();
-            playIcon.className = "bi bi-pause-fill main-play";
-        } else {
-            vElement.pause();
-            playIcon.className = "bi bi-play-fill main-play";
-        }
-    };
-
-    // Tombol Mundur 10 Detik
-    const btnRewind = document.getElementById('rewindBtn');
-    if (btnRewind) {
-        btnRewind.onclick = (e) => { 
-            e.stopPropagation(); 
-            vElement.currentTime = Math.max(0, vElement.currentTime - 10); 
-        };
-    }
-
-    // Tombol Maju 10 Detik
-    const btnForward = document.getElementById('fastForwardBtn');
-    if (btnForward) {
-        btnForward.onclick = (e) => { 
-            e.stopPropagation(); 
-            vElement.currentTime = Math.min(vElement.duration, vElement.currentTime + 10); 
-        };
-    }
-
-    // --- FULLSCREEN LOGIC ---
-    // --- LOGIKA TOMBOL TOGGLE: NORMAL <-> FULLSCREEN VERTIKAL ---    
-btnFullscreen.onclick = (e) => {
-    e.stopPropagation();
-
-    const vContainer = document.getElementById('vContainer');
-    const scrollContent = detailPage.querySelector('.detail-scroll-content');
-    const playerWrapper = detailPage.querySelector('.player-wrapper');
-    
-    // Cek apakah browser sedang dalam mode Fullscreen Landscape (16:9)
-    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
-
-    // 1. JIKA SEDANG LANDSCAPE (16:9) -> KELUAR KE NORMAL
-    if (isFS) {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        }
-        // Ikon akan otomatis berubah lewat listener 'fullscreenchange' yang kita buat di bawah
-        return;
-    }
-
-    // 2. JIKA SEDANG MODE PORTRAIT (VERTIKAL) -> BALIK KE NORMAL
-    if (isPortrait) {
-        isPortrait = false;
-        if (vContainer) vContainer.classList.remove('mode-portrait');
-
-        // Ganti Ikon Balik ke Expand
-        btnFullscreen.classList.replace('ri-collapse-diagonal-2-line', 'ri-expand-diagonal-2-line');
-
-        // Animasi kembali ke posisi semula
-        playerWrapper.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
-        scrollContent.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
-
-        requestAnimationFrame(() => {
-            playerWrapper.style.transform = 'translateY(0)';
-            scrollContent.style.transform = 'translateY(0)';
-            scrollContent.style.opacity = '1';
-        });
-    } 
-    // 3. JIKA SEDANG NORMAL -> MASUK KE LANDSCAPE (16:9)
-    else {
-        if (vContainer.requestFullscreen) {
-            vContainer.requestFullscreen();
-        } else if (vContainer.webkitRequestFullscreen) {
-            vContainer.webkitRequestFullscreen();
-        }
-
-        // Putar layar otomatis (Opsional)
-        if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('landscape').catch(err => console.log(err));
-        }
-        
-        // Ikon berubah jadi "Perkecil"
-        btnFullscreen.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
-    }
-};
-
-// --- TAMBAHKAN LISTENER INI DI LUAR ONCLICK (PENTING) ---
-// Supaya saat user tekan tombol "Back" HP, ikonnya tidak nyangkut
-document.addEventListener('fullscreenchange', () => {
-    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
-    const btnFs = document.getElementById('btnFullscreen');
-    if (!isFS && btnFs && !isPortrait) {
-        btnFs.classList.replace('ri-collapse-diagonal-2-line', 'ri-expand-diagonal-2-line');
-        if (screen.orientation && screen.orientation.unlock) {
-            screen.orientation.unlock();
-        }
-    }
-});
-
-
-  
-    // --- UPDATE PROGRESS & TIME (Real-time) ---
-vElement.addEventListener('timeupdate', () => {
-    // KUNCINYA: Cari elemen 'merahJalan' DI DALAM event ini
-    const garisUpdate = document.getElementById('merahJalan'); 
-    
-    if (garisUpdate && vElement.duration) {
-        let p = (vElement.currentTime / vElement.duration) * 100;
-        garisUpdate.style.width = p + "%";
-    }
-
-    // Update angka waktu (0:00 / 0:00)
-    if (tSekarang) tSekarang.innerText = formatWaktu(vElement.currentTime);
-});
-
-// Pastikan Durasi Total muncul saat video dimuat
-vElement.addEventListener('loadedmetadata', () => {
-    if (tTotal && isFinite(vElement.duration) && vElement.duration > 0) {
-        tTotal.innerText = formatWaktu(vElement.duration);
-    }
-});
-
-vElement.addEventListener('durationchange', () => {
-    if (tTotal && isFinite(vElement.duration) && vElement.duration > 0) {
-        tTotal.innerText = formatWaktu(vElement.duration);
-    }
-});
-    // --- LOGIKA LOADING & PLAY OTOMATIS ---
-
-    // 1. Jika video sedang memuat data (buffering), munculkan loading
-    vElement.onloadstart = () => {
-        loadingEfek.style.display = 'flex';
-    };
-    
-    vElement.onwaiting = () => {
-        loadingEfek.style.display = 'flex';
-    };
-
-    // 2. Jika video sudah siap/mulai berjalan, sembunyikan loading
-    vElement.onplaying = () => {
-        loadingEfek.style.display = 'none';
-    };
-
-        // 3. Perintah Play Utama
-    if (isAutomatic) {
-        // SELALU mulai dengan muted=true agar tidak diblokir browser
-        vElement.muted = true; 
-        vElement.load(); 
-
-        vElement.play().then(() => {
-            console.log("Video berhasil diputar otomatis (muted)");
-            if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
-
-            if (suaraDariVideoLama) {
-                setTimeout(() => {
-                    vElement.muted = false;
-                    console.log("Suara diaktifkan setelah autoplay");
-                }, 500);
+            if (isFS) {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            } else {
+                if (vContainer.requestFullscreen) vContainer.requestFullscreen();
+                else if (vContainer.webkitRequestFullscreen) vContainer.webkitRequestFullscreen();
             }
-        }).catch(err => {
-            console.error("Autoplay gagal diblokir browser:", err);
-            // Fallback: Jika policy browser terlalu ketat, paksa buka tombol play
-            if (playIcon) playIcon.className = "bi bi-play-fill main-play";
-        });
-    } else {
-        // JIKA DIKLIK MANUAL OLEH USER
-        vElement.muted = false;
-        vElement.play().catch(e => console.log("Play manual error:", e));
-        if (playIcon) playIcon.className = "bi bi-pause-fill main-play";
+        };
     }
-
-    
-    // 4. Fitur autonext 
-    vElement.onended = () => {
-        console.log("Video selesai, memutar video berikutnya...");
-        putarVideoOtomatis();
-    };
 
     // --- LOGIKA KOMENTAR DINAMIS ---
     const elementTeksKomentar = document.getElementById('commentText');
     const elementFotoKomentar = document.getElementById('commentUserImg');
-    const elementNamaKomentar = document.getElementById('commentUserName');
 
     if (elementTeksKomentar && typeof daftarKomentar !== 'undefined') {
         let hash = 0;
@@ -759,13 +427,8 @@ vElement.addEventListener('durationchange', () => {
             hash = video.title.charCodeAt(i) + ((hash << 5) - hash);
         }
         const indexKomentar = Math.abs(hash) % daftarKomentar.length;
-        
-        // Update Teks
         elementTeksKomentar.innerText = daftarKomentar[indexKomentar];
-        
-        // Update Foto & Nama (Satu untuk semua sesuai permintaanmu)
-        if (elementFotoKomentar) elementFotoKomentar.src = "MAMA.JPG";
-        if (elementNamaKomentar) elementNamaKomentar.innerText = "Koleksi Ayah Bunda";
+        if (elementFotoKomentar) elementFotoKomentar.src = "MAMA.JPG"; 
     }
 
     // 5. ISI DAFTAR REKOMENDASI
@@ -783,218 +446,157 @@ vElement.addEventListener('durationchange', () => {
     setTimeout(() => { detailPage.classList.add('active'); }, 40);
     document.body.style.overflow = 'hidden';
     
-    
-    // --- FITUR SWIPE TO PORTRAIT (DENGAN DETEKSI KECEPATAN) ---
+    // --- FITUR SWIPE TO PORTRAIT ---
     const scrollContent = detailPage.querySelector('.detail-scroll-content');
     const playerWrapper = detailPage.querySelector('.player-wrapper');
     let startY = 0;
     let distY = 0;
-    let startTime = 0; // Untuk menghitung kecepatan
+    let startTime = 0;
 
-        detailPage.addEventListener('touchstart', (e) => {
-        const playerWrapper = detailPage.querySelector('.player-wrapper');
-        const videoHeight = playerWrapper ? playerWrapper.offsetHeight : 250; // default 250 jika tidak terbaca
+    detailPage.addEventListener('touchstart', (e) => {
+        const videoHeight = playerWrapper ? playerWrapper.offsetHeight : 250;
         const touchY = e.touches[0].clientY;
         
         if (detailPage.scrollTop <= 0 && touchY > videoHeight) {
             startY = touchY;
             startTime = Date.now();
             detailPage.classList.add('dragging');
-            
-            // Matikan transisi agar gerakannya menempel di jari
             scrollContent.style.transition = 'none';
             playerWrapper.style.transition = 'none';
         }
     }, { passive: true });
 
-        detailPage.addEventListener('touchmove', (e) => {
+    detailPage.addEventListener('touchmove', (e) => {
         const currentY = e.touches[0].clientY;
         distY = currentY - startY;
 
-// A. LOGIKA TARIK KE BAWAH (Ke Portrait)
-// Tambahkan syarat !isPortrait (artinya: HANYA jalan jika TIDAK sedang mode portrait)
-if (detailPage.classList.contains('dragging') && distY > 0 && !isPortrait) {
-    e.preventDefault(); 
-    detailPage.style.backgroundColor = `rgba(0, 0, 0, ${Math.min(distY / 300, 1)})`;
-    scrollContent.style.transform = `translateY(${distY}px)`;
-    scrollContent.style.opacity = Math.max(0, 1 - (distY / 200));
-    playerWrapper.style.transform = `translateY(${Math.min(distY * 0.4, window.innerHeight * 0.3)}px)`;
-}
+        if (detailPage.classList.contains('dragging') && distY > 0 && !isPortrait) {
+            e.preventDefault(); 
+            detailPage.style.backgroundColor = `rgba(0, 0, 0, ${Math.min(distY / 300, 1)})`;
+            scrollContent.style.transform = `translateY(${distY}px)`;
+            scrollContent.style.opacity = Math.max(0, 1 - (distY / 200));
+            playerWrapper.style.transform = `translateY(${Math.min(distY * 0.4, window.innerHeight * 0.3)}px)`;
+        }
 
+        if (bottomNav) {
+            bottomNav.style.transform = `translateY(100%)`; 
+        }
 
-         if (bottomNav) {
-                // bHeight biasanya 60px. Kita dorong ke bawah sesuai tarikan jari
-                const navHide = Math.min(60, distY / 2); 
-                bottomNav.style.transform = `translateY(100%)`; 
-            }
+        if (isPortrait && distY < 0) {
+            if (e.cancelable) e.preventDefault(); 
+            const viewHeight = window.innerHeight;
+            const posisiTengah = viewHeight * 0.3;
+            const jarakMaksimal = posisiTengah; 
+            const currentDist = Math.abs(distY);
+            const progress = Math.min(currentDist / jarakMaksimal, 1);
 
-        // B. LOGIKA TARIK KE ATAS (Balik dari Portrait ke Normal)
-          if (isPortrait && distY < 0) {
-             if (e.cancelable) e.preventDefault(); 
-    
-             // 1. Ambil tinggi layar
-               const viewHeight = window.innerHeight;
-               const posisiTengah = viewHeight * 0.3;
+            const moveVideo = posisiTengah - (posisiTengah * progress);
+            playerWrapper.style.transform = `translateY(${moveVideo}px)`;
+            const moveContent = viewHeight - (viewHeight * progress);
+            scrollContent.style.transform = `translateY(${moveContent}px)`;
+            scrollContent.style.opacity = progress;
+            detailPage.style.backgroundColor = `rgba(0, 0, 0, ${0.5 + (progress * 0.5)})`;
+        }
+    }, { passive: false });
 
-            // 2. Batasi tarikan agar tidak melampaui batas atas (0)
-             // Kita hitung seberapa jauh jarak dari posisi portrait ke posisi normal (0)
-              const jarakMaksimal = posisiTengah; 
-              const currentDist = Math.abs(distY);
-    
-            // 3. Hitung Progres (0 sampai 1)
-              const progress = Math.min(currentDist / jarakMaksimal, 1);
+    detailPage.addEventListener('touchend', (e) => {
+        if (Math.abs(distY) < 5) return; 
+        if (!detailPage.classList.contains('dragging')) return;
+        detailPage.classList.remove('dragging');
 
-           // 4. VIDEO: Bergerak dari posisiTengah ke 0
-              const moveVideo = posisiTengah - (posisiTengah * progress);
-              playerWrapper.style.transform = `translateY(${moveVideo}px)`;
+        const duration = Date.now() - startTime;
+        const velocity = distY / duration;
+        const vContainer = document.getElementById('vContainer');
 
-          // 5. KONTEN (Judul & List): Benar-benar mengikuti koordinat jari
-            // Kita buat dia mulai dari dasar layar dan naik ke atas
-              const moveContent = viewHeight - (viewHeight * progress);
-              scrollContent.style.transform = `translateY(${moveContent}px)`;
-
-          // 6. OPACITY: Mengikuti progres tarikan
-              scrollContent.style.opacity = progress;
-    
-         // Opsional: Background semakin gelap/solid saat naik
-              detailPage.style.backgroundColor = `rgba(0, 0, 0, ${0.5 + (progress * 0.5)})`;
-          }
-        }, { passive: false });
-
-        detailPage.addEventListener('touchend', (e) => {
-    if (Math.abs(distY) < 5) return; 
-    if (!detailPage.classList.contains('dragging')) return;
-    detailPage.classList.remove('dragging');
-
-    const duration = Date.now() - startTime;
-    const velocity = distY / duration;
-    
-    // Ambil container video untuk ganti mode ikon
-    const vContainer = document.getElementById('vContainer');
-
-    // 1. JIKA SWIPE UP (BALIK KE NORMAL)
-    if (isPortrait && distY < -50) {
-        isPortrait = false; 
-        
-        updateStatusBar('normal_video');
-    updateContentLayout('normal_video');
-        
-        // KONDISI IKON: Balik ke Normal
-        if (vContainer) vContainer.classList.remove('mode-portrait');
-        
-         if (btnFullscreen) {
-        btnFullscreen.classList.replace('ri-collapse-diagonal-2-line', 'ri-expand-diagonal-2-line');
-         }
-
-        const styleBalik = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
-        playerWrapper.style.transition = styleBalik;
-        scrollContent.style.transition = styleBalik;
-
-        requestAnimationFrame(() => {
-            playerWrapper.style.transform = 'translateY(0)';
-            scrollContent.style.transform = 'translateY(0)';
-            scrollContent.style.opacity = '1';
-            detailPage.style.backgroundColor = '#000';
+        if (isPortrait && distY < -50) {
+            isPortrait = false; 
+            updateStatusBar('normal_video');
+            updateContentLayout('normal_video');
             
+            if (vContainer) vContainer.classList.remove('mode-portrait');
+            if (btnFullscreen) btnFullscreen.classList.replace('ri-collapse-diagonal-2-line', 'ri-expand-diagonal-2-line');
+
+            const styleBalik = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
+            playerWrapper.style.transition = styleBalik;
+            scrollContent.style.transition = styleBalik;
+
+            requestAnimationFrame(() => {
+                playerWrapper.style.transform = 'translateY(0)';
+                scrollContent.style.transform = 'translateY(0)';
+                scrollContent.style.opacity = '1';
+                detailPage.style.backgroundColor = '#000';
+                if (bottomNav) {
+                    bottomNav.style.transition = 'transform 0.3s ease';
+                    bottomNav.style.transform = 'translateY(100%)'; 
+                }
+            });
+            setTimeout(() => {
+                playerWrapper.style.transition = '';
+                scrollContent.style.transition = '';
+            }, 300);
+            return;
+        }
+
+        if (velocity > 0.5 || distY > 100) {
+            isPortrait = true; 
+            updateStatusBar('portrait_video');
+            updateContentLayout('portrait_video');
+            
+            if (vContainer) vContainer.classList.add('mode-portrait');
+            if (btnFullscreen) btnFullscreen.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
+
             if (bottomNav) {
                 bottomNav.style.transition = 'transform 0.3s ease';
                 bottomNav.style.transform = 'translateY(100%)'; 
             }
-        });
-
-        setTimeout(() => {
-            playerWrapper.style.transition = '';
-            scrollContent.style.transition = '';
-        }, 300);
-        return;
-    }
-
-    // 2. JIKA SWIPE DOWN (MASUK KE PORTRAIT)
-    if (velocity > 0.5 || distY > 100) {
-        isPortrait = true; 
-        
-        updateStatusBar('portrait_video');
-    updateContentLayout('portrait_video');
-        
-        // KONDISI IKON: Aktifkan Mode Portrait
-        if (vContainer) vContainer.classList.add('mode-portrait');
-        
-        if (btnFullscreen) {
-        btnFullscreen.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
-        }
-
-        if (bottomNav) {
-            bottomNav.style.transition = 'transform 0.3s ease';
-            bottomNav.style.transform = 'translateY(100%)'; 
-        }
-        
-        const midPoint = window.innerHeight * 0.3;
-        
-        playerWrapper.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
-        scrollContent.style.transition = 'all 0.3s ease';
-        
-        playerWrapper.style.transform = `translateY(${midPoint}px)`;
-        scrollContent.style.transform = `translateY(${window.innerHeight}px)`;
-        scrollContent.style.opacity = '0';
-        detailPage.style.backgroundColor = '#000';
-    } else {
-        // 3. LOGIKA SNAP BACK (Video "Nggantung")
-        // Jika tidak jadi portrait, pastikan class mode-portrait dihapus
-        if (vContainer) vContainer.classList.remove('mode-portrait');
-
-        const styleBalik = 'all 0.25s ease-out';
-        playerWrapper.style.transition = styleBalik;
-        scrollContent.style.transition = styleBalik;
-
-        requestAnimationFrame(() => {
-            playerWrapper.style.transform = 'translateY(0)';
-            scrollContent.style.transform = 'translateY(0)';
-            scrollContent.style.opacity = '1';
-            detailPage.style.backgroundColor = '#000';
             
-            if (bottomNav) {
-                bottomNav.style.transform = 'translateY(100%)';
-            }
-        });
+            const midPoint = window.innerHeight * 0.3;
+            playerWrapper.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
+            scrollContent.style.transition = 'all 0.3s ease';
+            playerWrapper.style.transform = `translateY(${midPoint}px)`;
+            scrollContent.style.transform = `translateY(${window.innerHeight}px)`;
+            scrollContent.style.opacity = '0';
+            detailPage.style.backgroundColor = '#000';
+        } else {
+            if (vContainer) vContainer.classList.remove('mode-portrait');
+            const styleBalik = 'all 0.25s ease-out';
+            playerWrapper.style.transition = styleBalik;
+            scrollContent.style.transition = styleBalik;
 
-        setTimeout(() => {
-            playerWrapper.style.transition = '';
-            scrollContent.style.transition = '';
-        }, 250);
-    }
-    
-    distY = 0; 
-});
+            requestAnimationFrame(() => {
+                playerWrapper.style.transform = 'translateY(0)';
+                scrollContent.style.transform = 'translateY(0)';
+                scrollContent.style.opacity = '1';
+                detailPage.style.backgroundColor = '#000';
+                if (bottomNav) bottomNav.style.transform = 'translateY(100%)';
+            });
+            setTimeout(() => {
+                playerWrapper.style.transition = '';
+                scrollContent.style.transition = '';
+            }, 250);
+        }
+        distY = 0; 
+    });
     
     history.pushState({ page: "detail" }, "Detail Video", "#detail");
     
-        // --- KODE BARU UNTUK MENGATUR POSISI & IKON DI MODE PORTRAIT ---
     if (isPortrait) {
         const vContainer = document.getElementById('vContainer');
-        const scrollContent = detailPage.querySelector('.detail-scroll-content');
-        const playerWrapper = detailPage.querySelector('.player-wrapper');
-        const btnFs = document.getElementById('btnFullscreen'); // Ambil tombolnya
+        const btnFs = document.getElementById('btnFullscreen');
 
         if (vContainer) vContainer.classList.add('mode-portrait');
-        
-        // 1. GANTI IKON: Jadi ikon "Perkecil" (Collapse)
-        if (btnFs) {
-            btnFs.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
-        }
-
-        // 2. KONTEN: Dibuang ke bawah layar
+        if (btnFs) btnFs.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
         if (scrollContent) {
             scrollContent.style.transform = `translateY(${window.innerHeight}px)`;
             scrollContent.style.opacity = '0';
         }
-
-        // 3. VIDEO: Pindah ke posisi tengah (Portrait)
         if (playerWrapper) {
             const midPoint = window.innerHeight * 0.3;
             playerWrapper.style.transform = `translateY(${midPoint}px)`;
         }
     }
 }
+
 
 // Fungsi pembantu format waktu (di luar agar rapi)
 function formatWaktu(detik) {
