@@ -363,40 +363,39 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     }
     lastPos = 0; 
 
-    // 1. Reset Awal
+     // 1. Reset Awal
     if (targetRekomendasi) targetRekomendasi.innerHTML = "";
     
-    // Ambil YouTube ID dari data.js
     const ytId = video.youtubeId || ""; 
 
-    // 2. Masukkan Iframe YouTube
-    // 1. Buat wadah kosong untuk video
-playerArea.innerHTML = `
-<div class="video-container" id="vContainer" style="background:#000;">
-  <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
-</div>`;
+    // 2. Buat wadah kosong untuk video API
+    playerArea.innerHTML = `
+    <div class="video-container" id="vContainer" style="background:#000;">
+      <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+    </div>`;
 
-const ytId = video.youtubeId || "";
-
-// 2. Gunakan YouTube API untuk memuat video
-// (Tunggu sebentar agar div-nya siap)
-setTimeout(() => {
-    new YT.Player('ytPlayerApi', {
-        videoId: ytId,
-        playerVars: { 
-            'autoplay': 1, 
-            'rel': 0, 
-            'modestbranding': 1,
-            'iv_load_policy': 3 // Ini perintah untuk mematikan anotasi
-        },
-        events: {
-            'onReady': function(event) {
-                event.target.playVideo(); // Putar otomatis
-            }
+    // 3. Gunakan YouTube API untuk memuat video
+    setTimeout(() => {
+        // Cek apakah API sudah termuat
+        if (typeof YT !== 'undefined' && YT.Player) {
+            new YT.Player('ytPlayerApi', {
+                videoId: ytId,
+                playerVars: { 
+                    'autoplay': 1, 
+                    'rel': 0, 
+                    'modestbranding': 1,
+                    'iv_load_policy': 3 // Mematikan anotasi (Video lainnya)
+                },
+                events: {
+                    'onReady': function(event) {
+                        event.target.playVideo(); // Putar otomatis
+                    }
+                }
+            });
+        } else {
+            console.error("YouTube API belum termuat!");
         }
-    });
-}, 100);
-
+    }, 100);
     // 3. Update Informasi Video (Title, Views, Date, Likes, Comment Count)
     const stats = getStatsOtomatis(video.title);
     const meta = getMetaOtomatis(video.title);
