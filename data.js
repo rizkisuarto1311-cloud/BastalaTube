@@ -3,7 +3,6 @@ const videoLibrary = [
         id: "v1",
         title: "Roda-Roda Bis - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773754106/prN3Q1_Um4w-HD_b0oclz.jpg",
         youtubeId: "prN3Q1_Um4w",
         duration: "2.52"
     },
