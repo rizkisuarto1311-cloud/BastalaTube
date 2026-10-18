@@ -376,7 +376,7 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
         id="mainVideoPlayer"
         width="100%" 
         height="100%" 
-        src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&fs=0&disablekb=1" 
+        src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&controls=0"
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen
