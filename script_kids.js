@@ -180,7 +180,7 @@ function displayVideos(videos, append = false) {
         // Template HTML yang lebih bersih
         card.innerHTML = `
             <div class="thumb-container">
-              <img src="${video.thumbnail}" loading="lazy" alt="thumb">
+              <img src="https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg" loading="lazy" alt="${v.title}" onerror="this.src='fallback.jpg'">
               <span class="duration">${video.duration || "0:00"}</span>
             </div>
             
