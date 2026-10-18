@@ -146,14 +146,6 @@ function getMetaOtomatis(judul) {
     };
 }
 
-function getStatsOtomatis(judul, waktu) {
-    // ... Pastikan fungsi stats juga menerima parameter 'waktu' ...
-    // Gunakan parameter 'waktu' untuk membatasi jumlah views jika isinya "jam"
-}
-
-
-
-
 
 // ==== FUNGSI RENDER VIDEO (UI LOGIC) ==== //
 
