@@ -370,19 +370,32 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     const ytId = video.youtubeId || ""; 
 
     // 2. Masukkan Iframe YouTube
-    playerArea.innerHTML = `
-    <div class="video-container" id="vContainer" style="background:#000;">
-      <iframe 
-        id="mainVideoPlayer"
-        width="100%" 
-        height="100%" 
-        src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0"
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen
-        style="position:absolute; top:0; left:0; width:100%; height:100%;">
-      </iframe>
-    </div>`;
+    // 1. Buat wadah kosong untuk video
+playerArea.innerHTML = `
+<div class="video-container" id="vContainer" style="background:#000;">
+  <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+</div>`;
+
+const ytId = video.youtubeId || "";
+
+// 2. Gunakan YouTube API untuk memuat video
+// (Tunggu sebentar agar div-nya siap)
+setTimeout(() => {
+    new YT.Player('ytPlayerApi', {
+        videoId: ytId,
+        playerVars: { 
+            'autoplay': 1, 
+            'rel': 0, 
+            'modestbranding': 1,
+            'iv_load_policy': 3 // Ini perintah untuk mematikan anotasi
+        },
+        events: {
+            'onReady': function(event) {
+                event.target.playVideo(); // Putar otomatis
+            }
+        }
+    });
+}, 100);
 
     // 3. Update Informasi Video (Title, Views, Date, Likes, Comment Count)
     const stats = getStatsOtomatis(video.title);
