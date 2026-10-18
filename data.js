@@ -10,24 +10,21 @@ const videoLibrary = [
         id: "v2",
         title: "Dengar Suara Hewan - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773818276/pyM_znA8CIA-HD_buziso.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773939445/YTDown.com_YouTube_Dengar-Suara-Hewan-Lagu-Anak-dan-Balita-_Media_pyM_znA8CIA_001_1080p_hd1hrm.mp4",
+        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773939445/YTDown.com_YouTube_Dengar-Suara-Hewan-Lagu-Anak-dan-Balita-_Media_pyM_znA8CIA_001_1080p_hd1hrm.mp4",
         duration: "2.20"
     },
     {
         id: "v3",
         title: "Kalau Kau Suka Hati - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773819119/3aJQticUGUg-HD_liuwi5.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773937386/YTDown.com_YouTube_Kalau-Kau-Suka-Hati-Lagu-Anak-dan-Balita_Media_3aJQticUGUg_001_1080p_lanpmr.mp4",
+        youtubeId: "3aJQticUGUg",
         duration: "1.38"
     },
     {
         id: "v4",
         title: "Gelembung - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773826424/wN7tFnC_8IA-HD_or9yir.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773937273/YTDown.com_YouTube_Gelembung-Lagu-Anak-dan-Balita-Indonesia_Media_wN7tFnC_8IA_001_1080p_chajku.mp4",
+        youtubeId: "wN7tFnC_8IA",
         duration: "1.52"
     },
     {
