@@ -108,40 +108,35 @@ const videoLibrary = [
         id: "v16",
         title: "Nyanyian Alfabet - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773940500/S-aLYOLHkL0-HD_wmhzby.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773940235/YTDown.com_YouTube_Nyayian-Alfabet-Lagu-Anak-dan-Balita-Ind_Media_S-aLYOLHkL0_001_1080p_t5fllh.mp4",
+        youtubeId: "S-aLYOLHkL0",
         duration: "2.28"
     },
     {
         id: "v17",
         title: "Laba-Laba Kecil - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773942931/F4lVmicSOm4-HD_rpjzww.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942601/YTDown.com_YouTube_Laba-laba-Kecil-Lagu-Anak-dan-Balita-Ind_Media_F4lVmicSOm4_001_1080p_azunmx.mp4",
+        youtubeId: "F4lVmicSOm4",
         duration: "1.05"
     },
     {
         id: "v18",
         title: "Ciluk Ba - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773942922/z1oCKaK0rJE-HD_wiu34s.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942609/YTDown.com_YouTube_Ciluk-Ba-Lagu-Anak-dan-Balita-Indonesia-_Media_z1oCKaK0rJE_001_1080p_s48zje.mp4",
+        youtubeId: "z1oCKaK0rJE",
         duration: "1.37"
     },
     {
         id: "v19",
         title: "Triceratops - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773942924/ajfSU3zM-v8-HD_cts9vk.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942619/YTDown.com_YouTube_Triceratops-Lagu-Anak-dan-Balita-Indones_Media_ajfSU3zM-v8_001_1080p_w9ihfk.mp4",
+        youtubeId: "ajfSU3zM-v8",
         duration: "2.29"
     },
     {
         id: "v20",
         title: "Gorila - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773942922/kGs0_dvGHOM-HD_ht3box.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942621/YTDown.com_YouTube_Gorilla-Lagu-Anak-dan-Balita-Indonesia-O_Media_kGs0_dvGHOM_001_1080p_ievodr.mp4",
+        youtubeId: "kGs0_dvGHOM",
         duration: "1.46"
     },
     {
@@ -149,7 +144,7 @@ const videoLibrary = [
         title: "Bergerak Seperti Robot - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773942923/jFYndaK7hZI-HD_wpfrqu.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942622/YTDown.com_YouTube_Bergerak-Seperti-Robot-Lagu-Anak-dan-Bal_Media_jFYndaK7hZI_001_1080p_dew0am.mp4",
+        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942622/YTDown.com_YouTube_Bergerak-Seperti-Robot-Lagu-Anak-dan-Bal_Media_jFYndaK7hZI_001_1080p_dew0am.mp4",
         duration: "2.16"
     },
     {
@@ -157,7 +152,7 @@ const videoLibrary = [
         title: "Stegosaurus - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945870/VJuz4zSdVwE-HD_ploj99.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945832/YTDown.com_YouTube_Stegosaurus-Lagu-Anak-dan-Balita-Indones_Media_VJuz4zSdVwE_001_1080p_qus2fl.mp4",
+        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945832/YTDown.com_YouTube_Stegosaurus-Lagu-Anak-dan-Balita-Indones_Media_VJuz4zSdVwE_001_1080p_qus2fl.mp4",
         duration: "2.05"
     },
     {
@@ -165,7 +160,7 @@ const videoLibrary = [
         title: "Pemadam Kebakaran - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945871/kPiTNjvBoKQ-HD_guxh3d.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945816/YTDown.com_YouTube_Pemadam-Kebakaran-Lagu-Anak-dan-Balita-I_Media_kPiTNjvBoKQ_001_1080p_wzzyhq.mp4",
+        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945816/YTDown.com_YouTube_Pemadam-Kebakaran-Lagu-Anak-dan-Balita-I_Media_kPiTNjvBoKQ_001_1080p_wzzyhq.mp4",
         duration: "2.12"
     },
     {
@@ -173,7 +168,7 @@ const videoLibrary = [
         title: "Jangkrik - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945872/OCnZ7iSmVNM-HD_reoeya.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945806/YTDown.com_YouTube_Jangkrik-Lagu-Anak-dan-Balita-Indonesia-_Media_OCnZ7iSmVNM_001_1080p_cnbgh1.mp4",
+        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945806/YTDown.com_YouTube_Jangkrik-Lagu-Anak-dan-Balita-Indonesia-_Media_OCnZ7iSmVNM_001_1080p_cnbgh1.mp4",
         duration: "1.20"
     },
     {
@@ -181,7 +176,7 @@ const videoLibrary = [
         title: "Polisi - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945871/CpciCgFC0gc-HD_bucofh.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945808/YTDown.com_YouTube_Polisi-Lagu-Anak-dan-Balita-Indonesia-Or_Media_CpciCgFC0gc_001_1080p_oas1dc.mp4",
+        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945808/YTDown.com_YouTube_Polisi-Lagu-Anak-dan-Balita-Indonesia-Or_Media_CpciCgFC0gc_001_1080p_oas1dc.mp4",
         duration: "2.07"
     },
     {
