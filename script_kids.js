@@ -322,9 +322,6 @@ if ((sisaPixel < 2500 || sisaPersen < 30) && !sedangMemuat) {
 }, { passive: true });
 
 
-      .slice(0, 15);
-
-
 // ==== FUNGSI BUKA DETAIL VIDEO ==== //
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
   const detailPage = document.getElementById('videoDetailPage');
