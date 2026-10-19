@@ -466,6 +466,133 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
       const jarakMaksimal = posisiTengah;
       const currentDist = Math.abs(distY);
       const progress = Math.min(currentDist / jarakMaksimal, 1);
+// ==== FUNGSI BUKA DETAIL VIDEO ==== //
+function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
+  const detailPage = document.getElementById('videoDetailPage');
+  const playerArea = document.getElementById('playerContent');
+  const targetRekomendasi = document.getElementById('rekomendasiSection');
+  const bottomNav = document.getElementById('bottomNav');
+
+  updateStatusBar('normal_video');
+  updateContentLayout('normal_video');
+
+  if (bottomNav) {
+    bottomNav.style.transform = 'translateY(100%)';
+    bottomNav.style.transition = 'transform 0.3s ease';
+  }
+  lastPos = 0;
+
+  if (targetRekomendasi) targetRekomendasi.innerHTML = "";
+  const ytId = video.youtubeId || "";
+
+  playerArea.innerHTML = `
+    <div class="video-container" id="vContainer" style="background:#000;">
+      <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+    </div>`;
+
+  setTimeout(() => {
+    if (typeof YT !== 'undefined' && YT.Player) {
+      new YT.Player('ytPlayerApi', {
+        videoId: ytId,
+        playerVars: {
+          'autoplay': 1,
+          'rel': 0,
+          'modestbranding': 1,
+          'iv_load_policy': 3
+        },
+        events: {
+          'onReady': function(event) {
+            event.target.playVideo();
+          }
+        }
+      });
+    } else {
+      console.error("YouTube API belum termuat!");
+    }
+  }, 100);
+
+  const stats = getStatsOtomatis(video.title);
+  const meta = getMetaOtomatis(video.title);
+  const jmlKomentar = getKomentarOtomatis(video.title);
+
+  document.getElementById('detailTitle').innerText = video.title;
+  document.getElementById('detailViews').innerText = stats.views + " x ditonton";
+  document.getElementById('detailDate').innerText = meta.waktu;
+
+  const likeLabel = document.querySelector('.btn-group button span');
+  if (likeLabel) likeLabel.innerText = stats.likes;
+
+  const commentCountElement = document.getElementById('commentCount');
+  if (commentCountElement) commentCountElement.innerText = jmlKomentar;
+
+  const elementTeksKomentar = document.getElementById('commentText');
+  const elementFotoKomentar = document.getElementById('commentUserImg');
+
+  if (elementTeksKomentar && typeof daftarKomentar !== 'undefined') {
+    let hash = 0;
+    for (let i = 0; i < video.title.length; i++) {
+      hash = video.title.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const indexKomentar = Math.abs(hash) % daftarKomentar.length;
+    elementTeksKomentar.innerText = daftarKomentar[indexKomentar];
+    if (elementFotoKomentar) elementFotoKomentar.src = "MAMA.JPG";
+  }
+
+  if (targetRekomendasi && typeof videoLibrary !== 'undefined') {
+    const videoLainnya = videoLibrary
+      .filter(v => v.title !== video.title)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 15);
+    tambahRekomendasi(videoLainnya, targetRekomendasi);
+  }
+
+  detailPage.style.display = 'block';
+  requestAnimationFrame(() => { detailPage.scrollTop = 0; });
+  setTimeout(() => { detailPage.classList.add('active'); }, 40);
+  document.body.style.overflow = 'hidden';
+
+  const scrollContent = detailPage.querySelector('.detail-scroll-content');
+  const playerWrapper = detailPage.querySelector('.player-wrapper');
+  let startY = 0;
+  let distY = 0;
+  let startTime = 0;
+
+  detailPage.addEventListener('touchstart', (e) => {
+    const videoHeight = playerWrapper ? playerWrapper.offsetHeight : 250;
+    const touchY = e.touches[0].clientY;
+
+    if (detailPage.scrollTop <= 0 && touchY > videoHeight) {
+      startY = touchY;
+      startTime = Date.now();
+      detailPage.classList.add('dragging');
+      scrollContent.style.transition = 'none';
+      playerWrapper.style.transition = 'none';
+    }
+  }, { passive: true });
+
+  detailPage.addEventListener('touchmove', (e) => {
+    const currentY = e.touches[0].clientY;
+    distY = currentY - startY;
+
+    if (detailPage.classList.contains('dragging') && distY > 0 && !isPortrait) {
+      e.preventDefault();
+      detailPage.style.backgroundColor = `rgba(0, 0, 0, ${Math.min(distY / 300, 1)})`;
+      scrollContent.style.transform = `translateY(${distY}px)`;
+      scrollContent.style.opacity = Math.max(0, 1 - (distY / 200));
+      playerWrapper.style.transform = `translateY(${Math.min(distY * 0.4, window.innerHeight * 0.3)}px)`;
+    }
+
+    if (bottomNav) {
+      bottomNav.style.transform = `translateY(100%)`;
+    }
+
+    if (isPortrait && distY < 0) {
+      if (e.cancelable) e.preventDefault();
+      const viewHeight = window.innerHeight;
+      const posisiTengah = viewHeight * 0.3;
+      const jarakMaksimal = posisiTengah;
+      const currentDist = Math.abs(distY);
+      const progress = Math.min(currentDist / jarakMaksimal, 1);
 
       const moveVideo = posisiTengah - (posisiTengah * progress);
       playerWrapper.style.transform = `translateY(${moveVideo}px)`;
@@ -491,7 +618,6 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
       updateContentLayout('normal_video');
 
       if (vContainer) vContainer.classList.remove('mode-portrait');
-      if (btnFullscreen) btnFullscreen.classList.replace('ri-collapse-diagonal-2-line', 'ri-expand-diagonal-2-line');
 
       const styleBalik = 'all 0.3s cubic-bezier(0.2, 0, 0, 1)';
       playerWrapper.style.transition = styleBalik;
@@ -520,7 +646,6 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
       updateContentLayout('portrait_video');
 
       if (vContainer) vContainer.classList.add('mode-portrait');
-      if (btnFullscreen) btnFullscreen.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
 
       if (bottomNav) {
         bottomNav.style.transition = 'transform 0.3s ease';
@@ -559,10 +684,8 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
 
   if (isPortrait) {
     const vContainer = document.getElementById('vContainer');
-    const btnFs = document.getElementById('btnFullscreen');
 
     if (vContainer) vContainer.classList.add('mode-portrait');
-    if (btnFs) btnFs.classList.replace('ri-expand-diagonal-2-line', 'ri-collapse-diagonal-2-line');
     if (scrollContent) {
       scrollContent.style.transform = `translateY(${window.innerHeight}px)`;
       scrollContent.style.opacity = '0';
