@@ -143,40 +143,35 @@ const videoLibrary = [
         id: "v21",
         title: "Bergerak Seperti Robot - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773942923/jFYndaK7hZI-HD_wpfrqu.jpg",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773942622/YTDown.com_YouTube_Bergerak-Seperti-Robot-Lagu-Anak-dan-Bal_Media_jFYndaK7hZI_001_1080p_dew0am.mp4",
+        youtubeId: "jFYndaK7hZI",
         duration: "2.16"
     },
     {
         id: "v22",
         title: "Stegosaurus - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945870/VJuz4zSdVwE-HD_ploj99.jpg",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945832/YTDown.com_YouTube_Stegosaurus-Lagu-Anak-dan-Balita-Indones_Media_VJuz4zSdVwE_001_1080p_qus2fl.mp4",
+        youtubeId: "VJuz4zSdVwE",
         duration: "2.05"
     },
     {
         id: "v23",
         title: "Pemadam Kebakaran - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945871/kPiTNjvBoKQ-HD_guxh3d.jpg",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945816/YTDown.com_YouTube_Pemadam-Kebakaran-Lagu-Anak-dan-Balita-I_Media_kPiTNjvBoKQ_001_1080p_wzzyhq.mp4",
+        youtubeId: "kPiTNjvBoKQ",
         duration: "2.12"
     },
     {
         id: "v24",
         title: "Jangkrik - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945872/OCnZ7iSmVNM-HD_reoeya.jpg",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945806/YTDown.com_YouTube_Jangkrik-Lagu-Anak-dan-Balita-Indonesia-_Media_OCnZ7iSmVNM_001_1080p_cnbgh1.mp4",
+        youtubeId: "OCnZ7iSmVNM",
         duration: "1.20"
     },
     {
         id: "v25",
         title: "Polisi - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945871/CpciCgFC0gc-HD_bucofh.jpg",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945808/YTDown.com_YouTube_Polisi-Lagu-Anak-dan-Balita-Indonesia-Or_Media_CpciCgFC0gc_001_1080p_oas1dc.mp4",
+        youtubeId: "CpciCgFC0gc",
         duration: "2.07"
     },
     {
