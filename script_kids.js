@@ -278,6 +278,9 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+let isPortrait = false; 
+let currentYouTubePlayer = null; // <--- TAMBAHKAN BARIS INI
+
 // ==== FUNGSI BUKA DETAIL VIDEO ==== //
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
   const detailPage = document.getElementById('videoDetailPage');
@@ -303,25 +306,32 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     </div>`;
 
   setTimeout(() => {
-    if (typeof YT !== 'undefined' && YT.Player) {
-      new YT.Player('ytPlayerApi', {
-        videoId: ytId,
-        playerVars: {
-          'autoplay': 1,
-          'rel': 0,
-          'modestbranding': 1,
-          'iv_load_policy': 3
+  if (typeof YT !== 'undefined' && YT.Player) {
+    currentYouTubePlayer = new YT.Player('ytPlayerApi', { // <--- Simpan ke variabel global
+      videoId: ytId,
+      playerVars: {
+        'autoplay': 1,
+        'rel': 0,
+        'modestbranding': 1,
+        'iv_load_policy': 3
+      },
+      events: {
+        'onReady': function(event) {
+          event.target.playVideo();
         },
-        events: {
-          'onReady': function(event) {
-            event.target.playVideo();
+        'onStateChange': function(event) {
+          // Kode 0 berarti video YouTube telah SELESAI diputar
+          if (event.data === 0) {
+            console.log("Video selesai, memutar video acak berikutnya...");
+            putarVideoOtomatis(); // <--- Panggil fungsi ini saat selesai
           }
         }
-      });
-    } else {
-      console.error("YouTube API belum termuat!");
-    }
-  }, 100);
+      }
+    });
+  } else {
+    console.error("YouTube API belum termuat!");
+  }
+}, 100);
 
   const stats = getStatsOtomatis(video.title);
   const meta = getMetaOtomatis(video.title);
@@ -626,17 +636,22 @@ function putarVideoOtomatis() {
 
     if (daftarPilihan.length === 0) return;
 
+    // Ambil video acak
     const videoBerikutnya = daftarPilihan[Math.floor(Math.random() * daftarPilihan.length)];
+
+    // Hancurkan player YouTube lama agar tidak ada suara dobel
+    if (currentYouTubePlayer && typeof currentYouTubePlayer.destroy === 'function') {
+      currentYouTubePlayer.destroy();
+      currentYouTubePlayer = null;
+    }
 
     const detailPage = document.getElementById('videoDetailPage');
     if (detailPage) {
       detailPage.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    const playerLama = document.getElementById('mainVideoPlayer');
-    const apakahBersuaraSebelumnya = playerLama ? !playerLama.muted : true;
-
-    bukaDetailVideo(videoBerikutnya, true, apakahBersuaraSebelumnya);
+    // Panggil fungsi buka video (secara manual, bukan otomatis, karena YouTube akan diputar baru)
+    bukaDetailVideo(videoBerikutnya, false, false);
   }
 }
 
