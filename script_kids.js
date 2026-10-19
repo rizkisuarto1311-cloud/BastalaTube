@@ -200,86 +200,127 @@ function displayVideos(videos, append = false) {
 }
 
 // ==== LOGIKA FILTER & INFINITE SCROLL ==== //
+
 document.addEventListener('DOMContentLoaded', () => {
-  const detailPage = document.getElementById('videoDetailPage');
-  const rekomendasiSection = document.getElementById('rekomendasiSection');
-  const categories = document.querySelectorAll('.chip');
+const detailPage = document.getElementById('videoDetailPage');
+const rekomendasiSection = document.getElementById('rekomendasiSection');
+const categories = document.querySelectorAll('.chip');
 
-  let sedangMemuat = false;
+let sedangMemuat = false; // Flag agar loading tidak tumpang tindih  
 
-  if (detailPage) {
-    detailPage.addEventListener('scroll', () => {
-      const sisaScroll = detailPage.scrollHeight - detailPage.scrollTop - detailPage.clientHeight;
-      if (sisaScroll < 1000 && !sedangMemuat) {
-        sedangMemuat = true;
-        setTimeout(() => {
-          if (typeof videoLibrary !== 'undefined') {
-            const videoBaru = kocokVideo(videoLibrary).slice(0, 6);
-            tambahRekomendasi(videoBaru, rekomendasiSection);
-          }
-          sedangMemuat = false;
-        }, 200);
-      }
-    }, { passive: true });
-  }
+// --- A. LOGIKA INFINITE SCROLL (DI HALAMAN DETAIL) ---  
+if (detailPage) {  
+  detailPage.addEventListener('scroll', () => {  
+    // Hitung sisa jarak ke bawah di dalam modal/halaman detail  
+    const sisaScroll = detailPage.scrollHeight - detailPage.scrollTop - detailPage.clientHeight;  
 
-  categories.forEach(chip => {
-    chip.addEventListener('click', function() {
-      const currentActive = document.querySelector('.chip.active');
-      if (currentActive) currentActive.classList.remove('active');
-      this.classList.add('active');
+    // Jika sisa scroll kurang dari 1000px, muat video rekomendasi tambahan  
+      if (sisaScroll < 1000 && !sedangMemuat) {  
+        sedangMemuat = true;  
 
-      const kategoriNama = this.innerText.trim();
-      if (typeof videoLibrary !== 'undefined') {
-        if (kategoriNama === "Semua") {
-          displayVideos(videoLibrary);
-        } else {
-          const filtered = videoLibrary.filter(v => v.category === kategoriNama);
-          displayVideos(filtered);
-        }
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
+        // Simulasi loading sebentar agar halus  
+        setTimeout(() => {  
+            if (typeof videoLibrary !== 'undefined') {  
+                // Ambil 6 video acak untuk rekomendasi  
+                const videoBaru = kocokVideo(videoLibrary).slice(0, 6);  
+                  
+                // Panggil fungsi rekomendasi yang sudah kita rapikan tadi  
+                tambahRekomendasi(videoBaru, rekomendasiSection);  
+            }  
+               sedangMemuat = false;  
+        }, 200);  
+      }  
+  }, { passive: true });  
+}  
 
-  if (typeof videoLibrary !== 'undefined') {
-    displayVideos(videoLibrary);
-  }
+
+// --- B. LOGIKA FILTER KATEGORI (DI BERANDA) ---  
+categories.forEach(chip => {  
+    chip.addEventListener('click', function() {  
+        // 1. Update UI (Class Active)  
+        const currentActive = document.querySelector('.chip.active');  
+        if (currentActive) currentActive.classList.remove('active');  
+        this.classList.add('active');  
+          
+        // 2. Jalankan Filter  
+        const kategoriNama = this.innerText.trim(); // Gunakan trim agar spasi hilang  
+          
+        if (typeof videoLibrary !== 'undefined') {  
+            if (kategoriNama === "Semua") {  
+                displayVideos(videoLibrary);  
+            } else {  
+                const filtered = videoLibrary.filter(v => v.category === kategoriNama);  
+                displayVideos(filtered);  
+            }  
+        }  
+          
+        // Auto scroll ke atas setelah ganti kategori  
+        window.scrollTo({ top: 0, behavior: 'smooth' });  
+    });  
+});  
+
+// --- C. INISIALISASI PERTAMA KALI ---  
+if (typeof videoLibrary !== 'undefined') {  
+    displayVideos(videoLibrary);  
+}
+
 });
 
 // ==== FUNGSI INFINITE SCROLL BERANDA ==== //
+
+// 1. Teknik Mengacak Array (Fisher-Yates Shuffle) - Sangat Efisien
 function kocokVideo(array) {
-  let copy = [...array];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
+let copy = [...array];
+for (let i = copy.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[copy[i], copy[j]] = [copy[j], copy[i]];
+}
+return copy;
 }
 
+// 2. Variabel status (Letakkan di atas agar bisa diakses fungsi)
+let sedangMemuat = false;
+
+// 3. Fungsi Utama Memuat Video
 function muatVideoLagi() {
-  if (sedangMemuat) return;
-  sedangMemuat = true;
+if (sedangMemuat) return;
+sedangMemuat = true;
 
-  if (typeof videoLibrary !== 'undefined') {
-    const videoAcak = kocokVideo(videoLibrary).slice(0, 6);
-    requestAnimationFrame(() => {
-      displayVideos(videoAcak, true);
-      setTimeout(() => { sedangMemuat = false; }, 100);
-    });
-  }
+if (typeof videoLibrary !== 'undefined') {  
+    // Ambil 6 video (tambah sedikit jumlahnya dari 4 ke 6 agar antrean lebih panjang)  
+    const videoAcak = kocokVideo(videoLibrary).slice(0, 6);  
+      
+    requestAnimationFrame(() => {  
+        displayVideos(videoAcak, true);  
+          
+        // Buka kunci LEBIH CEPAT (100ms saja)  
+        // agar gerakan jari kedua bisa langsung memicu loading lagi  
+        setTimeout(() => {  
+            sedangMemuat = false;  
+        }, 100);   
+    });  
 }
 
-window.addEventListener('scroll', () => {
-  const tinggiKonten = document.body.offsetHeight;
-  const posisiSekarang = window.innerHeight + window.scrollY;
-  const sisaPixel = tinggiKonten - posisiSekarang;
-  const sisaPersen = (sisaPixel / tinggiKonten) * 100;
+}
 
-  if ((sisaPixel < 2500 || sisaPersen < 30) && !sedangMemuat) {
-    muatVideoLagi();
-  }
+// 4. Pantau Scroll User (Cukup SATU Listener saja)
+window.addEventListener('scroll', () => {
+const tinggiKonten = document.body.offsetHeight;
+const posisiSekarang = window.innerHeight + window.scrollY;
+
+// Hitung sisa jarak dalam pixel  
+const sisaPixel = tinggiKonten - posisiSekarang;  
+  
+// Hitung sisa dalam persentase (biar lebih akurat di berbagai panjang halaman)  
+const sisaPersen = (sisaPixel / tinggiKonten) * 100;  
+
+// TRIGGER: Jika sisa kurang dari 2000px ATAU sisa konten tinggal 30% lagi  
+if ((sisaPixel < 2500 || sisaPersen < 30) && !sedangMemuat) {  
+    muatVideoLagi();  
+}
+
 }, { passive: true });
+
 
 // ==== FUNGSI BUKA DETAIL VIDEO ==== //
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
