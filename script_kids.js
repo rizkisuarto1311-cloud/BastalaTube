@@ -368,66 +368,215 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     
     const ytId = video.youtubeId || ""; 
 
-    // 2. Buat wadah kosong untuk video API
+    
+    // 2. Siapkan pemutar video dan kontrol kustom
+    if (window.videoProgressTimer) {
+        clearInterval(window.videoProgressTimer);
+        window.videoProgressTimer = null;
+    }
+
+    window.activeYTPlayer = null;
+
     playerArea.innerHTML = `
-    <div class="video-container" id="vContainer" style="background:#000;">
-      <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
-    </div>`;
+      <div class="video-container" id="vContainer">
 
-    // 3. Gunakan YouTube API untuk memuat video
-    setTimeout(() => {
-        // Cek apakah API sudah termuat
-        if (typeof YT !== 'undefined' && YT.Player) {
-            new YT.Player('ytPlayerApi', {
-                videoId: ytId,
-                playerVars: { 
-                    'autoplay': 1, 
-                    'rel': 0, 
-                    'modestbranding': 1,
-                    'iv_load_policy': 3 // Mematikan anotasi (Video lainnya)
-                },
-                events: {
-                    'onReady': function(event) {
-                        event.target.playVideo(); // Putar otomatis
-                    }
-                }
-            });
-        } else {
-            console.error("YouTube API belum termuat!");
+        <div id="ytPlayerApi"></div>
+
+        <div class="custom-video-controls" id="customVideoControls">
+
+          <button type="button"
+                  id="customPlayPause"
+                  class="custom-play-pause"
+                  aria-label="Putar video">
+            <i class="bi bi-play-fill"></i>
+          </button>
+
+          <div class="custom-progress-area">
+            <div class="custom-time-row">
+              <span id="customCurrentTime">0:00</span>
+              <span id="customDuration">0:00</span>
+            </div>
+
+            <input
+              type="range"
+              id="customProgress"
+              min="0"
+              max="1000"
+              value="0"
+              step="1"
+              aria-label="Progres video"
+            >
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    // 3. Inisialisasi YouTube Player API
+    const buatPlayer = () => {
+        if (typeof YT === "undefined" || !YT.Player) {
+            console.error("YouTube API belum siap.");
+            return;
         }
-    }, 100);
-    // 3. Update Informasi Video (Title, Views, Date, Likes, Comment Count)
-    const stats = getStatsOtomatis(video.title);
-    const meta = getMetaOtomatis(video.title);
-    const jmlKomentar = getKomentarOtomatis(video.title);
 
-    document.getElementById('detailTitle').innerText = video.title;
-    document.getElementById('detailViews').innerText = stats.views + " x ditonton";
-    document.getElementById('detailDate').innerText = meta.waktu;
+        const playBtn = document.getElementById("customPlayPause");
+        const progress = document.getElementById("customProgress");
+        const currentLabel = document.getElementById("customCurrentTime");
+        const durationLabel = document.getElementById("customDuration");
+        const controls = document.getElementById("customVideoControls");
 
-    const likeLabel = document.querySelector('.btn-group button span');
-    if (likeLabel) likeLabel.innerText = stats.likes;
+        if (!playBtn || !progress || !currentLabel || !durationLabel) {
+            return;
+        }
 
-    const commentCountElement = document.getElementById('commentCount');
-    if (commentCountElement) commentCountElement.innerText = jmlKomentar;
+        const formatDetik = (detik) => {
+            if (!Number.isFinite(detik) || detik < 0) return "0:00";
 
-    // 4. Tombol Fullscreen (Mode Browser)
-    const btnFullscreen = document.getElementById('btnFullscreen');
-    if (btnFullscreen) {
-        btnFullscreen.onclick = (e) => {
+            const menit = Math.floor(detik / 60);
+            const sisaDetik = Math.floor(detik % 60);
+
+            return `${menit}:${String(sisaDetik).padStart(2, "0")}`;
+        };
+
+        const updateIkon = (sedangDiputar) => {
+            playBtn.innerHTML = sedangDiputar
+                ? '<i class="bi bi-pause-fill"></i>'
+                : '<i class="bi bi-play-fill"></i>';
+
+            playBtn.setAttribute(
+                "aria-label",
+                sedangDiputar ? "Jeda video" : "Putar video"
+            );
+        };
+
+        const player = new YT.Player("ytPlayerApi", {
+            width: "100%",
+            height: "100%",
+            videoId: ytId,
+
+            playerVars: {
+                autoplay: 1,
+                controls: 0,
+                rel: 0,
+                playsinline: 1,
+                iv_load_policy: 3
+            },
+
+            events: {
+                onReady: function(event) {
+                    window.activeYTPlayer = event.target;
+
+                    updateIkon(false);
+
+                    event.target.playVideo();
+
+                    if (window.videoProgressTimer) {
+                        clearInterval(window.videoProgressTimer);
+                    }
+
+                    window.videoProgressTimer = setInterval(() => {
+                        if (
+                            !window.activeYTPlayer ||
+                            !document.getElementById("vContainer")
+                        ) {
+                            clearInterval(window.videoProgressTimer);
+                            window.videoProgressTimer = null;
+                            return;
+                        }
+
+                        const durasi = player.getDuration() || 0;
+                        const posisi = player.getCurrentTime() || 0;
+                        const status = player.getPlayerState();
+
+                        currentLabel.textContent = formatDetik(posisi);
+                        durationLabel.textContent = formatDetik(durasi);
+
+                        // Jangan mengganggu pengguna saat menggeser progres.
+                        if (document.activeElement !== progress) {
+                            progress.value = durasi > 0
+                                ? Math.round((posisi / durasi) * 1000)
+                                : 0;
+                        }
+
+                        if (status === YT.PlayerState.PLAYING) {
+                            updateIkon(true);
+                        } else if (
+                            status === YT.PlayerState.PAUSED ||
+                            status === YT.PlayerState.ENDED
+                        ) {
+                            updateIkon(false);
+                        }
+                    }, 250);
+                },
+
+                onStateChange: function(event) {
+                    if (event.data === YT.PlayerState.PLAYING) {
+                        updateIkon(true);
+                    } else if (
+                        event.data === YT.PlayerState.PAUSED ||
+                        event.data === YT.PlayerState.ENDED
+                    ) {
+                        updateIkon(false);
+                    }
+                },
+
+                onError: function(event) {
+                    console.error("YouTube Player error:", event.data);
+                }
+            }
+        });
+
+        // Tombol play/pause kustom
+        playBtn.onclick = function(e) {
             e.stopPropagation();
-            const vContainer = document.getElementById('vContainer');
-            const isFS = document.fullscreenElement || document.webkitFullscreenElement;
 
-            if (isFS) {
-                if (document.exitFullscreen) document.exitFullscreen();
-                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            const p = window.activeYTPlayer;
+            if (!p || typeof p.getPlayerState !== "function") return;
+
+            if (p.getPlayerState() === YT.PlayerState.PLAYING) {
+                p.pauseVideo();
             } else {
-                if (vContainer.requestFullscreen) vContainer.requestFullscreen();
-                else if (vContainer.webkitRequestFullscreen) vContainer.webkitRequestFullscreen();
+                p.playVideo();
             }
         };
+
+        // Pengguna dapat menggeser garis progres.
+        progress.oninput = function() {
+            const p = window.activeYTPlayer;
+            if (!p) return;
+
+            const durasi = p.getDuration() || 0;
+            const posisi = durasi * (Number(progress.value) / 1000);
+
+            currentLabel.textContent = formatDetik(posisi);
+        };
+
+        progress.onchange = function() {
+            const p = window.activeYTPlayer;
+            if (!p) return;
+
+            const durasi = p.getDuration() || 0;
+            const posisi = durasi * (Number(progress.value) / 1000);
+
+            p.seekTo(posisi, true);
+        };
+    };
+
+    // API mungkin sudah siap atau masih dalam proses dimuat.
+    if (typeof YT !== "undefined" && YT.Player) {
+        buatPlayer();
+    } else {
+        const callbackLama = window.onYouTubeIframeAPIReady;
+
+        window.onYouTubeIframeAPIReady = function() {
+            if (typeof callbackLama === "function") {
+                callbackLama();
+            }
+
+            buatPlayer();
+        };
     }
+
 
     // --- LOGIKA KOMENTAR DINAMIS ---
     const elementTeksKomentar = document.getElementById('commentText');
