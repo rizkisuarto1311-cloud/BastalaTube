@@ -301,9 +301,14 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   const ytId = video.youtubeId || "";
 
   playerArea.innerHTML = `
-    <div class="video-container" id="vContainer" style="background:#000;">
-      <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
-    </div>`;
+  <div class="video-container" id="vContainer" style="background:#000;">
+    <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+    
+    <!-- PROGRESS BAR MERAH -->
+    <div id="progressContainer" style="position:absolute; bottom:0; left:0; width:100%; height:3px; background:rgba(255,255,255,0.2); z-index:99; pointer-events:none;">
+      <div id="progressBar" style="height:100%; width:0%; background:#ff0000; transition: width 0.1s linear;"></div>
+    </div>
+  </div>`;
 
   setTimeout(() => {
   if (typeof YT !== 'undefined' && YT.Player) {
@@ -318,6 +323,7 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
       events: {
         'onReady': function(event) {
           event.target.playVideo();
+          mulaiProgressBar(event.target);
         },
         'onStateChange': function(event) {
           // Kode 0 berarti video YouTube telah SELESAI diputar
@@ -526,6 +532,30 @@ function formatWaktu(detik) {
   return m + ":" + (s < 10 ? "0" + s : s);
 }
 
+let progressInterval = null;
+
+function mulaiProgressBar(player) {
+  // Hentikan interval lama jika ada
+  if (progressInterval) clearInterval(progressInterval);
+
+  progressInterval = setInterval(() => {
+    const progressBar = document.getElementById('progressBar');
+    if (!progressBar || !player || typeof player.getCurrentTime !== 'function') return;
+
+    // Cek apakah video sedang diputar atau di-pause
+    const state = player.getPlayerState();
+    if (state === 1 || state === 2) { // 1 = playing, 2 = paused
+      const currentTime = player.getCurrentTime();
+      const duration = player.getDuration();
+      
+      if (duration > 0) {
+        const persentase = (currentTime / duration) * 100;
+        progressBar.style.width = persentase + '%';
+      }
+    }
+  }, 250); // Update setiap 250ms
+}
+
 // ==== FUNGSI PEMBUAT KARTU VIDEO (REUSABLE) ==== //
 function buatElemenVideo(v) {
   const stats = getStatsOtomatis(v.title);
@@ -587,6 +617,9 @@ window.addEventListener('popstate', function(event) {
 
 // ==== FUNGSI TUTUP VIDEO MANUAL ==== //
 function tutupDetailVideoManual() {
+  if (progressInterval) clearInterval(progressInterval); 
+  progressInterval = null;
+
   const detailPage = document.getElementById('videoDetailPage');
   const header = document.getElementById('header');
   const bottomNav = document.getElementById('bottomNav');
