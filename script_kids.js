@@ -301,30 +301,16 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   const ytId = video.youtubeId || "";
 
   playerArea.innerHTML = `
-    <div class="video-container" id="vContainer" style="background:#000;">
-      <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+    <div class="video-container" id="vContainer" style="background:#000; width:100%; height:100%; position:relative;">
+      <video 
+        id="mainVideoPlayer" 
+        src="${video.rawUrl}" 
+        controls 
+        autoplay 
+        playsinline
+        style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain;">
+      </video>
     </div>`;
-
-  setTimeout(() => {
-    if (typeof YT !== 'undefined' && YT.Player) {
-      new YT.Player('ytPlayerApi', {
-        videoId: ytId,
-        playerVars: {
-          'autoplay': 1,
-          'rel': 0,
-          'modestbranding': 1,
-          'iv_load_policy': 3
-        },
-        events: {
-          'onReady': function(event) {
-            event.target.playVideo();
-          }
-        }
-      });
-    } else {
-      console.error("YouTube API belum termuat!");
-    }
-  }, 100);
 
   const stats = getStatsOtomatis(video.title);
   const meta = getMetaOtomatis(video.title);
