@@ -305,7 +305,7 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
     <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
     
     <!-- PROGRESS BAR MERAH -->
-    <div id="progressContainer" style="position:absolute; bottom:0; left:0; width:100%; height:1px; background:rgba(255,255,255,0.2); z-index:99; pointer-events:none;">
+    <div id="progressContainer" style="position:absolute; bottom:0; left:0; width:100%; height:2px; background:rgba(255,255,255,0.2); z-index:99; pointer-events:none;">
       <div id="progressBar" style="height:100%; width:0%; background:#ff0000; transition: width 0.1s linear;"></div>
     </div>
   </div>`;
