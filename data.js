@@ -283,56 +283,56 @@ const videoLibrary = [
         id: "v41",
         title: "Ayo Menyanyi - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234584/YTDown.com_YouTube_Ayo-Menyanyi-Lagu-Anak-dan-Balita-Indone_Media_mC5NdmijIxo_001_1080p_rkgsoy.mp4",
+        youtubeId: "mC5NdmijIxo",
         duration: "2.30"
     },
     {
         id: "v42",
         title: "Hewan Laut - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234862/YTDown.com_YouTube_Hewan-Laut-Lagu-Anak-dan-Balita-Indonesi_Media_M23Aalh928U_001_1080p_hzcg5s.mp4",
+        youtubeId: "M23Aalh928U",
         duration: "2.16"
     },
     {
         id: "v43",
         title: "Mana Hewan - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234803/YTDown.com_YouTube_Mana-Hewan-Lagu-Anak-dan-Balita-Indonesi_Media_GO9hqm9W1PI_001_1080p_sd9zes.mp4",
+        youtubeId: "GO9hqm9W1PI",
         duration: "1.48"
     },
     {
         id: "v44",
         title: "Jenis Paus - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234914/YTDown.com_YouTube_Jenis-Paus-Lagu-Anak-dan-Balita-Indonesi_Media_slahIJgQIa4_001_1080p_k2hkng.mp4",
+        youtubeId: "slahIJgQIa4",
         duration: "1.30"
     },
     {
         id: "v45",
         title: "Jenis Hiu - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1778989092/YTDown_YouTube_Jenis-Hiu-Lagu-Anak-dan-Balita-Indonesia_Media_nFt2S5e5UUI_001_1080p_wjpv8b.mp4",
+        youtubeId: "nFt2S5e5UUI",
         duration: "2.04"
     },
     {
         id: "v46",
         title: "Oh Koki - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1778989090/YTDown_YouTube_Oh-Koki-Lagu-Anak-dan-Balita-Indonesia-O_Media_8iAXIm3OdjQ_001_1080p_avehsx.mp4",
+        youtubeId: "8iAXIm3OdjQ",
         duration: "1.41"
     },
     {
         id: "v47",
         title: "Bergerak Bersama - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1778989915/YTDown_YouTube_Bergerak-Bersama-Lagu-Anak-dan-Balita-In_Media_KIPXl8rajOY_001_1080p_pdnfux.mp4",
+        youtubeId: "KIPXl8rajOY",
         duration: "1.25"
     },
     {
         id: "v48",
         title: "Ikan Badut - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1778989911/YTDown_YouTube_Ikan-Badut-Lagu-Anak-dan-Balita-Indonesi_Media_EeQ739wH4aM_001_1080p_twlqb7.mp4",
+        youtubeId: "EeQ739wH4aM",
         duration: "2.15"
     },
     {
