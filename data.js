@@ -10,7 +10,7 @@ const videoLibrary = [
         id: "v2",
         title: "Dengar Suara Hewan - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773939445/YTDown.com_YouTube_Dengar-Suara-Hewan-Lagu-Anak-dan-Balita-_Media_pyM_znA8CIA_001_1080p_hd1hrm.mp4",
+        youtubeId: "pyM_znA8CIA",
         duration: "2.20"
     },
     {
@@ -178,120 +178,105 @@ const videoLibrary = [
         id: "v26",
         title: "5 Anak Bebek - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1773945872/jsoy3qj5iic-HD_ywnimj.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1773945806/YTDown.com_YouTube_5-Anak-Bebek-Lagu-Anak-dan-Balita-Indone_Media_jsoy3qj5iic_001_1080p_feqfpl.mp4",
+        youtubeId: "jsoy3qj5iic",
         duration: "2.23"
     },
     {
         id: "v27",
         title: "Buaya - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774027331/7D69ogxUtkI-HD_anewbj.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774027277/YTDown.com_YouTube_Buaya-Lagu-Anak-dan-Balita-Indonesia-Ori_Media_7D69ogxUtkI_001_1080p_nut5ht.mp4",
+        youtubeId: "7D69ogxUtkI",
         duration: "1.19"
     },
     {
         id: "v28",
         title: "5 Dino Berlari - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774027330/eLixUKODgEo-HD_s8enz1.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774027287/YTDown.com_YouTube_5-Dino-Berlari-Lagu-Anak-dan-Balita-Indo_Media_eLixUKODgEo_001_1080p_oilkgd.mp4",
+        youtubeId: "eLixUKODgEo",
         duration: "2.28"
     },
     {
         id: "v29",
         title: "Lagu Fonik - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774027331/oqQl0MDqeJc-HD_ytymjq.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774027289/YTDown.com_YouTube_Lagu-Fonik-Lagu-Anak-dan-Balita-Indonesi_Media_oqQl0MDqeJc_001_1080p_thngjh.mp4",
+        youtubeId: "oqQl0MDqeJc",
         duration: "2.34"
     },
     {
         id: "v30",
         title: "Menarilah Bersamaku - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774027332/pv5KPVYmZDE-HD_y7oaok.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774027297/YTDown.com_YouTube_Menarilah-Bersamaku-Lagu-Anak-dan-Balita_Media_pv5KPVYmZDE_001_1080p_kqh7zk.mp4",
+        youtubeId: "pv5KPVYmZDE",
         duration: "2.20"
     },
     {
         id: "v31",
         title: "Buka Tutup - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774027332/nHCadZiITMk-HD_qjkvb9.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774027292/YTDown.com_YouTube_Buka-Tutup-Lagu-Anak-dan-Balita-Indonesi_Media_nHCadZiITMk_001_1080p_unroob.mp4",
+        youtubeId: "nHCadZiITMk",
         duration: "3.05"
     },
     {
         id: "v32",
         title: "Hewan Hewan Bernanyi - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774027332/RRq2iBjiPmE-HD_oyheoq.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774027294/YTDown.com_YouTube_Hewan-Hewan-Bernyanyi-Lagu-Anak-dan-Bali_Media_RRq2iBjiPmE_001_1080p_vofd7b.mp4",
+        youtubeId: "RRq2iBjiPmE",
         duration: "1.51"
     },
     {
         id: "v33",
         title: "Angkat Telepon - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774033386/4uSO1cvIgUE-HD_rvsypc.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774033279/YTDown.com_YouTube_Angkat-Telepon-Lagu-Anak-dan-Balita-Indo_Media_4uSO1cvIgUE_001_1080p_pwryzn.mp4",
+        youtubeId: "4uSO1cvIgUE",
         duration: "1.34"
     },
     {
         id: "v34",
         title: "Ular Di Semak-Semak - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774033388/6Us37K_qFo0-HD_wnp6bi.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774033289/YTDown.com_YouTube_Ular-di-Semak-semak-Lagu-Anak-dan-Balita_Media_6Us37K_qFo0_001_1080p_ye64pz.mp4",
+        youtubeId: "6Us37K_qFo0",
         duration: "1.33"
     },
     {
         id: "v35",
         title: "Selamat Tidur - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774033389/QAabWkGky2M-HD_oxfldo.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774033295/YTDown.com_YouTube_Selamat-Tidur-Lagu-Anak-dan-Balita-Indon_Media_QAabWkGky2M_001_1080p_jwgbck.mp4",
+        youtubeId: "QAabWkGky2M",
         duration: "1.39"
     },
     {
         id: "v36",
         title: "Kelinci - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774033387/iQveewJMQB4-HD_gygbfp.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774033299/YTDown.com_YouTube_Kelinci-Lagu-Anak-dan-Balita-Indonesia-O_Media_iQveewJMQB4_001_1080p_zxusy1.mp4",
+        youtubeId: "iQveewJMQB4",
         duration: "1.56"
     },
     {
         id: "v37",
         title: "Brachiosaurus - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774033391/rljhrthVcqg-HD_vibomo.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774033310/YTDown.com_YouTube_Brachiosaurus-Lagu-Anak-dan-Balita-Indon_Media_rljhrthVcqg_001_1080p_xif5dz.mp4",
+        youtubeId: "rljhrthVcqg",
         duration: "1.55"
     },
     {
         id: "v38",
         title: "Spinosaurus Vs TRex - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774033387/jyrucA5oXPM-HD_y0rbev.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774033309/YTDown.com_YouTube_Spinosaurus-vs-T-Rex-Lagu-Anak-dan-Balit_Media_jyrucA5oXPM_001_1080p_vh49kr.mp4",
+        youtubeId: "jyrucA5oXPM",
         duration: "1.55"
     },
     {
         id: "v39",
         title: "3 Kata Ajaib - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774234966/OQj_lMWPyiA-HD_i6pt93.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234434/YTDown.com_YouTube_3-Kata-Ajaib-Lagu-Anak-dan-Balita-Indone_Media_OQj_lMWPyiA_001_1080p_csnfvq.mp4",
+        youtubeId: "OQj_lMWPyiA",
         duration: "1.37"
     },
     {
         id: "v40",
         title: "2 Dino Kuat - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        thumbnail: "https://res.cloudinary.com/dhhlkytkc/image/upload/v1774234967/SZLfD1DLGnM-HD_makncj.jpg",
-        videoUrl: "https://res.cloudinary.com/dhhlkytkc/video/upload/v1774234527/YTDown.com_YouTube_Dua-Dino-Kuat-Lagu-Anak-dan-Balita-Indon_Media_SZLfD1DLGnM_001_1080p_rkfwk8.mp4",
+        youtubeId: "SZLfD1DLGnM",
         duration: "2.04"
     },
     {
