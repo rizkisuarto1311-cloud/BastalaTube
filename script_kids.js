@@ -375,8 +375,8 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   }
 }, 100);
 
-  const stats = getStatsOtomatis(video.title, meta.waktu);
   const meta = getMetaOtomatis(video.title);
+  const stats = getStatsOtomatis(video.title, meta.waktu);
   const jmlKomentar = getKomentarOtomatis(video.title);
 
   document.getElementById('detailTitle').innerText = video.title;
