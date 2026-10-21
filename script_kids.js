@@ -91,13 +91,34 @@ function getMetaOtomatis(judul) {
     hash = judul.charCodeAt(i) + ((hash << 5) - hash);
   }
   const seed = Math.abs(hash);
-  const daftarRentang = [
-    { unit: "jam", min: 1, max: 6 },
-    { unit: "minggu", min: 1, max: 3 },
-    { unit: "bulan", min: 1, max: 11 },
-    { unit: "tahun", min: 1, max: 8 }
-  ];
-  const kategori = daftarRentang[seed % daftarRentang.length];
+  
+  // Ambil angka 0-99 sebagai "bola undian"
+  const peluang = seed % 100; 
+  let kategori;
+
+  // --- ATUR PERSENTASE (TOTAL 100%) ---
+  // 30% Tahun (0-29)
+  if (peluang < 30) {
+    kategori = { unit: "tahun", min: 1, max: 8 };
+  } 
+  // 25% Bulan (30-54)
+  else if (peluang < 55) {
+    kategori = { unit: "bulan", min: 1, max: 11 };
+  } 
+  // 20% Minggu (55-74)
+  else if (peluang < 75) {
+    kategori = { unit: "minggu", min: 1, max: 3 };
+  } 
+  // 15% Jam (75-89)
+  else if (peluang < 90) {
+    kategori = { unit: "jam", min: 1, max: 23 };
+  } 
+  // 5% Menit (90-99)
+  else {
+    kategori = { unit: "menit", min: 1, max: 59 };
+  }
+
+  // Hitung angka acak di dalam rentang kategori yang terpilih
   const angka = (seed % (kategori.max - kategori.min + 1)) + kategori.min;
 
   return {
@@ -127,16 +148,31 @@ function getStatsOtomatis(judul, waktu) {
   const seed = generateSeed(judul);
   let rawViews = (seed % 1990000) + 10000;
 
+  // Logika Penyesuaian Views berdasarkan Waktu
   if (waktu) {
-    if (waktu.includes("menit")) {
-      rawViews = (seed % 500) + 2;
-    } else if (waktu.includes("jam")) {
-      const angkaJam = parseInt(waktu) || 1;
-      rawViews = Math.floor((rawViews / 100) * (angkaJam / 2));
+    if (waktu.includes("menit")) {  
+      // Video baru (menit): views kecil (2 - 500)
+      rawViews = (seed % 500) + 2;  
+    } 
+    else if (waktu.includes("jam")) {  
+      // Video beberapa jam lalu: views sedang
+      const angkaJam = parseInt(waktu) || 1;  
+      rawViews = Math.floor((rawViews / 100) * (angkaJam / 2)) + 50;   
+    } 
+    else if (waktu.includes("minggu")) {  
+      // Video beberapa minggu lalu: views mulai naik
+      const angkaMinggu = parseInt(waktu) || 1;
+      rawViews = Math.floor((rawViews / 4) * angkaMinggu);
+    } 
+    else if (waktu.includes("bulan")) {  
+      // Video berbulan-bulan lalu: views tinggi
+      const angkaBulan = parseInt(waktu) || 1;
+      rawViews = Math.floor((rawViews / 12) * angkaBulan);
     }
+    // Jika "tahun", biarkan rawViews tetap besar (default)
   }
 
-  const persentaseLike = (seed % 6) + 2;
+  const persentaseLike = (seed % 6) + 2; 
   const rawLikes = Math.floor(rawViews * (persentaseLike / 100));
 
   return {
