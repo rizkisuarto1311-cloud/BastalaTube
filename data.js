@@ -354,7 +354,7 @@ const videoLibrary = [
         title: "Tut Tut Misteri - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         youtubeId: "XdeCfEGabr0",
-        duration: "30.28"
+        duration: "30.29"
     },
     {
         id: "v52",
