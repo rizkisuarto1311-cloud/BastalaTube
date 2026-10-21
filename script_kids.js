@@ -146,28 +146,27 @@ function formatAngkaYoutube(angka) {
 
 function getStatsOtomatis(judul, waktu) {
   const seed = generateSeed(judul);
-  let rawViews = (seed % 1990000) + 10000;
+  let rawViews = (seed % 1990000) + 10000; // Default views untuk video lama
 
-  // Logika Penyesuaian Views berdasarkan Waktu
   if (waktu) {
     if (waktu.includes("menit")) {  
-      // Video baru (menit): views kecil (2 - 500)
-      rawViews = (seed % 500) + 2;  
+      // Video baru (menit): Minimal 1.000, maksimal 5.000 views
+      rawViews = (seed % 4000) + 1000;  
     } 
     else if (waktu.includes("jam")) {  
-      // Video beberapa jam lalu: views sedang
+      // Video beberapa jam lalu: Mulai dari 5.000 hingga puluhan ribu
       const angkaJam = parseInt(waktu) || 1;  
-      rawViews = Math.floor((rawViews / 100) * (angkaJam / 2)) + 50;   
+      rawViews = Math.floor((seed % 20000) * (angkaJam / 2)) + 5000;   
     } 
     else if (waktu.includes("minggu")) {  
-      // Video beberapa minggu lalu: views mulai naik
+      // Video beberapa minggu lalu: Ratusan ribu
       const angkaMinggu = parseInt(waktu) || 1;
-      rawViews = Math.floor((rawViews / 4) * angkaMinggu);
+      rawViews = Math.floor((seed % 500000) * (angkaMinggu / 4)) + 50000;
     } 
     else if (waktu.includes("bulan")) {  
-      // Video berbulan-bulan lalu: views tinggi
+      // Video berbulan-bulan lalu: Jutaan
       const angkaBulan = parseInt(waktu) || 1;
-      rawViews = Math.floor((rawViews / 12) * angkaBulan);
+      rawViews = Math.floor((seed % 1000000) * (angkaBulan / 12)) + 100000;
     }
     // Jika "tahun", biarkan rawViews tetap besar (default)
   }
@@ -180,6 +179,7 @@ function getStatsOtomatis(judul, waktu) {
     likes: formatAngkaYoutube(rawLikes)
   };
 }
+
 
 function getKomentarOtomatis(judul) {
   const seed = generateSeed(judul);
