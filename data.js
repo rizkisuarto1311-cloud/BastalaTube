@@ -4,6 +4,7 @@ const videoLibrary = [
         title: "Roda-Roda Bis - Lagu Anak dan Balita Indonesia",  
         category: "Musik",
         youtubeId: "prN3Q1_Um4w",
+        duration: "2.52"
     },
     {
         id: "v2",
@@ -750,7 +751,7 @@ const videoLibrary = [
         id: "v107",
         title: "Musim Kesukaanku - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "htt",
+        youtubeId: "hha99O_zgxw",
         duration: "5.15",
     },
     {
