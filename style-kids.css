@@ -210,7 +210,7 @@ body {
     display: flex;
     align-items: center;
     padding: 0 10px;
-    padding-top: 30px; /* <--- TAMBAHKAN INI (Sesuaikan dengan tinggi status bar HP Anda) */
+    padding-top: 50px; /* <--- TAMBAHKAN INI (Sesuaikan dengan tinggi status bar HP Anda) */
     border-bottom: 1px solid #eee;
     gap: 10px;
     position: fixed;
