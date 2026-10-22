@@ -1330,3 +1330,95 @@ body {
         display: none !important;
     }
 }
+
+/* ==========================================================================
+   10. SEARCH RESULTS (TAMBAHAN)
+   ========================================================================== */
+#searchResults {
+    padding-top: 70px; /* Jarak dari kolom input pencarian */
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Desain Kartu di Hasil Pencarian */
+#searchResults .video-card {
+    display: flex;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f2f2f2;
+    min-height: auto;
+    cursor: pointer;
+}
+
+#searchResults .video-card:active {
+    background-color: #f9f9f9;
+}
+
+/* Sembunyikan area thumbnail besar, ganti dengan thumbnail kecil */
+#searchResults .thumb-container {
+    display: none;
+}
+
+#searchResults .v-details {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0;
+    width: 100%;
+}
+
+#searchResults .v-avatar-container {
+    width: 80px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#searchResults .v-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    border-radius: 8px;
+}
+
+#searchResults .v-text {
+    flex: 1;
+    min-width: 0;
+}
+
+#searchResults .video-title {
+    font-size: 14px;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+#searchResults .v-text p {
+    font-size: 11px;
+    color: #606060;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Sembunyikan tombol titik tiga di hasil pencarian */
+#searchResults .menu-btn {
+    display: none;
+}
+
+/* Pesan jika video tidak ditemukan */
+#searchResults .no-result {
+    text-align: center;
+    padding: 40px 20px;
+    color: #606060;
+    font-size: 14px;
+}
