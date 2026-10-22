@@ -1336,12 +1336,13 @@ body {
 /* ==========================================================================
    10. SEARCH RESULTS (TAMBAHAN)
    ========================================================================== */
+   /* Memperbaiki area hasil pencarian agar bisa di-scroll */
 #searchResults {
-    padding-top: 70px; /* Jarak dari kolom input pencarian */
-    padding-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    height: calc(100vh - 110px) !important; /* Kurangi tinggi layar dengan tinggi kolom input */
+    overflow-y: auto !important; /* Izinkan scroll ke bawah */
+    padding-top: 10px !important; /* Jarak dari kolom input */
+    padding-bottom: 50px !important; /* Jarak aman di bawah */
+    background-color: #ffffff !important;
 }
 
 /* Desain Kartu di Hasil Pencarian */
