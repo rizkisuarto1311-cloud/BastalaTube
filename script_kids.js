@@ -737,6 +737,107 @@ function updateContentLayout(state) {
   }
 }
 
+// ==== FITUR PENCARIAN ==== //
+document.addEventListener('DOMContentLoaded', () => {
+  const openSearchBtn = document.getElementById('openSearch');
+  const closeSearchBtn = document.getElementById('closeSearch');
+  const searchOverlay = document.getElementById('searchOverlay');
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const searchForm = document.getElementById('searchForm');
+
+  // Buka Overlay Pencarian
+  if (openSearchBtn) {
+    openSearchBtn.addEventListener('click', () => {
+      searchOverlay.classList.add('active');
+      setTimeout(() => searchInput.focus(), 300); // Fokus otomatis ke input
+    });
+  }
+
+  // Tutup Overlay Pencarian
+  if (closeSearchBtn) {
+    closeSearchBtn.addEventListener('click', () => {
+      searchOverlay.classList.remove('active');
+      searchInput.value = ""; // Bersihkan input
+      searchResults.innerHTML = ""; // Bersihkan hasil
+    });
+  }
+
+  // Mencegah form reload halaman saat enter ditekan
+  if (searchForm) {
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault(); 
+    });
+  }
+
+  // Logika Pencarian Real-time saat mengetik
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const keyword = this.value.toLowerCase().trim();
+      
+      // Jika input kosong, bersihkan hasil
+      if (keyword === "") {
+        searchResults.innerHTML = "";
+        return;
+      }
+
+      // Cari video berdasarkan judul ATAU kategori
+      const filtered = videoLibrary.filter(video => 
+        video.title.toLowerCase().includes(keyword) || 
+        video.category.toLowerCase().includes(keyword)
+      );
+
+      // Tampilkan hasil
+      renderSearchResults(filtered);
+    });
+  }
+
+  // Fungsi untuk merender hasil pencarian
+  function renderSearchResults(videos) {
+    searchResults.innerHTML = "";
+
+    if (videos.length === 0) {
+      searchResults.innerHTML = `<p style="text-align:center; padding: 20px; color:#606060;">Video tidak ditemukan.</p>`;
+      return;
+    }
+
+    videos.forEach(video => {
+      const meta = getMetaOtomatis(video.title);
+      const stats = getStatsOtomatis(video.title, meta.waktu);
+
+      const card = document.createElement('div');
+      card.className = 'video-card';
+
+      // Template kartu untuk hasil pencarian
+      card.innerHTML = `
+        <div class="v-details">
+          <div class="v-avatar-container">
+            <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="Thumb" style="width: 60px; height: 40px; border-radius: 8px; object-fit: cover;">
+          </div>
+          <div class="v-text">
+            <div class="title-row">
+              <h3 class="video-title">${video.title}</h3>
+            </div>
+            <p>
+              <b>${meta.channel}</b> • ${stats.views} ditonton • ${meta.waktu}
+            </p>
+          </div>
+        </div>
+      `;
+
+      // Jika diklik, buka video dan tutup overlay pencarian
+      card.onclick = () => {
+        searchOverlay.classList.remove('active');
+        searchInput.value = "";
+        searchResults.innerHTML = "";
+        bukaDetailVideo(video);
+      };
+
+      searchResults.appendChild(card);
+    });
+  }
+});
+
 function showHomeAfterReady() {
   const intro = document.getElementById('introAnimation');
   if (!intro) return;
