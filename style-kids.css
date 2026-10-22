@@ -206,10 +206,11 @@ body {
 .search-container {
     pointer-events: auto;
     background: #fff;
-    height: 60px;
+    height: 60px; /* Sesuaikan jika perlu lebih tinggi */
     display: flex;
     align-items: center;
     padding: 0 10px;
+    padding-top: 30px; /* <--- TAMBAHKAN INI (Sesuaikan dengan tinggi status bar HP Anda) */
     border-bottom: 1px solid #eee;
     gap: 10px;
     position: fixed;
