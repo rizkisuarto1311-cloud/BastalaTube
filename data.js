@@ -768,6 +768,21 @@ const videoLibrary = [
         youtubeId: "W8M06qdB4v4",
         duration: "1.57",
     },
+    {
+        id: "v110",
+        title: "Nama Buah Dan Hewan Lucu - Lagu Anak dan Balita Indonesia",
+        category: "Belajar",
+        youtubeId: "pXmJI0L3B1E",
+        duration: "30.13",
+    },
+    
+    {
+        id: "v111",
+        title: "Excavator Memuat Pasir Ke Dalam Truk - Lagu Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "rKEtzsv22VI",
+        duration: "8.09",
+    },
 ];
 
 // Acak video
