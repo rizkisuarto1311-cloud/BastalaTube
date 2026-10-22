@@ -781,6 +781,49 @@ const videoLibrary = [
         youtubeId: "rKEtzsv22VI",
         duration: "8.09"
     },
+    {
+        id: "v112",
+        title: "Balonku Ada 5 - Lagu Anak dan Balita Indonesia",
+        category: "Musik",
+        youtubeId: "ykCeUb1kOIA",
+        duration: "2.00"
+    },
+    
+    {
+        id: "v113",
+        title: "Roda-Roda Bus dan Menjelajahi bunga menggunakan telur - Lagu Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "rKEtzsv22VI",
+        duration: "3.51"
+    },
+    {
+        id: "v114",
+        title: "permainan perosotan panjang dengan hewan-hewan seperti dinosaurus, singa, sapi, kuda nil, dan gorila - Lagu Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "gB4HLCDAcO0",
+        duration: "5.02"
+    },
+    {
+        id: "v115",
+        title: "Suara Binatang - Lagu Anak dan Balita Indonesia",
+        category: "Musik",
+        youtubeId: "9_wnYlLGeLc",
+        duration: "1.06"
+    },
+    {
+        id: "v116",
+        title: "Bola-Bola  - Lagu Anak dan Balita Indonesia",
+        category: "Musik",
+        youtubeId: "ufHTj4W_wj8",
+        duration: "2.41"
+    },
+    {
+        id: "v117",
+        title: "Naik Kereta Api - Lagu Anak dan Balita Indonesia",
+        category: "Musik",
+        youtubeId: "vw5V45LHMD4",
+        duration: "3.06"
+    },
 ];
 
 // Acak video
