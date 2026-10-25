@@ -1,24 +1,24 @@
 const videoLibrary = [
     {
         id: "v1",
-        title: "Roda-Roda Bis - Lagu Anak dan Balita Indonesia",  
-        category: "Musik",
-        youtubeId: "prN3Q1_Um4w",
-        duration: "2.52"
+        title: "Bot Besar Bing - Lagu Anak dan Balita Indonesia",
+        category: "Kartun",
+        youtubeId: "4nJVz5PHDMA",
+        duration: "7.24"
     },
     {
         id: "v2",
-        title: "Dengar Suara Hewan - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "pyM_znA8CIA",
-        duration: "2.20"
+        title: "Evan Si Gajah Pelupa - Lagu Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "pPoP-a0amok",
+        duration: "8.27"
     },
     {
         id: "v3",
-        title: "Kalau Kau Suka Hati - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "3aJQticUGUg",
-        duration: "1.38"
+        title: "Asal Usul Beo Si Peniru - Lagu Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "se9IIxXsVpM",
+        duration: "9.35"
     },
     {
         id: "v4",
