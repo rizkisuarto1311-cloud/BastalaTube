@@ -776,7 +776,7 @@ const videoLibrary = [
     {
         id: "v111",
         title: "Excavator Memuat Pasir Ke Dalam Truk - Lagu Anak dan Balita Indonesia",
-        category: "Dongeng",
+        category: "Kartun",
         youtubeId: "rKEtzsv22VI",
         duration: "8.09"
     },
@@ -791,14 +791,14 @@ const videoLibrary = [
     {
         id: "v113",
         title: "Roda-Roda Bus dan Menjelajahi bunga menggunakan telur - Lagu Anak dan Balita Indonesia",
-        category: "Dongeng",
+        category: "Kartun",
         youtubeId: "vySAS5h63Ew",
         duration: "3.51"
     },
     {
         id: "v114",
         title: "permainan perosotan panjang dengan hewan-hewan seperti dinosaurus, singa, sapi, kuda nil, dan gorila - Lagu Anak dan Balita Indonesia",
-        category: "Dongeng",
+        category: "Kartun",
         youtubeId: "gB4HLCDAcO0",
         duration: "5.02"
     },
