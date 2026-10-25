@@ -162,44 +162,44 @@ const videoLibrary = [
     },
     {
         id: "v24",
-        title: "Jangkrik - Lagu Anak dan Balita Indonesia",
+        title: "Eksavator, Buldozer Dan Crane - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "OCnZ7iSmVNM",
-        duration: "1.20"
+        youtubeId: "3mxE2PYt64Q",
+        duration: "4.21"
     },
     {
         id: "v25",
-        title: "Polisi - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "CpciCgFC0gc",
-        duration: "2.07"
+        title: "Mengenal Aneka Pekerjaan - Belajar Anak dan Balita Indonesia",
+        category: "Belajar",
+        youtubeId: "2P7fdh2bzD4",
+        duration: "5.23"
     },
     {
         id: "v26",
-        title: "5 Anak Bebek - Lagu Anak dan Balita Indonesia",
+        title: "Profesi Pekerjaan - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "jsoy3qj5iic",
-        duration: "2.23"
+        youtubeId: "live/BlZ6VzOB_54",
+        duration: "2.57"
     },
     {
         id: "v27",
-        title: "Buaya - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "7D69ogxUtkI",
-        duration: "1.19"
+        title: "Mengenal Warna - Belajar Anak dan Balita Indonesia",
+        category: "Belajar",
+        youtubeId: "iyrZ6LcZ09w",
+        duration: "4.13"
     },
     {
         id: "v28",
         title: "5 Dino Berlari - Lagu Anak dan Balita Indonesia",
         category: "Musik",
         youtubeId: "eLixUKODgEo",
-        duration: "2.28"
+        duration: "2.14"
     },
     {
         id: "v29",
-        title: "Lagu Fonik - Lagu Anak dan Balita Indonesia",
+        title: "Alat Berat dan Belajar Warna- Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "oqQl0MDqeJc",
+        youtubeId: "youtu.be/FI_LDt-7xtE",
         duration: "2.34"
     },
     {
