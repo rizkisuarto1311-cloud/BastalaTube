@@ -823,6 +823,41 @@ const videoLibrary = [
         youtubeId: "vw5V45LHMD4",
         duration: "3.06"
     },
+    {
+        id: "v118",
+        title: "Kisah Gajah Dan Semut - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "sMW_fy8Lttg",
+        duration: "5.40"
+    },
+    {
+        id: "v119",
+        title: "Monyet dan Kura-Kura - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "znw0Vvcf2jU",
+        duration: "11.46"
+    },
+    {
+        id: "v120",
+        title: "Kisah Kancil dan Buaya - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "KUrlU6WW7ZI",
+        duration: "8.48"
+    },
+    {
+        id: "v121",
+        title: "Singa Dan Tikus - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "H99WbZP3eGE",
+        duration: "12.34"
+    },
+    {
+        id: "v122",
+        title: "Kancil, Gajah Dan Langit Runtuh - Lagu Anak dan Balita Indonesia",
+        category: "Musik",
+        youtubeId: "aZmO-hVTLF0",
+        duration: "7.54"
+    },
 ];
 
 // Acak video
