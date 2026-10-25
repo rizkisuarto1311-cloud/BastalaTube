@@ -22,24 +22,24 @@ const videoLibrary = [
     },
     {
         id: "v4",
-        title: "Gelembung - Lagu Anak dan Balita Indonesia",
+        title: "Bingo - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "wN7tFnC_8IA",
-        duration: "1.52"
+        youtubeId: "xNfSMAcLLok",
+        duration: "1.56"
     },
     {
         id: "v5",
-        title: "Lagu Senang Ft Mazaya - Lagu Anak dan Balita Indonesia",
+        title: "Balap Sepeda Roda 4 Vs 2 - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "VusO1txOR-0",
-        duration: "2.07"
+        youtubeId: "heGFErtqqUo",
+        duration: "4.16"
     },
     {
         id: "v6",
-        title: "Gajah - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "poNPmDpm5tI",
-        duration: "2.28"
+        title: "Es Krim Bing  - Lagu Anak dan Balita Indonesia",
+        category: "Kartun",
+        youtubeId: "XjmTfkf8z3c",
+        duration: "7.25"
     },
     {
         id: "v7",
@@ -78,17 +78,17 @@ const videoLibrary = [
     },
     {
         id: "v12",
-        title: "Suara Hewan - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "0lnDsVZTlXQ",
-        duration: "1.33"
+        title: "Kenapa Kita Bisa Senang - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "--sqT5Wfyws",
+        duration: "3.22"
     },
     {
         id: "v13",
-        title: "Burung Hantu - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "2kA0iIQcmOo",
-        duration: "1.49"
+        title: "Kenapa Kita Bisa Marah - Donegeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "CayUvS0HKmk",
+        duration: "3.45"
     },
     {
         id: "v14",
@@ -106,10 +106,10 @@ const videoLibrary = [
     },
     {
         id: "v16",
-        title: "Nyanyian Alfabet - Lagu Anak dan Balita Indonesia",
+        title: "Paman Datang - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "S-aLYOLHkL0",
-        duration: "2.28"
+        youtubeId: "KFfDtJf4USs",
+        duration: "10.13"
     },
     {
         id: "v17",
@@ -120,10 +120,10 @@ const videoLibrary = [
     },
     {
         id: "v18",
-        title: "Ciluk Ba - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "z1oCKaK0rJE",
-        duration: "1.37"
+        title: "Menanan Jagung - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "udyNp6jc_rI",
+        duration: "2.31"
     },
     {
         id: "v19",
@@ -134,31 +134,31 @@ const videoLibrary = [
     },
     {
         id: "v20",
-        title: "Gorila - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "kGs0_dvGHOM",
-        duration: "1.46"
+        title: "Pesawat Militer - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "ql8knTCBNDk",
+        duration: "1.44"
     },
     {
         id: "v21",
-        title: "Bergerak Seperti Robot - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "jFYndaK7hZI",
-        duration: "2.16"
+        title: "Menyusun Menara - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "9TJJeythKYA",
+        duration: "1.40"
     },
     {
         id: "v22",
-        title: "Stegosaurus - Lagu Anak dan Balita Indonesia",
-        category: "Musik",
-        youtubeId: "VJuz4zSdVwE",
-        duration: "2.05"
+        title: "Huruf ABCDEF - Dongeng Anak dan Balita Indonesia",
+        category: "Dongeng",
+        youtubeId: "9TJJeythKYA",
+        duration: "1.38."
     },
     {
         id: "v23",
-        title: "Pemadam Kebakaran - Lagu Anak dan Balita Indonesia",
+        title: "Garuda Pancasila - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "kPiTNjvBoKQ",
-        duration: "2.12"
+        youtubeId: "OTyVK-sUBIw",
+        duration: "2.07"
     },
     {
         id: "v24",
