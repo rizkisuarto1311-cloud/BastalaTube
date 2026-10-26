@@ -178,7 +178,7 @@ const videoLibrary = [
         id: "v26",
         title: "Profesi Pekerjaan - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "live/BlZ6VzOB_54",
+        youtubeId: "BlZ6VzOB_54",
         duration: "2.57"
     },
     {
