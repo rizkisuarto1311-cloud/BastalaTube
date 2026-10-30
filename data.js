@@ -197,10 +197,10 @@ const videoLibrary = [
     },
     {
         id: "v29",
-        title: "Alat Berat dan Belajar Warna- Lagu Anak dan Balita Indonesia",
+        title: "Prosotan Pelangi Tayo - Lagu Anak dan Balita Indonesia",
         category: "Musik",
-        youtubeId: "FI_LDt-7xtE",
-        duration: "2.34"
+        youtubeId: "_zoVtSS3cwA",
+        duration: "50.12"
     },
     {
         id: "v30",
