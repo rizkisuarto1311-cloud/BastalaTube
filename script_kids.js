@@ -676,41 +676,35 @@ function tambahRekomendasi(videos, target, append = true) {
 }
 
 // ==== MONITORING TOMBOL BACK HP ==== //
+// ==== MONITORING TOMBOL BACK HP ==== //
 window.addEventListener('popstate', function(event) {
   const detailPage = document.getElementById('videoDetailPage');
   const descOverlay = document.getElementById('descriptionOverlay');
   const descBottomSheet = document.querySelector('.desc-bottom-sheet');
-  const closeDescBtn = document.getElementById('closeDescBtn');
   const detailScrollContent = document.querySelector('.detail-scroll-content');
 
   // 1. JIKA PANEL SELENGKAPNYA SEDANG TERBUKA
   if (descOverlay && descOverlay.classList.contains('active')) {
-    // Tutup panelnya secara manual (animasi meluncur ke bawah)
-    if (descBottomSheet) {
-      descBottomSheet.style.transform = 'translateY(100%)';
-    }
-    
-    // Tunggu animasi selesai, lalu sembunyikan overlay dan munculkan konten bawah
+    // Turunkan panel selengkapnya
+    descBottomSheet.style.transform = 'translateY(100%)';
     setTimeout(() => {
       descOverlay.classList.remove('active');
       if (detailScrollContent) detailScrollContent.classList.remove('hidden-content');
-      
-      setTimeout(() => {
-        if (descBottomSheet) descBottomSheet.style.transform = '';
-      }, 50); 
+      setTimeout(() => { descBottomSheet.style.transform = ''; }, 50); 
     }, 300);
-
-    // PENTING: Push state lagi agar aplikasi tidak keluar saat tombol back ditekan
-    // (Karena kita sudah menghabiskan 1 state untuk menutup panel)
-    history.pushState({ page: "detail" }, "Detail Video", "#detail");
     
-    return; // Hentikan fungsi di sini agar tidak menutup videonya
+    // KUNCI: Tambahkan history lagi agar saat back ditekan lagi, tidak keluar aplikasi
+    history.pushState({ page: "detail" }, "Detail Video", "#detail");
+    return; 
   }
 
-  // 2. JIKA PANEL TERTUTUP TAPI VIDEO MASIH TERBUKA
+  // 2. JIKA VIDEO TERBUKA (TAPI PANEL TERTUTUP)
   if (detailPage && detailPage.classList.contains('active')) {
     tutupDetailVideoManual();
-    history.pushState(null, null, window.location.pathname);
+    
+    // KUNCI UTAMA: Kita paksa masuk ke beranda dengan pushState baru!
+    // Jangan gunakan history.back() karena akan menghabiskan riwayat.
+    history.pushState({ page: "home" }, "Beranda", window.location.pathname);
   }
 });
 
