@@ -350,6 +350,14 @@ body {
     font-weight: 900;
     line-height: 1.4;
     margin: 0;
+    
+    /* KODE UNTUK MEMBATASI 2 BARIS */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Batasi maksimal 2 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 .v-text p {
