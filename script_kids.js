@@ -384,13 +384,35 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   document.getElementById('detailDate').innerText = meta.waktu;
   
 // Mengisi data untuk panel "Selengkapnya"
-// Mengisi data untuk panel "Selengkapnya"
 document.getElementById('fullDescTitle').innerText = video.title;
 document.getElementById('fullDescViews').innerText = stats.views;
 document.getElementById('fullDescLikes').innerText = stats.likes;
 
 // Format tanggal
-document.getElementById('fullDescDate').innerText = meta.waktu; 
+// Membuat format tanggal palsu yang realistis (Tahun di atas, Tanggal Bulan di bawah)
+const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+const sekarang = new Date();
+let tahunKurang = 0;
+let bulanAcak, tanggalAcak;
+
+// Hitung mundur tahun berdasarkan teks "X tahun/bulan/minggu/jam yang lalu"
+if (meta.waktu.includes("tahun")) {
+  tahunKurang = parseInt(meta.waktu);
+} else if (meta.waktu.includes("bulan")) {
+  tahunKurang = 0; // Tetap di tahun ini
+} else {
+  tahunKurang = 0; // Tetap di tahun ini
+}
+
+const tahunTampil = sekarang.getFullYear() - tahunKurang;
+const indexBulan = Math.floor(Math.random() * 12);
+const tanggalTampil = Math.floor(Math.random() * 28) + 1; // Tanggal 1-28
+const bulanTampil = bulanIndo[indexBulan];
+
+// Masukkan ke dalam HTML (Tahun di atas, Tanggal Bulan di bawah)
+document.getElementById('fullDescDate').innerHTML = `
+  ${tahunTampil}<br><span style="font-size: 11px; font-weight: normal; color: #606060;">${tanggalTampil} ${bulanTampil}</span>
+`;
 
 // Deskripsi yang lebih panjang (seperti di gambar)
 document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan menemani bayi dan balita Anda belajar sambil bernyanyi! Lewat lagu-lagu anak dengan lirik sederhana serta melodi yang ceria, video ini dirancang untuk membantu perkembangan bahasa, motorik, dan kognitif si kecil.\n\nDalam video ini, si kecil diajak untuk aktif bergerak, menyanyi, dan belajar hal-hal baru dengan cara yang menyenangkan.`;
