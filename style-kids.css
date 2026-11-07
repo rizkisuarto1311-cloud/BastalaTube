@@ -1438,6 +1438,10 @@ body {
    BOTTOM SHEET DESKRIPSI (SELENGKAPNYA)
    ========================================================================== */
 .desc-overlay {
+/* ==========================================================================
+   BOTTOM SHEET DESKRIPSI (GAYA YOUTUBE)
+   ========================================================================== */
+.desc-overlay {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
     background: rgba(0, 0, 0, 0.5);
@@ -1460,8 +1464,10 @@ body {
     padding: 20px;
     transform: translateY(100%);
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    max-height: 80vh;
+    height: 90vh; /* Menutupi 90% layar */
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .desc-overlay.active .desc-bottom-sheet {
@@ -1478,50 +1484,107 @@ body {
 .desc-close {
     position: absolute;
     top: 20px; right: 20px;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     color: #000;
+    z-index: 10;
 }
 
 .desc-title {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 20px;
     line-height: 1.4;
-    padding-right: 30px; /* Agar tidak menabrak tombol close */
+    margin-bottom: 15px;
+    padding-right: 30px;
 }
 
-.desc-stats-row {
+/* Info Channel */
+.desc-channel-info {
     display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 15px;
 }
 
-.desc-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.desc-channel-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.stat-number {
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
+.desc-channel-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f0f0f;
 }
 
-.stat-label {
-    font-size: 12px;
-    color: #606060;
-    margin-top: 4px;
-}
-
+/* Kotak Deskripsi Biru */
 .desc-text-box {
-    background: #f9f9f9;
+    background: #e8f0fe; /* Warna biru muda khas YouTube */
     padding: 15px;
     border-radius: 12px;
     font-size: 14px;
     line-height: 1.5;
+    color: #030303;
+    margin-bottom: 25px;
+}
+
+/* Section Transkrip & Detail */
+.desc-section-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.desc-section-sub {
+    font-size: 13px;
+    color: #606060;
+    margin-bottom: 10px;
+}
+
+.mt-20 {
+    margin-top: 30px;
+}
+
+/* Tombol Garis Tepi */
+.desc-outline-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f0f0f;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* List Detail Video */
+.desc-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.desc-detail-label {
+    font-size: 14px;
+    color: #606060;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.desc-detail-label i {
+    font-size: 18px;
+    color: #030303;
+}
+
+.desc-detail-value {
+    font-size: 14px;
+    font-weight: 500;
     color: #030303;
 }
