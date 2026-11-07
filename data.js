@@ -1,63 +1,63 @@
 const videoLibrary = [
     {
         id: "v1",
-        title: "Bot Besar Bing - Lagu Anak dan Balita Indonesia",
+        title: "Bot Besar | Bing Episode Lengkap | Bing Bahasa Indonesia",
         category: "Kartun",
         youtubeId: "4nJVz5PHDMA",
         duration: "7.24"
     },
     {
         id: "v2",
-        title: "Evan Si Gajah Pelupa - Lagu Anak dan Balita Indonesia",
+        title: "Evan Si Gajah Pelupa | Dongeng Bahasa Indonesia | Cerita Rakyat dan Dongeng Nusantara",
         category: "Dongeng",
         youtubeId: "pPoP-a0amok",
         duration: "8.27"
     },
     {
         id: "v3",
-        title: "Asal Usul Beo Si Peniru - Lagu Anak dan Balita Indonesia",
+        title: "Asal Usul Beo Si Peniru | Dongeng Bahasa Indonesia | Cerita Rakyat dan Dongeng Nusantara",
         category: "Dongeng",
         youtubeId: "se9IIxXsVpM",
         duration: "9.35"
     },
     {
         id: "v4",
-        title: "Bingo - Lagu Anak dan Balita Indonesia",
+        title: "Lagu Anak | BINGO 🐶 Anjing Periang | BaLiTa | Baba Lili Tata",
         category: "Musik",
         youtubeId: "xNfSMAcLLok",
         duration: "1.56"
     },
     {
         id: "v5",
-        title: "Balap Sepeda Roda 4 Vs 2 - Lagu Anak dan Balita Indonesia",
+        title: "Kartun Anak | Balap Sepeda Roda 4 Vs 2 🚲 Siapa Lebih Cepat? | Baba Lili Tata | BaLiTa",
         category: "Musik",
         youtubeId: "heGFErtqqUo",
         duration: "4.16"
     },
     {
         id: "v6",
-        title: "Es Krim Bing  - Lagu Anak dan Balita Indonesia",
+        title: "Es Krim | Bing Episode Lengkap | Bing Bahasa Indonesia",
         category: "Kartun",
         youtubeId: "XjmTfkf8z3c",
         duration: "7.25"
     },
     {
         id: "v7",
-        title: "Alat Berat - Lagu Anak dan Balita Indonesia",
+        title: "Alat Berat - Lagu Anak dan Balita Indonesia | Kinderflix Music",
         category: "Musik",
         youtubeId: "hJfFqsjixfg",
         duration: "2.13"
     },
     {
         id: "v8",
-        title: "Monyet - Lagu Anak dan Balita Indonesia",
+        title: "Monyet - Lagu Anak dan Balita Indonesia | Original Song - Kinderflix Music",
         category: "Musik",
         youtubeId: "xj2eses74xo",
         duration: "2.01"
     },
     {
         id: "v9",
-        title: "Sayang Semua - Lagu Anak dan Balita Indonesia",
+        title: "Sayang Semua ''Satu-Satu aku Sayang Mama'' - Lagu Anak dan Balita Indonesia | Kinderflix Music",
         category: "Musik",
         youtubeId: "XyIoZk5TskQ",
         duration: "2.08"
