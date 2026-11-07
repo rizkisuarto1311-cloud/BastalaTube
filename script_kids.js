@@ -678,6 +678,36 @@ function tambahRekomendasi(videos, target, append = true) {
 // ==== MONITORING TOMBOL BACK HP ==== //
 window.addEventListener('popstate', function(event) {
   const detailPage = document.getElementById('videoDetailPage');
+  const descOverlay = document.getElementById('descriptionOverlay');
+  const descBottomSheet = document.querySelector('.desc-bottom-sheet');
+  const closeDescBtn = document.getElementById('closeDescBtn');
+  const detailScrollContent = document.querySelector('.detail-scroll-content');
+
+  // 1. JIKA PANEL SELENGKAPNYA SEDANG TERBUKA
+  if (descOverlay && descOverlay.classList.contains('active')) {
+    // Tutup panelnya secara manual (animasi meluncur ke bawah)
+    if (descBottomSheet) {
+      descBottomSheet.style.transform = 'translateY(100%)';
+    }
+    
+    // Tunggu animasi selesai, lalu sembunyikan overlay dan munculkan konten bawah
+    setTimeout(() => {
+      descOverlay.classList.remove('active');
+      if (detailScrollContent) detailScrollContent.classList.remove('hidden-content');
+      
+      setTimeout(() => {
+        if (descBottomSheet) descBottomSheet.style.transform = '';
+      }, 50); 
+    }, 300);
+
+    // PENTING: Push state lagi agar aplikasi tidak keluar saat tombol back ditekan
+    // (Karena kita sudah menghabiskan 1 state untuk menutup panel)
+    history.pushState({ page: "detail" }, "Detail Video", "#detail");
+    
+    return; // Hentikan fungsi di sini agar tidak menutup videonya
+  }
+
+  // 2. JIKA PANEL TERTUTUP TAPI VIDEO MASIH TERBUKA
   if (detailPage && detailPage.classList.contains('active')) {
     tutupDetailVideoManual();
     history.pushState(null, null, window.location.pathname);
