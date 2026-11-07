@@ -884,16 +884,18 @@ function showHomeAfterReady() {
 document.addEventListener('DOMContentLoaded', () => {
     const selengkapnyaBtn = document.querySelector('.selengkapnya');
     const descOverlay = document.getElementById('descriptionOverlay');
+    const descBottomSheet = document.querySelector('.desc-bottom-sheet');
     const closeDescBtn = document.getElementById('closeDescBtn');
 
     // Buka Panel
     if (selengkapnyaBtn) {
         selengkapnyaBtn.addEventListener('click', () => {
             descOverlay.classList.add('active');
+            descBottomSheet.style.transform = ''; // Reset posisi
         });
     }
 
-    // Tutup Panel
+    // Tutup Panel (via tombol X)
     if (closeDescBtn) {
         closeDescBtn.addEventListener('click', () => {
             descOverlay.classList.remove('active');
@@ -906,6 +908,65 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === descOverlay) {
                 descOverlay.classList.remove('active');
             }
+        });
+    }
+
+    // --- FITUR SWIPE TO CLOSE (TARIK KE BAWAH) ---
+    let startY = 0;
+    let currentY = 0;
+    let isDragging = false;
+
+    if (descBottomSheet) {
+        // Saat jari menyentuh layar
+        descBottomSheet.addEventListener('touchstart', (e) => {
+            // Hanya izinkan swipe jika panel sedang scroll paling atas
+            if (descBottomSheet.scrollTop <= 0) {
+                startY = e.touches[0].clientY;
+                isDragging = true;
+                // Matikan transisi CSS saat jari menempel agar gerakannya instan
+                descBottomSheet.style.transition = 'none'; 
+            }
+        }, { passive: true });
+
+        // Saat jari digeser
+        descBottomSheet.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+
+            currentY = e.touches[0].clientY;
+            const diffY = currentY - startY;
+
+            // Jika ditarik ke bawah (nilai positif)
+            if (diffY > 0) {
+                // Geser panelnya mengikuti jari
+                descBottomSheet.style.transform = `translateY(${diffY}px)`;
+            }
+        }, { passive: true });
+
+        // Saat jari dilepas
+        descBottomSheet.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+
+            // Kembalikan transisi CSS
+            descBottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+
+            const diffY = currentY - startY;
+
+            // Jika ditarik cukup jauh (lebih dari 100px), tutup panelnya
+            if (diffY > 100) {
+                descOverlay.classList.remove('active');
+                // Reset posisi setelah animasi selesai
+                setTimeout(() => {
+                    descBottomSheet.style.transform = '';
+                }, 300);
+            } else {
+                // Jika tarikan sedikit, kembalikan ke posisi semula (snap back)
+                descBottomSheet.style.transform = 'translateY(0)';
+            }
+
+            // Reset variabel
+            startY = 0;
+            currentY = 0;
         });
     }
 });
