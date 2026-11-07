@@ -169,33 +169,57 @@
    <script src="https://www.youtube.com/iframe_api"></script>
    <script src="script_kids.js"></script>
 
-    <!-- PANEL SELENGKAPNYA (POP-UP) -->
+<!-- PANEL SELENGKAPNYA (POP-UP YOUTUBE STYLE) -->
 <div id="descriptionOverlay" class="desc-overlay">
   <div class="desc-bottom-sheet">
     <div class="desc-drag-handle"></div>
     <i class="bi bi-x-lg desc-close" id="closeDescBtn"></i>
     
+    <!-- 1. Judul Video -->
     <h2 id="fullDescTitle" class="desc-title">Judul Video</h2>
     
-    <div class="desc-stats-row">
-      <div class="desc-stat">
-        <span id="fullDescLikes" class="stat-number">0</span>
-        <span class="stat-label">Suka</span>
-      </div>
-      <div class="desc-stat">
-        <span id="fullDescViews" class="stat-number">0</span>
-        <span class="stat-label">Penayangan</span>
-      </div>
-      <div class="desc-stat">
-        <span id="fullDescDate" class="stat-number">0</span>
-        <span class="stat-label">Tanggal</span>
-      </div>
+    <!-- 2. Info Channel -->
+    <div class="desc-channel-info">
+      <img src="ayah.jpg" alt="Channel" class="desc-channel-img">
+      <span class="desc-channel-name">Koleksi Ayah Bunda</span>
+    </div>
+    
+    <!-- 3. Kotak Deskripsi Biru -->
+    <div class="desc-text-box">
+      <p id="fullDescText">Deskripsi video...</p>
     </div>
 
-    <div class="desc-text-box">
-      <p id="fullDescText">Deskripsi video akan muncul di sini...</p>
+    <!-- 4. Bagian Transkrip (Placeholder) -->
+    <h3 class="desc-section-title">Transkrip</h3>
+    <p class="desc-section-sub">Ikuti menggunakan transkrip.</p>
+    <button class="desc-outline-btn">Tampilkan transkrip</button>
+
+    <!-- 5. Bagian Detail Video -->
+    <h3 class="desc-section-title mt-20">Detail video</h3>
+    
+    <div class="desc-detail-row">
+      <div class="desc-detail-label">
+        <i class="bi bi-calendar4"></i> Tanggal
+      </div>
+      <div class="desc-detail-value" id="fullDescDate">-</div>
     </div>
+    
+    <div class="desc-detail-row">
+      <div class="desc-detail-label">
+        <i class="bi bi-play-btn"></i> Penayangan
+      </div>
+      <div class="desc-detail-value" id="fullDescViews">-</div>
+    </div>
+    
+    <div class="desc-detail-row">
+      <div class="desc-detail-label">
+        <i class="bi bi-hand-thumbs-up"></i> Suka
+      </div>
+      <div class="desc-detail-value" id="fullDescLikes">-</div>
+    </div>
+
   </div>
 </div>
+    
   </body>
 </html>
