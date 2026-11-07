@@ -378,10 +378,16 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   const meta = getMetaOtomatis(video.title);
   const stats = getStatsOtomatis(video.title, meta.waktu);
   const jmlKomentar = getKomentarOtomatis(video.title);
+// Mengisi data untuk panel "Selengkapnya"
+document.getElementById('fullDescTitle').innerText = video.title;
+document.getElementById('fullDescViews').innerText = stats.views;
+document.getElementById('fullDescLikes').innerText = stats.likes;
 
-  document.getElementById('detailTitle').innerText = video.title;
-  document.getElementById('detailViews').innerText = stats.views + " x ditonton";
-  document.getElementById('detailDate').innerText = meta.waktu;
+// Format tanggal (misal: "3 tahun yang lalu" diubah tampilannya)
+document.getElementById('fullDescDate').innerText = meta.waktu.replace(" yang lalu", ""); 
+
+// Deskripsi palsu (karena kita tidak punya deskripsi asli)
+document.getElementById('fullDescText').innerText = `Tonton video ${video.title}. Video ini berisi konten edukasi dan hiburan yang cocok untuk anak-anak. Jangan lupa untuk subscribe channel Koleksi Ayah Bunda agar tidak ketinggalan video seru lainnya!`;
 
   const likeLabel = document.querySelector('.btn-group button span');
   if (likeLabel) likeLabel.innerText = stats.likes;
@@ -846,3 +852,33 @@ function showHomeAfterReady() {
     intro.remove();
   }, 450);
 }
+
+// ==== FITUR SELENGKAPNYA (BOTTOM SHEET) ==== //
+document.addEventListener('DOMContentLoaded', () => {
+    const selengkapnyaBtn = document.querySelector('.selengkapnya');
+    const descOverlay = document.getElementById('descriptionOverlay');
+    const closeDescBtn = document.getElementById('closeDescBtn');
+
+    // Buka Panel
+    if (selengkapnyaBtn) {
+        selengkapnyaBtn.addEventListener('click', () => {
+            descOverlay.classList.add('active');
+        });
+    }
+
+    // Tutup Panel
+    if (closeDescBtn) {
+        closeDescBtn.addEventListener('click', () => {
+            descOverlay.classList.remove('active');
+        });
+    }
+
+    // Tutup Panel jika klik di luar area putih
+    if (descOverlay) {
+        descOverlay.addEventListener('click', (e) => {
+            if (e.target === descOverlay) {
+                descOverlay.classList.remove('active');
+            }
+        });
+    }
+});
