@@ -378,6 +378,11 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   const meta = getMetaOtomatis(video.title);
   const stats = getStatsOtomatis(video.title, meta.waktu);
   const jmlKomentar = getKomentarOtomatis(video.title);
+
+  document.getElementById('detailTitle').innerText = video.title;
+  document.getElementById('detailViews').innerText = stats.views + " x ditonton";
+  document.getElementById('detailDate').innerText = meta.waktu;
+  
 // Mengisi data untuk panel "Selengkapnya"
 document.getElementById('fullDescTitle').innerText = video.title;
 document.getElementById('fullDescViews').innerText = stats.views;
