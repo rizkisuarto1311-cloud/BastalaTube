@@ -384,16 +384,16 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   document.getElementById('detailDate').innerText = meta.waktu;
   
 // Mengisi data untuk panel "Selengkapnya"
+// Mengisi data untuk panel "Selengkapnya"
 document.getElementById('fullDescTitle').innerText = video.title;
 document.getElementById('fullDescViews').innerText = stats.views;
 document.getElementById('fullDescLikes').innerText = stats.likes;
 
-// Format tanggal (misal: "3 tahun yang lalu" diubah tampilannya)
-document.getElementById('fullDescDate').innerText = meta.waktu.replace(" yang lalu", ""); 
+// Format tanggal
+document.getElementById('fullDescDate').innerText = meta.waktu; 
 
-// Deskripsi palsu (karena kita tidak punya deskripsi asli)
-document.getElementById('fullDescText').innerText = `Tonton video ${video.title}. Video ini berisi konten edukasi dan hiburan yang cocok untuk anak-anak. Jangan lupa untuk subscribe channel Koleksi Ayah Bunda agar tidak ketinggalan video seru lainnya!`;
-
+// Deskripsi yang lebih panjang (seperti di gambar)
+document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan menemani bayi dan balita Anda belajar sambil bernyanyi! Lewat lagu-lagu anak dengan lirik sederhana serta melodi yang ceria, video ini dirancang untuk membantu perkembangan bahasa, motorik, dan kognitif si kecil.\n\nDalam video ini, si kecil diajak untuk aktif bergerak, menyanyi, dan belajar hal-hal baru dengan cara yang menyenangkan.`;
   const likeLabel = document.querySelector('.btn-group button span');
   if (likeLabel) likeLabel.innerText = stats.likes;
 
