@@ -895,12 +895,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Tutup Panel (via tombol X)
-    if (closeDescBtn) {
-        closeDescBtn.addEventListener('click', () => {
+// Tutup Panel (via tombol X) dengan efek meluncur
+if (closeDescBtn) {
+    closeDescBtn.addEventListener('click', () => {
+        // 1. Geser panel ke bawah dulu
+        descBottomSheet.style.transform = 'translateY(100%)';
+        
+        // 2. Tunggu animasi selesai (0.3 detik), baru hilangkan overlay
+        setTimeout(() => {
             descOverlay.classList.remove('active');
-        });
-    }
+            // 3. Reset posisi setelah benar-benar tertutup
+            setTimeout(() => {
+                descBottomSheet.style.transform = '';
+            }, 50); 
+        }, 300); // Sesuaikan dengan durasi transisi di CSS (0.3s)
+    });
+}
 
     // Tutup Panel jika klik di luar area putih
     if (descOverlay) {
