@@ -122,7 +122,7 @@
            <div class="comment-content">
              <p id="commentText">Wah videonya bagus sekali, anak saya suka!</p>
            </div>
-</div>
+          </div>
 
          </div>
 
@@ -168,5 +168,34 @@
    <script src="daftarkomentar.js"></script> 
    <script src="https://www.youtube.com/iframe_api"></script>
    <script src="script_kids.js"></script>
+
+    <!-- PANEL SELENGKAPNYA (POP-UP) -->
+<div id="descriptionOverlay" class="desc-overlay">
+  <div class="desc-bottom-sheet">
+    <div class="desc-drag-handle"></div>
+    <i class="bi bi-x-lg desc-close" id="closeDescBtn"></i>
+    
+    <h2 id="fullDescTitle" class="desc-title">Judul Video</h2>
+    
+    <div class="desc-stats-row">
+      <div class="desc-stat">
+        <span id="fullDescLikes" class="stat-number">0</span>
+        <span class="stat-label">Suka</span>
+      </div>
+      <div class="desc-stat">
+        <span id="fullDescViews" class="stat-number">0</span>
+        <span class="stat-label">Penayangan</span>
+      </div>
+      <div class="desc-stat">
+        <span id="fullDescDate" class="stat-number">0</span>
+        <span class="stat-label">Tanggal</span>
+      </div>
+    </div>
+
+    <div class="desc-text-box">
+      <p id="fullDescText">Deskripsi video akan muncul di sini...</p>
+    </div>
+  </div>
+</div>
   </body>
 </html>
