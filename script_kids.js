@@ -402,96 +402,9 @@ if (meta.waktu.includes("tahun")) {
   tahunKurang = 0; // Tetap di tahun ini
 } else {
   tahunKurang = 0; // Tetap di tahun ini
+if (!history.state || history.state.page !== "detail") {
+    history.pushState({ page: "detail" }, "Detail Video", "#detail");
 }
-
-const tahunTampil = sekarang.getFullYear() - tahunKurang;
-const indexBulan = Math.floor(Math.random() * 12);
-const tanggalTampil = Math.floor(Math.random() * 28) + 1; // Tanggal 1-28
-const bulanTampil = bulanIndo[indexBulan];
-
-// Masukkan ke dalam HTML (Tahun di atas, Tanggal Bulan di bawah)
-document.getElementById('fullDescDate').innerHTML = `
-  ${tahunTampil}<br><span style="font-size: 11px; font-weight: normal; color: #606060;">${tanggalTampil} ${bulanTampil}</span>
-`;
-
-// Deskripsi yang lebih panjang (seperti di gambar)
-document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan menemani bayi dan balita Anda belajar sambil bernyanyi! Lewat lagu-lagu anak dengan lirik sederhana serta melodi yang ceria, video ini dirancang untuk membantu perkembangan bahasa, motorik, dan kognitif si kecil.\n\nDalam video ini, si kecil diajak untuk aktif bergerak, menyanyi, dan belajar hal-hal baru dengan cara yang menyenangkan.`;
-  const likeLabel = document.querySelector('.btn-group button span');
-  if (likeLabel) likeLabel.innerText = stats.likes;
-
-  const commentCountElement = document.getElementById('commentCount');
-  if (commentCountElement) commentCountElement.innerText = jmlKomentar;
-
-  const elementTeksKomentar = document.getElementById('commentText');
-  const elementFotoKomentar = document.getElementById('commentUserImg');
-
-  if (elementTeksKomentar && typeof daftarKomentar !== 'undefined') {
-    let hash = 0;
-    for (let i = 0; i < video.title.length; i++) {
-      hash = video.title.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const indexKomentar = Math.abs(hash) % daftarKomentar.length;
-    elementTeksKomentar.innerText = daftarKomentar[indexKomentar];
-    if (elementFotoKomentar) elementFotoKomentar.src = "MAMA.JPG";
-  }
-
-  if (targetRekomendasi && typeof videoLibrary !== 'undefined') {
-    const videoLainnya = videoLibrary
-      .filter(v => v.title !== video.title)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 15);
-    tambahRekomendasi(videoLainnya, targetRekomendasi);
-  }
-
-  detailPage.style.display = 'block';
-  requestAnimationFrame(() => { detailPage.scrollTop = 0; });
-  setTimeout(() => { detailPage.classList.add('active'); }, 40);
-  document.body.style.overflow = 'hidden';
-
-  const scrollContent = detailPage.querySelector('.detail-scroll-content');
-  const playerWrapper = detailPage.querySelector('.player-wrapper');
-  let startY = 0;
-  let distY = 0;
-  let startTime = 0;
-
-  detailPage.addEventListener('touchstart', (e) => {
-    const videoHeight = playerWrapper ? playerWrapper.offsetHeight : 250;
-    const touchY = e.touches[0].clientY;
-
-    if (detailPage.scrollTop <= 0 && touchY > videoHeight) {
-      startY = touchY;
-      startTime = Date.now();
-      detailPage.classList.add('dragging');
-      scrollContent.style.transition = 'none';
-      playerWrapper.style.transition = 'none';
-    }
-  }, { passive: true });
-
-  detailPage.addEventListener('touchmove', (e) => {
-    const currentY = e.touches[0].clientY;
-    distY = currentY - startY;
-
-    if (detailPage.classList.contains('dragging') && distY > 0 && !isPortrait) {
-      e.preventDefault();
-      detailPage.style.backgroundColor = `rgba(0, 0, 0, ${Math.min(distY / 300, 1)})`;
-      scrollContent.style.transform = `translateY(${distY}px)`;
-      scrollContent.style.opacity = Math.max(0, 1 - (distY / 200));
-      playerWrapper.style.transform = `translateY(${Math.min(distY * 0.4, window.innerHeight * 0.3)}px)`;
-    }
-
-    if (bottomNav) {
-      bottomNav.style.transform = `translateY(100%)`;
-    }
-
-    if (isPortrait && distY < 0) {
-      if (e.cancelable) e.preventDefault();
-      const viewHeight = window.innerHeight;
-      const posisiTengah = viewHeight * 0.3;
-      const jarakMaksimal = posisiTengah;
-      const currentDist = Math.abs(distY);
-      const progress = Math.min(currentDist / jarakMaksimal, 1);
-
-      const moveVideo = posisiTengah - (posisiTengah * progress);
       playerWrapper.style.transform = `translateY(${moveVideo}px)`;
       const moveContent = viewHeight - (viewHeight * progress);
       scrollContent.style.transform = `translateY(${moveContent}px)`;
@@ -577,7 +490,10 @@ document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan men
     distY = 0;
   });
 
+  // Hanya tambahkan history jika kita baru masuk dari beranda
+if (!history.state || history.state.page !== "detail") {
   history.pushState({ page: "detail" }, "Detail Video", "#detail");
+}
 
   if (isPortrait) {
     const vContainer = document.getElementById('vContainer');
@@ -676,7 +592,6 @@ function tambahRekomendasi(videos, target, append = true) {
 }
 
 // ==== MONITORING TOMBOL BACK HP ==== //
-// ==== MONITORING TOMBOL BACK HP ==== //
 window.addEventListener('popstate', function(event) {
   const detailPage = document.getElementById('videoDetailPage');
   const descOverlay = document.getElementById('descriptionOverlay');
@@ -693,7 +608,8 @@ window.addEventListener('popstate', function(event) {
       setTimeout(() => { descBottomSheet.style.transform = ''; }, 50); 
     }, 300);
     
-    // KUNCI: Tambahkan history lagi agar saat back ditekan lagi, tidak keluar aplikasi
+    // KUNCI 1: Isi ulang history dengan state detail
+    // Agar saat user back lagi dari video, browser tidak bingung
     history.pushState({ page: "detail" }, "Detail Video", "#detail");
     return; 
   }
@@ -702,8 +618,7 @@ window.addEventListener('popstate', function(event) {
   if (detailPage && detailPage.classList.contains('active')) {
     tutupDetailVideoManual();
     
-    // KUNCI UTAMA: Kita paksa masuk ke beranda dengan pushState baru!
-    // Jangan gunakan history.back() karena akan menghabiskan riwayat.
+    // KUNCI 2: Set state beranda
     history.pushState({ page: "home" }, "Beranda", window.location.pathname);
   }
 });
