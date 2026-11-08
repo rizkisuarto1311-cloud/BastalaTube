@@ -91,21 +91,34 @@ function getMetaOtomatis(judul) {
     hash = judul.charCodeAt(i) + ((hash << 5) - hash);
   }
   const seed = Math.abs(hash);
+  
+  // Ambil angka 0-99 sebagai "bola undian"
   const peluang = seed % 100; 
   let kategori;
 
+  // --- ATUR PERSENTASE (TOTAL 100%) ---
+  // 30% Tahun (0-29)
   if (peluang < 30) {
     kategori = { unit: "tahun", min: 1, max: 8 };
-  } else if (peluang < 55) {
+  } 
+  // 25% Bulan (30-54)
+  else if (peluang < 55) {
     kategori = { unit: "bulan", min: 1, max: 11 };
-  } else if (peluang < 75) {
+  } 
+  // 20% Minggu (55-74)
+  else if (peluang < 75) {
     kategori = { unit: "minggu", min: 1, max: 3 };
-  } else if (peluang < 90) {
+  } 
+  // 15% Jam (75-89)
+  else if (peluang < 90) {
     kategori = { unit: "jam", min: 1, max: 23 };
-  } else {
+  } 
+  // 5% Menit (90-99)
+  else {
     kategori = { unit: "menit", min: 1, max: 59 };
   }
 
+  // Hitung angka acak di dalam rentang kategori yang terpilih
   const angka = (seed % (kategori.max - kategori.min + 1)) + kategori.min;
 
   return {
@@ -133,24 +146,29 @@ function formatAngkaYoutube(angka) {
 
 function getStatsOtomatis(judul, waktu) {
   const seed = generateSeed(judul);
-  let rawViews = (seed % 1990000) + 10000; 
+  let rawViews = (seed % 1990000) + 10000; // Default views untuk video lama
 
   if (waktu) {
     if (waktu.includes("menit")) {  
+      // Video baru (menit): Minimal 1.000, maksimal 5.000 views
       rawViews = (seed % 4000) + 1000;  
     } 
     else if (waktu.includes("jam")) {  
+      // Video beberapa jam lalu: Mulai dari 5.000 hingga puluhan ribu
       const angkaJam = parseInt(waktu) || 1;  
       rawViews = Math.floor((seed % 20000) * (angkaJam / 2)) + 5000;   
     } 
     else if (waktu.includes("minggu")) {  
+      // Video beberapa minggu lalu: Ratusan ribu
       const angkaMinggu = parseInt(waktu) || 1;
       rawViews = Math.floor((seed % 500000) * (angkaMinggu / 4)) + 50000;
     } 
     else if (waktu.includes("bulan")) {  
+      // Video berbulan-bulan lalu: Jutaan
       const angkaBulan = parseInt(waktu) || 1;
       rawViews = Math.floor((seed % 1000000) * (angkaBulan / 12)) + 100000;
     }
+    // Jika "tahun", biarkan rawViews tetap besar (default)
   }
 
   const persentaseLike = (seed % 6) + 2; 
@@ -161,6 +179,7 @@ function getStatsOtomatis(judul, waktu) {
     likes: formatAngkaYoutube(rawLikes)
   };
 }
+
 
 function getKomentarOtomatis(judul) {
   const seed = generateSeed(judul);
@@ -296,7 +315,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 let isPortrait = false; 
-let currentYouTubePlayer = null;
+let currentYouTubePlayer = null; // <--- TAMBAHKAN BARIS INI
 
 // ==== FUNGSI BUKA DETAIL VIDEO ==== //
 function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) {
@@ -320,32 +339,41 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   playerArea.innerHTML = `
   <div class="video-container" id="vContainer" style="background:#000;">
     <div id="ytPlayerApi" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+    
+    <!-- PROGRESS BAR MERAH -->
     <div id="progressContainer" style="position:absolute; bottom:0; left:0; width:100%; height:2px; background:rgba(255,255,255,0.2); z-index:99; pointer-events:none;">
       <div id="progressBar" style="height:100%; width:0%; background:#ff0000; transition: width 0.1s linear;"></div>
     </div>
   </div>`;
 
   setTimeout(() => {
-    if (typeof YT !== 'undefined' && YT.Player) {
-      currentYouTubePlayer = new YT.Player('ytPlayerApi', {
-        videoId: ytId,
-        playerVars: { 'autoplay': 1, 'rel': 0, 'modestbranding': 1, 'iv_load_policy': 3 },
-        events: {
-          'onReady': function(event) {
-            event.target.playVideo();
-            mulaiProgressBar(event.target);
-          },
-          'onStateChange': function(event) {
-            if (event.data === 0) {
-              putarVideoOtomatis(); 
-            }
+  if (typeof YT !== 'undefined' && YT.Player) {
+    currentYouTubePlayer = new YT.Player('ytPlayerApi', { // <--- Simpan ke variabel global
+      videoId: ytId,
+      playerVars: {
+        'autoplay': 1,
+        'rel': 0,
+        'modestbranding': 1,
+        'iv_load_policy': 3
+      },
+      events: {
+        'onReady': function(event) {
+          event.target.playVideo();
+          mulaiProgressBar(event.target);
+        },
+        'onStateChange': function(event) {
+          // Kode 0 berarti video YouTube telah SELESAI diputar
+          if (event.data === 0) {
+            console.log("Video selesai, memutar video acak berikutnya...");
+            putarVideoOtomatis(); // <--- Panggil fungsi ini saat selesai
           }
         }
-      });
-    } else {
-      console.error("YouTube API belum termuat!");
-    }
-  }, 100);
+      }
+    });
+  } else {
+    console.error("YouTube API belum termuat!");
+  }
+}, 100);
 
   const meta = getMetaOtomatis(video.title);
   const stats = getStatsOtomatis(video.title, meta.waktu);
@@ -355,38 +383,39 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   document.getElementById('detailViews').innerText = stats.views + " x ditonton";
   document.getElementById('detailDate').innerText = meta.waktu;
   
-  document.getElementById('fullDescTitle').innerText = video.title;
-document.getElementById('fullDescViewsTop').innerText = stats.views;
-document.getElementById('fullDescLikesTop').innerText = stats.likes;
-// Isi juga bagian bawah
-document.getElementById('fullDescViewsBottom').innerText = stats.views;
-document.getElementById('fullDescLikesBottom').innerText = stats.likes;
+// Mengisi data untuk panel "Selengkapnya"
+document.getElementById('fullDescTitle').innerText = video.title;
+document.getElementById('fullDescViews').innerText = stats.views;
+document.getElementById('fullDescLikes').innerText = stats.likes;
 
-  const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-  const sekarang = new Date();
-  let tahunKurang = 0;
+// Format tanggal
+// Membuat format tanggal palsu yang realistis (Tahun di atas, Tanggal Bulan di bawah)
+const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+const sekarang = new Date();
+let tahunKurang = 0;
+let bulanAcak, tanggalAcak;
 
-  if (meta.waktu.includes("tahun")) {
-    tahunKurang = parseInt(meta.waktu);
-  } else if (meta.waktu.includes("bulan")) {
-    tahunKurang = 0; 
-  } else {
-    tahunKurang = 0; 
-  }
+// Hitung mundur tahun berdasarkan teks "X tahun/bulan/minggu/jam yang lalu"
+if (meta.waktu.includes("tahun")) {
+  tahunKurang = parseInt(meta.waktu);
+} else if (meta.waktu.includes("bulan")) {
+  tahunKurang = 0; // Tetap di tahun ini
+} else {
+  tahunKurang = 0; // Tetap di tahun ini
+}
 
-  const tahunTampil = sekarang.getFullYear() - tahunKurang;
-  const indexBulan = Math.floor(Math.random() * 12);
-  const tanggalTampil = Math.floor(Math.random() * 28) + 1;
-  const bulanTampil = bulanIndo[indexBulan];
+const tahunTampil = sekarang.getFullYear() - tahunKurang;
+const indexBulan = Math.floor(Math.random() * 12);
+const tanggalTampil = Math.floor(Math.random() * 28) + 1; // Tanggal 1-28
+const bulanTampil = bulanIndo[indexBulan];
 
-  const htmlTanggal = `
+// Masukkan ke dalam HTML (Tahun di atas, Tanggal Bulan di bawah)
+document.getElementById('fullDescDate').innerHTML = `
   ${tahunTampil}<br><span style="font-size: 11px; font-weight: normal; color: #606060;">${tanggalTampil} ${bulanTampil}</span>
 `;
-  
-document.getElementById('fullDescDateTop').innerHTML = htmlTanggal;
-document.getElementById('fullDescDateBottom').innerText = `${tanggalTampil} ${bulanTampil} ${tahunTampil}`;
-  document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan menemani bayi dan balita Anda belajar sambil bernyanyi! Lewat lagu-lagu anak dengan lirik sederhana serta melodi yang ceria, video ini dirancang untuk membantu perkembangan bahasa, motorik, dan kognitif si kecil.\n\nDalam video ini, si kecil diajak untuk aktif bergerak, menyanyi, dan belajar hal-hal baru dengan cara yang menyenangkan.`;
 
+// Deskripsi yang lebih panjang (seperti di gambar)
+document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan menemani bayi dan balita Anda belajar sambil bernyanyi! Lewat lagu-lagu anak dengan lirik sederhana serta melodi yang ceria, video ini dirancang untuk membantu perkembangan bahasa, motorik, dan kognitif si kecil.\n\nDalam video ini, si kecil diajak untuk aktif bergerak, menyanyi, dan belajar hal-hal baru dengan cara yang menyenangkan.`;
   const likeLabel = document.querySelector('.btn-group button span');
   if (likeLabel) likeLabel.innerText = stats.likes;
 
@@ -548,10 +577,7 @@ document.getElementById('fullDescDateBottom').innerText = `${tanggalTampil} ${bu
     distY = 0;
   });
 
-  // Penempatan history.pushState yang sudah benar
-  if (!history.state || history.state.page !== "detail") {
-    history.pushState({ page: "detail" }, "Detail Video", "#detail");
-  }
+  history.pushState({ page: "detail" }, "Detail Video", "#detail");
 
   if (isPortrait) {
     const vContainer = document.getElementById('vContainer');
@@ -578,14 +604,16 @@ function formatWaktu(detik) {
 let progressInterval = null;
 
 function mulaiProgressBar(player) {
+  // Hentikan interval lama jika ada
   if (progressInterval) clearInterval(progressInterval);
 
   progressInterval = setInterval(() => {
     const progressBar = document.getElementById('progressBar');
     if (!progressBar || !player || typeof player.getCurrentTime !== 'function') return;
 
+    // Cek apakah video sedang diputar atau di-pause
     const state = player.getPlayerState();
-    if (state === 1 || state === 2) {
+    if (state === 1 || state === 2) { // 1 = playing, 2 = paused
       const currentTime = player.getCurrentTime();
       const duration = player.getDuration();
       
@@ -594,7 +622,7 @@ function mulaiProgressBar(player) {
         progressBar.style.width = persentase + '%';
       }
     }
-  }, 250);
+  }, 250); // Update setiap 250ms
 }
 
 // ==== FUNGSI PEMBUAT KARTU VIDEO (REUSABLE) ==== //
@@ -650,25 +678,9 @@ function tambahRekomendasi(videos, target, append = true) {
 // ==== MONITORING TOMBOL BACK HP ==== //
 window.addEventListener('popstate', function(event) {
   const detailPage = document.getElementById('videoDetailPage');
-  const descOverlay = document.getElementById('descriptionOverlay');
-  const descBottomSheet = document.querySelector('.desc-bottom-sheet');
-  const detailScrollContent = document.querySelector('.detail-scroll-content');
-
-  if (descOverlay && descOverlay.classList.contains('active')) {
-    descBottomSheet.style.transform = 'translateY(100%)';
-    setTimeout(() => {
-      descOverlay.classList.remove('active');
-      if (detailScrollContent) detailScrollContent.classList.remove('hidden-content');
-      setTimeout(() => { descBottomSheet.style.transform = ''; }, 50); 
-    }, 300);
-    
-    history.pushState({ page: "detail" }, "Detail Video", "#detail");
-    return; 
-  }
-
   if (detailPage && detailPage.classList.contains('active')) {
     tutupDetailVideoManual();
-    history.pushState({ page: "home" }, "Beranda", window.location.pathname);
+    history.pushState(null, null, window.location.pathname);
   }
 });
 
@@ -726,8 +738,10 @@ function putarVideoOtomatis() {
 
     if (daftarPilihan.length === 0) return;
 
+    // Ambil video acak
     const videoBerikutnya = daftarPilihan[Math.floor(Math.random() * daftarPilihan.length)];
 
+    // Hancurkan player YouTube lama agar tidak ada suara dobel
     if (currentYouTubePlayer && typeof currentYouTubePlayer.destroy === 'function') {
       currentYouTubePlayer.destroy();
       currentYouTubePlayer = null;
@@ -738,6 +752,7 @@ function putarVideoOtomatis() {
       detailPage.scrollTo({ top: 0, behavior: 'instant' });
     }
 
+    // Panggil fungsi buka video (secara manual, bukan otomatis, karena YouTube akan diputar baru)
     bukaDetailVideo(videoBerikutnya, false, false);
   }
 }
@@ -764,43 +779,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchResults = document.getElementById('searchResults');
   const searchForm = document.getElementById('searchForm');
 
+  // Buka Overlay Pencarian
   if (openSearchBtn) {
     openSearchBtn.addEventListener('click', () => {
       searchOverlay.classList.add('active');
-      setTimeout(() => searchInput.focus(), 300);
+      setTimeout(() => searchInput.focus(), 300); // Fokus otomatis ke input
     });
   }
 
+  // Tutup Overlay Pencarian
   if (closeSearchBtn) {
     closeSearchBtn.addEventListener('click', () => {
       searchOverlay.classList.remove('active');
-      searchInput.value = "";
-      searchResults.innerHTML = "";
+      searchInput.value = ""; // Bersihkan input
+      searchResults.innerHTML = ""; // Bersihkan hasil
     });
   }
 
+  // Mencegah form reload halaman saat enter ditekan
   if (searchForm) {
-    searchForm.addEventListener('submit', (e) => { e.preventDefault(); });
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault(); 
+    });
   }
 
+  // Logika Pencarian Real-time saat mengetik
   if (searchInput) {
     searchInput.addEventListener('input', function() {
       const keyword = this.value.toLowerCase().trim();
       
+      // Jika input kosong, bersihkan hasil
       if (keyword === "") {
         searchResults.innerHTML = "";
         return;
       }
 
+      // Cari video berdasarkan judul ATAU kategori
       const filtered = videoLibrary.filter(video => 
         video.title.toLowerCase().includes(keyword) || 
         video.category.toLowerCase().includes(keyword)
       );
 
+      // Tampilkan hasil
       renderSearchResults(filtered);
     });
   }
 
+  // Fungsi untuk merender hasil pencarian
   function renderSearchResults(videos) {
     searchResults.innerHTML = "";
 
@@ -816,6 +841,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'video-card';
 
+      // Template kartu untuk hasil pencarian
       card.innerHTML = `
         <div class="v-details">
           <div class="v-avatar-container">
@@ -832,6 +858,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
+      // Jika diklik, buka video dan tutup overlay pencarian
       card.onclick = () => {
         searchOverlay.classList.remove('active');
         searchInput.value = "";
@@ -848,7 +875,9 @@ function showHomeAfterReady() {
   const intro = document.getElementById('introAnimation');
   if (!intro) return;
   intro.classList.add('intro-hide');
-  setTimeout(() => { intro.remove(); }, 450);
+  setTimeout(() => {
+    intro.remove();
+  }, 450);
 }
 
 // ==== FITUR SELENGKAPNYA (BOTTOM SHEET) ==== //
@@ -858,72 +887,94 @@ document.addEventListener('DOMContentLoaded', () => {
     const descBottomSheet = document.querySelector('.desc-bottom-sheet');
     const closeDescBtn = document.getElementById('closeDescBtn');
 
+    // Buka Panel
     if (selengkapnyaBtn) {
         selengkapnyaBtn.addEventListener('click', () => {
             descOverlay.classList.add('active');
-            descBottomSheet.style.transform = '';
+            descBottomSheet.style.transform = ''; // Reset posisi
         });
     }
 
-    if (closeDescBtn) {
-        closeDescBtn.addEventListener('click', () => {
-            descBottomSheet.style.transform = 'translateY(100%)';
+// Tutup Panel (via tombol X) dengan efek meluncur
+if (closeDescBtn) {
+    closeDescBtn.addEventListener('click', () => {
+        // 1. Geser panel ke bawah dulu
+        descBottomSheet.style.transform = 'translateY(100%)';
+        
+        // 2. Tunggu animasi selesai (0.3 detik), baru hilangkan overlay
+        setTimeout(() => {
+            descOverlay.classList.remove('active');
+            // 3. Reset posisi setelah benar-benar tertutup
             setTimeout(() => {
-                descOverlay.classList.remove('active');
-                setTimeout(() => { descBottomSheet.style.transform = ''; }, 50); 
-            }, 300);
-        });
-    }
+                descBottomSheet.style.transform = '';
+            }, 50); 
+        }, 300); // Sesuaikan dengan durasi transisi di CSS (0.3s)
+    });
+}
 
+    // Tutup Panel jika klik di luar area putih
     if (descOverlay) {
         descOverlay.addEventListener('click', (e) => {
             if (e.target === descOverlay) {
-                descBottomSheet.style.transform = 'translateY(100%)';
-                setTimeout(() => {
-                    descOverlay.classList.remove('active');
-                    setTimeout(() => { descBottomSheet.style.transform = ''; }, 50); 
-                }, 300);
+                descOverlay.classList.remove('active');
             }
         });
     }
 
+    // --- FITUR SWIPE TO CLOSE (TARIK KE BAWAH) ---
     let startY = 0;
     let currentY = 0;
     let isDragging = false;
 
     if (descBottomSheet) {
+        // Saat jari menyentuh layar
         descBottomSheet.addEventListener('touchstart', (e) => {
+            // Hanya izinkan swipe jika panel sedang scroll paling atas
             if (descBottomSheet.scrollTop <= 0) {
                 startY = e.touches[0].clientY;
                 isDragging = true;
+                // Matikan transisi CSS saat jari menempel agar gerakannya instan
                 descBottomSheet.style.transition = 'none'; 
             }
         }, { passive: true });
 
+        // Saat jari digeser
         descBottomSheet.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
+
             currentY = e.touches[0].clientY;
             const diffY = currentY - startY;
 
+            // Jika ditarik ke bawah (nilai positif)
             if (diffY > 0) {
+                // Geser panelnya mengikuti jari
                 descBottomSheet.style.transform = `translateY(${diffY}px)`;
             }
         }, { passive: true });
 
+        // Saat jari dilepas
         descBottomSheet.addEventListener('touchend', (e) => {
             if (!isDragging) return;
             isDragging = false;
+
+            // Kembalikan transisi CSS
             descBottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
 
             const diffY = currentY - startY;
 
+            // Jika ditarik cukup jauh (lebih dari 100px), tutup panelnya
             if (diffY > 100) {
                 descOverlay.classList.remove('active');
-                setTimeout(() => { descBottomSheet.style.transform = ''; }, 300);
+                // Reset posisi setelah animasi selesai
+                setTimeout(() => {
+                    descBottomSheet.style.transform = '';
+                }, 300);
             } else {
+                // Jika tarikan sedikit, kembalikan ke posisi semula (snap back)
                 descBottomSheet.style.transform = 'translateY(0)';
             }
 
+            // Reset variabel
             startY = 0;
             currentY = 0;
         });
