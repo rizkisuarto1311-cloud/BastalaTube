@@ -356,8 +356,11 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   document.getElementById('detailDate').innerText = meta.waktu;
   
   document.getElementById('fullDescTitle').innerText = video.title;
-  document.getElementById('fullDescViews').innerText = stats.views;
-  document.getElementById('fullDescLikes').innerText = stats.likes;
+document.getElementById('fullDescViewsTop').innerText = stats.views;
+document.getElementById('fullDescLikesTop').innerText = stats.likes;
+// Isi juga bagian bawah
+document.getElementById('fullDescViewsBottom').innerText = stats.views;
+document.getElementById('fullDescLikesBottom').innerText = stats.likes;
 
   const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
   const sekarang = new Date();
@@ -376,10 +379,12 @@ function bukaDetailVideo(video, isAutomatic = false, suaraDariVideoLama = true) 
   const tanggalTampil = Math.floor(Math.random() * 28) + 1;
   const bulanTampil = bulanIndo[indexBulan];
 
-  document.getElementById('fullDescDate').innerHTML = `
-    ${tahunTampil}<br><span style="font-size: 11px; font-weight: normal; color: #606060;">${tanggalTampil} ${bulanTampil}</span>
-  `;
-
+  const htmlTanggal = `
+  ${tahunTampil}<br><span style="font-size: 11px; font-weight: normal; color: #606060;">${tanggalTampil} ${bulanTampil}</span>
+`;
+  
+document.getElementById('fullDescDateTop').innerHTML = htmlTanggal;
+document.getElementById('fullDescDateBottom').innerText = `${tanggalTampil} ${bulanTampil} ${tahunTampil}`;
   document.getElementById('fullDescText').innerText = `Koleksi Ayah Bunda akan menemani bayi dan balita Anda belajar sambil bernyanyi! Lewat lagu-lagu anak dengan lirik sederhana serta melodi yang ceria, video ini dirancang untuk membantu perkembangan bahasa, motorik, dan kognitif si kecil.\n\nDalam video ini, si kecil diajak untuk aktif bergerak, menyanyi, dan belajar hal-hal baru dengan cara yang menyenangkan.`;
 
   const likeLabel = document.querySelector('.btn-group button span');
