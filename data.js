@@ -64,63 +64,63 @@ const videoLibrary = [
     },
     {
        id: "v10",
-       title: "Akulah Trex - Lagu Anak dan Balita Indonesia",
+       title: "Akulah Trex - Lagu Anak dan Balita Indonesia|- Kinderflix Music",
        category: "Musik",
        youtubeId: "RAp0xNInj2k",
        duration: "2.20"
     },
     {
         id: "v11",
-        title: "Ekskavator - Lagu Anak dan Balita Indonesia",
+        title: "Ekskavator - Lagu Anak dan Balita Indonesia | Kinderflix Muaic",
         category: "Musik",
         youtubeId: "XNIayru07Jk",
         duration: "2.17"
     },
     {
         id: "v12",
-        title: "Kenapa Kita Bisa Senang - Dongeng Anak dan Balita Indonesia",
+        title: "SENG EP.05 - Kenapa Kita Bisa Senang? | 3 Menit | Berani Mencoba |🌟ANIMASI EDUKASI ANAK DARI AHLINYA",
         category: "Dongeng",
         youtubeId: "--sqT5Wfyws",
         duration: "3.22"
     },
     {
         id: "v13",
-        title: "Kenapa Kita Bisa Marah - Donegeng Anak dan Balita Indonesia",
+        title: "SENG EP.04 - Kenapa Kita Bisa Marah? | 4 Menit | Atasi Tantrum |🌟ANIMASI EDUKASI ANAK DARI AHLINYA",
         category: "Dongeng",
         youtubeId: "CayUvS0HKmk",
         duration: "3.45"
     },
     {
         id: "v14",
-        title: "Mari Berhitung - Lagu Anak dan Balita Indonesia",
+        title: "Mari Berhitung - Lagu Anak dan Balita Indonesia | Original Song - Kinderflix Music",
         category: "Musik",
         youtubeId: "MoeK5-SF5tM",
         duration: "1.31"
     },
     {
        id: "v15",
-       title: "Beruang - Lagu Anak dan Balita Indonesia",
+       title: "Beruang - Lagu Anak dan Balita Indonesia | Original Song - Kinderflix Music",
        category: "Musik",
        youtubeId: "xVJCWdD1nyo",
        duration: "1.38"
     },
     {
         id: "v16",
-        title: "Paman Datang - Lagu Anak dan Balita Indonesia",
+        title: "SANG- Lagu Anak Medley Seru | Paman Datang - Hati Gembira - Lagu Baik - Bintang Kejora - Cemara",
         category: "Musik",
         youtubeId: "KFfDtJf4USs",
         duration: "10.13"
     },
     {
         id: "v17",
-        title: "Laba-Laba Kecil - Lagu Anak dan Balita Indonesia",
+        title: "Laba-Laba Kecil - Lagu Anak dan Balita Indonesia | Kinderflix Music",
         category: "Musik",
         youtubeId: "F4lVmicSOm4",
         duration: "1.05"
     },
     {
         id: "v18",
-        title: "Menanan Jagung - Dongeng Anak dan Balita Indonesia",
+        title: "Menanan Jagung | Petualangan Lala Ciko | Kastari Sentra",
         category: "Dongeng",
         youtubeId: "udyNp6jc_rI",
         duration: "2.31"
