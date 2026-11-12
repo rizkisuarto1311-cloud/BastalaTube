@@ -116,10 +116,11 @@ body {
     font-size: 18px;
     cursor: pointer;
     -webkit-text-stroke: 1px #0f0f0f;
-}
-
-.icon:active {
+    display: inline-block; 
+    transition: transform 0.1s, opacity 0.1s; 
     -webkit-tap-highlight-color: transparent;
+}
+.icon:active {
     transform: scale(0.9);
     opacity: 0.6;
 }
