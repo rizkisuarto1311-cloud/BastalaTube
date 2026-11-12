@@ -225,31 +225,31 @@ const videoLibrary = [
     },
     {
         id: "v33",
-        title: "Angkat Telepon - Lagu Anak dan Balita Indonesia",
+        title: "Menanam Jagung di Kebun Kita🌽🎵 - Lagu Anak Belajar Bertani | Lagu Anak Ceria & Edukatif Animasi 3D",
         category: "Musik",
-        youtubeId: "4uSO1cvIgUE",
-        duration: "1.34"
+        youtubeId: "xwuBvWDWo3A",
+        duration: "2.33"
     },
     {
         id: "v34",
-        title: "Ular Di Semak-Semak - Lagu Anak dan Balita Indonesia",
+        title: "Tik Tik Bunyi Hujan - Lagu Anak Anak - Lagu Anak & Balita Paling Viral Terbaru",
         category: "Musik",
-        youtubeId: "6Us37K_qFo0",
-        duration: "1.33"
+        youtubeId: "Cinns8Fivm8",
+        duration: "2.11"
     },
     {
         id: "v35",
-        title: "Selamat Tidur - Lagu Anak dan Balita Indonesia",
+        title: "Selamat Tidur - Lagu Anak dan Balita Indonesia | Original Song - Kinderflix Music",
         category: "Musik",
         youtubeId: "QAabWkGky2M",
         duration: "1.39"
     },
     {
         id: "v36",
-        title: "Kelinci - Lagu Anak dan Balita Indonesia",
+        title: "🚆Lagu Anak Profesi | Aku Jadi Masinis Kereta Api Indonesia",
         category: "Musik",
-        youtubeId: "iQveewJMQB4",
-        duration: "1.56"
+        youtubeId: "live/BlZ6VzOB_54",
+        duration: "2.57"
     },
     {
         id: "v37",
