@@ -248,7 +248,7 @@ const videoLibrary = [
         id: "v36",
         title: "🚆Lagu Anak Profesi | Aku Jadi Masinis Kereta Api Indonesia",
         category: "Musik",
-        youtubeId: "live/BlZ6VzOB_54",
+        youtubeId: "BlZ6VzOB_54",
         duration: "2.57"
     },
     {
