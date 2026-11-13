@@ -155,10 +155,10 @@ const videoLibrary = [
     },
     {
         id: "v23",
-        title: "GARUDA PANCASILA LAGU WAJIB NASIONAL",
+        title: "GARUDA PANCASILA | Diva Bernyanyi | Lagu Anak Chanel",
         category: "Musik",
-        youtubeId: "OTyVK-sUBIw",
-        duration: "2.07"
+        youtubeId: "kbHFU-tzI1c",
+        duration: "2.43"
     },
     {
         id: "v24",
@@ -253,52 +253,52 @@ const videoLibrary = [
     },
     {
         id: "v37",
-        title: "Brachiosaurus - Lagu Anak dan Balita Indonesia",
+        title: "Bermain Layang-Layang🎏Lagu Anak Ceria dan Edukatif Indonesia | UnaStoryLand",
         category: "Musik",
-        youtubeId: "rljhrthVcqg",
-        duration: "1.55"
+        youtubeId: "vZQvSnxqed4",
+        duration: "2.43"
     },
     {
         id: "v38",
-        title: "Spinosaurus Vs TRex - Lagu Anak dan Balita Indonesia",
+        title: "Spinosaurus Vs TRex - Lagu Anak dan Balita Indonesia | Priginal Song - Kinderflix Music",
         category: "Musik",
         youtubeId: "jyrucA5oXPM",
         duration: "1.55"
     },
     {
         id: "v39",
-        title: "3 Kata Ajaib - Lagu Anak dan Balita Indonesia",
+        title: "🐻KRING KRING ADA SEPEDA🚲 | Lagu Anak Lucu & Seru 😺Baby Bear Jatuh!😯✨",
         category: "Musik",
-        youtubeId: "OQj_lMWPyiA",
-        duration: "1.37"
+        youtubeId: "OgivdllR0-Y",
+        duration: "1.11"
     },
     {
         id: "v40",
-        title: "2 Dino Kuat - Lagu Anak dan Balita Indonesia",
+        title: "2 Dino Kuat - Lagu Anak dan Balita Indonesia | Original Song - Kinderflix Music",
         category: "Musik",
         youtubeId: "SZLfD1DLGnM",
         duration: "2.04"
     },
     {
         id: "v41",
-        title: "Ayo Menyanyi - Lagu Anak dan Balita Indonesia",
+        title: "KEPALA PUNDAK LUTUT KAKI🎵Lagu Anak Indonesia Terpopuler | Animasi 3D Kartun Lucu | Nursery Rhymes",
         category: "Musik",
-        youtubeId: "mC5NdmijIxo",
-        duration: "2.30"
+        youtubeId: "HtCZTZYpzSU",
+        duration: "3.14"
     },
     {
         id: "v42",
-        title: "Hewan Laut - Lagu Anak dan Balita Indonesia",
+        title: "🎶Roda-Roda Alat Berat Berputar🚍Lagu Anak Lucu | KSG Lagu Populer",
         category: "Musik",
-        youtubeId: "M23Aalh928U",
-        duration: "2.16"
+        youtubeId: "pWXjd2V3E8w",
+        duration: "2.09"
     },
     {
         id: "v43",
-        title: "Mana Hewan - Lagu Anak dan Balita Indonesia",
+        title: "🎵Alat Berat Main Lumpur! Byur-Byut Mandi Busa | Lagu Anak KSG KIDS",
         category: "Musik",
         youtubeId: "GO9hqm9W1PI",
-        duration: "1.48"
+        duration: "1.55"
     },
     {
         id: "v44",
@@ -309,10 +309,10 @@ const videoLibrary = [
     },
     {
         id: "v45",
-        title: "Jenis Hiu - Lagu Anak dan Balita Indonesia",
+        title: "Baby Shark Dance | Menyanyi dan Dance! | Lagu hewan | PINKFONG Lagu untuk Anak-anak",
         category: "Musik",
-        youtubeId: "nFt2S5e5UUI",
-        duration: "2.04"
+        youtubeId: "XqZsoesa55w",
+        duration: "2.16"
     },
     {
         id: "v46",
